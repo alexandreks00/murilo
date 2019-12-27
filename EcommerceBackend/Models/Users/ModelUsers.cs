@@ -19,6 +19,8 @@ namespace DemoRestSharp.Models.Users
 
         public string LastName { get; set; }
 
+        public string NickName { get; set; }
+
         public string Gender { get; set; }
 
         public string Email { get; set; }
