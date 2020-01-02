@@ -39,6 +39,8 @@ namespace DemoRestSharp.Models.Users
 
         public string Message { get; set; }
 
+        public string NLPActive { get; set; }
+
         public ModelCity City { get; set; }
 
         public ModelMember Member { get; set; }

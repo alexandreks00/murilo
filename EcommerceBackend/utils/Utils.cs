@@ -29,10 +29,11 @@ namespace DemoRestSharp.utils
             request.AddJsonBody(new ModelUsers() { Email = Email, Password = Password });
             utils.Utils.setCisToken(request);
             var response = client.Execute<ModelUsers>(request);
+            Assert.That((int)response.StatusCode, Is.EqualTo(200), "Erro ao tentar coletar o token 'Authorization'.");
             string authorizationToken = response.Headers.ToList()
-                            .Find(x => x.Name == "authorization")
-                            .Value.ToString();
-            return authorizationToken;
+                             .Find(x => x.Name == "authorization")
+                             .Value.ToString();
+            return authorizationToken;            
         }
 
         public static RestRequest setAuthorizationToken(RestRequest request, string authorizationToken)
