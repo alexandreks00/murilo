@@ -301,7 +301,7 @@ namespace DemoRestSharp
 
                 //Enviando a requisição realizando login com o usuário que acabou de ser criado
                 var responseRealizaLogin = client.Execute<ModelUsers>(requestRealizaLogin);
-
+                //
                 //Inicio das validações
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
                 Assert.That((int)responseRealizaLogin.StatusCode, Is.EqualTo(200), "Status Code divergente.");
