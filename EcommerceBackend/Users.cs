@@ -24,7 +24,7 @@ namespace DemoRestSharp
         public void StartReport()
         {
             extent = new ExtentReports();
-            var htmlReporter = new ExtentHtmlReporter(@"C:\Users\gqsilva\git\EcommerceBackendRestSharp\EcommerceBackend\Reports\result.html");
+            var htmlReporter = new ExtentHtmlReporter(@"C:\Users\gqsilva\git\EcommerceBackendRestSharp\EcommerceBackend\Reports\Users\");
             extent.AttachReporter(htmlReporter);
         }
 
@@ -83,6 +83,7 @@ namespace DemoRestSharp
             } 
             catch (Exception e)
             {
+                throw new Exception("Falha ao validar dados do login do usuário: " + e.Message);
                 test.Log(Status.Fail, e.ToString());
             }
         }
@@ -120,6 +121,7 @@ namespace DemoRestSharp
             catch (Exception e)
             {
                 test.Log(Status.Fail, e.ToString());
+                throw new Exception("Falha ao validar a funcionalidade 'Esqueci minha senha'. " + e.Message);
             }
             
         }
@@ -155,6 +157,7 @@ namespace DemoRestSharp
             catch(Exception e)
             {
                 test.Log(Status.Fail, e.ToString());
+                throw new Exception("Falha ao validar a mensagem de crítica ao realizar login com um login inválido: " + e.Message);
             }
             
         }
@@ -203,8 +206,9 @@ namespace DemoRestSharp
                 test.Log(Status.Pass, "Teste ok, todas as verificações foram realizadas com sucesso.");
             }
             catch(Exception e)
-            {
+            {               
                 test.Log(Status.Fail, e.ToString());
+                throw new Exception("Falha ao validar dados do usuário: " + e.Message);
             }
             
         }
@@ -224,7 +228,6 @@ namespace DemoRestSharp
                 //Gerando um cpf aleatório que será utilizado na criação do usuário
                 test.Log(Status.Info, "Gerando CPF aleatório que será utilizado no request de criação do usuário.");
                 string cpf = utils.Utils.gerarCpf();
-
 
 
                 //Criando a requisição responsável por criar um usuário
@@ -301,7 +304,7 @@ namespace DemoRestSharp
 
                 //Enviando a requisição realizando login com o usuário que acabou de ser criado
                 var responseRealizaLogin = client.Execute<ModelUsers>(requestRealizaLogin);
-                //
+        
                 //Inicio das validações
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
                 Assert.That((int)responseRealizaLogin.StatusCode, Is.EqualTo(200), "Status Code divergente.");
@@ -323,8 +326,161 @@ namespace DemoRestSharp
             catch (Exception e) 
             {
                 test.Log(Status.Fail, e.ToString());
+                throw new Exception("Falha ao validar a criação de um usuário: " + e.Message);
+            }           
+        }
+
+        [Test]
+        public void ValidaAlteraDadosUsuario ()
+        {
+            ExtentTest test = null;
+            test = extent.CreateTest("ValidaAlteraDadosUsuario").Info("Início do teste");
+            string emailAlterado = "automacaousers@mailinator.com";
+            string emailRollback = "alterardadosrollback@mailinator.com";
+
+            try 
+            {
+                string authorizationToken = utils.Utils.getAuthorization("automacaousers@mailinator.com", "112233");
+                
+                //Criando a requisição responsável por editar os dados de um usuário
+                test.Log(Status.Info, "Criando a requisição responsável por editar os dados usuário.");
+                var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
+                var requestEditaDadosUsuario = new RestRequest("bus/v1/users", Method.PUT);
+                requestEditaDadosUsuario.RequestFormat = DataFormat.Json;
+
+                //Montando o body da requisição que será enviada
+                requestEditaDadosUsuario.AddJsonBody(new
+                {
+                    DateOfBirth = "1999-11-11T00:00:00.000Z",
+                    City = new
+                    {
+                        CityId = 1778,
+                        Name = "Brasília",
+                        State = new 
+                        {
+                            Code = "DF",
+                            StateId = 7,
+                            Name = "Distrito Federal"
+                        },
+                        StateId = 7
+                    },
+                    CPF = "47764000060",
+                    CpfNf = true,
+                    Email = emailAlterado,
+                    Gender = "N",
+                    UserId = 0,
+                    MiddleName = "",
+                    Name = "Teste Altera Dados",
+                    NickName = "Sr Teste",
+                    Password = "_",
+                    Phone1 = "1136333333",
+                    Id = "5dc9a229ef705d00010b7a76"
+                }
+                );
+
+                //Setando header de autenticação "X-CISIdentity"
+                test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
+                utils.Utils.setCisToken(requestEditaDadosUsuario);
+
+                //Enviando a requisição
+                test.Log(Status.Info, "Enviando a requisição editando os dados do usuário.");
+                var responseEditaDadosUsuario = client.Execute<ModelUsers>(requestEditaDadosUsuario);
+
+                //Validando Status Code de retorno da requisição
+                test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
+                Assert.That((int)responseEditaDadosUsuario.StatusCode, Is.EqualTo(200), "Status Code divergente.");
+
+                //Criando requisição que irá realizar login com o usuário e verificar se as informações foram alteradas
+                test.Log(Status.Info, "Criando requisição responsável por realizar login e consultar se as informações foram alteras.");
+                var requestRealizaLogin = new RestRequest("bus/v1/users/login/byapp", Method.POST);
+                requestRealizaLogin.RequestFormat = DataFormat.Json;
+
+                //Montando o body da requisição que será enviada
+                requestRealizaLogin.AddJsonBody(new
+                {
+                    Email = emailAlterado,
+                    Password = "112233"
+                }
+                );
+
+                //Enviando a requisição
+                test.Log(Status.Info, "Enviando a requisição consultando os dados do usuário.");
+                var responseRealizaLogin = client.Execute<ModelUsers>(requestRealizaLogin);
+
+                //Validando o Status Code de retorno da requisição
+                test.Log(Status.Info, "Validando se o Status Code da requisição é 200.");
+                Assert.That((int)responseRealizaLogin.StatusCode, Is.EqualTo(200), "Status Code divergente.");
+
             }
-            
+            catch (Exception e) 
+            {
+                test.Log(Status.Fail, e.ToString());
+                throw new Exception("Falha ao validar a edição de dados de um usuário: " + e.Message);
+            }
+        }
+
+        [Test]
+        public void ValidaAlteraSenhaUsuario()
+        {
+            ExtentTest test = null;
+            test = extent.CreateTest("ValidaAlteraSenhaUsuario").Info("Início do teste.");
+            string email = "alterasenha@mailinator.com";
+
+            try
+            {
+                //Coletando token "authorization"
+                string authorizationToken = utils.Utils.getAuthorization(email,"112233");
+
+
+                //Criando e enviando a requisição
+                test.Log(Status.Info, "Criando requisição responsável por alterar a senha do usuário.");
+                var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
+                var requestAlteraSenha = new RestRequest("bus/v1/users/changepassword", Method.POST);
+                requestAlteraSenha.RequestFormat = DataFormat.Json;
+                requestAlteraSenha.AddJsonBody(new
+                {
+                    Email = email,
+                    Password = "111111"
+                }
+                );
+                
+                test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
+                utils.Utils.setCisToken(requestAlteraSenha);
+                utils.Utils.setAuthorizationToken(requestAlteraSenha, authorizationToken);
+                
+                test.Log(Status.Info, "Enviando requisição.");
+                var responseAlteraSenha = client.Execute<ModelUsers>(requestAlteraSenha);
+
+                //Início das validações
+                test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
+                Assert.That((int)responseAlteraSenha.StatusCode, Is.EqualTo(200), "Status Code divergente.");
+
+                //Criando e enviando a requisição responsável por tentar realizar login com a nova senha
+                test.Log(Status.Info, "Criando requisição responsável por tentar realizar login com a senha nova.");
+                var requestRealizaLoginSenhaAlterada = new RestRequest("bus/v1/users/login/byapp", Method.POST);
+                requestRealizaLoginSenhaAlterada.RequestFormat = DataFormat.Json;
+                requestRealizaLoginSenhaAlterada.AddJsonBody(new
+                {
+                    Email = email,
+                    Password = "112233"
+                }
+                );
+
+                test.Log(Status.Info, "Enviando requisição ");
+                var responseRealizaLoginSenhaInvalida = client.Execute<ModelUsers>(requestRealizaLoginSenhaAlterada);
+
+                test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
+                Assert.That((int)responseRealizaLoginSenhaInvalida.StatusCode, Is.EqualTo(200), "Status Code divergente.");
+
+
+            }
+            catch (Exception e)
+            {
+                test.Log(Status.Fail, e.ToString());
+                throw new Exception("Falha ao validar a alteração de senha do usuário " + e.Message);
+            }
+
+
         }
     }
 }
