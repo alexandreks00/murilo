@@ -24,7 +24,7 @@ namespace DemoRestSharp
         public void StartReport()
         {
             extent = new ExtentReports();
-            var htmlReporter = new ExtentHtmlReporter(@"C:\Users\gqsilva\git\EcommerceBackendRestSharp\EcommerceBackend\Reports\Social\");
+            var htmlReporter = new ExtentHtmlReporter(@"C:\EcommerceBackendReports\Reports\Social\");
             extent.AttachReporter(htmlReporter);
         }
 

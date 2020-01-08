@@ -24,7 +24,7 @@ namespace DemoRestSharp
         public void StartReport()
         {
             extent = new ExtentReports();
-            var htmlReporter = new ExtentHtmlReporter(@"C:\Users\gqsilva\git\EcommerceBackendRestSharp\EcommerceBackend\Reports\Users\");
+            var htmlReporter = new ExtentHtmlReporter(@"C:\EcommerceBackendReports\Reports\Users\");
             extent.AttachReporter(htmlReporter);
         }
 
@@ -308,19 +308,19 @@ namespace DemoRestSharp
                 //Inicio das validações
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
                 Assert.That((int)responseRealizaLogin.StatusCode, Is.EqualTo(200), "Status Code diferente do esperado ao enviar requisição responsável por realizar login com o usuário que teve seus dados editados");
-                Assert.That(responseRealizaLogin.Data.Name, Is.EqualTo("Altera Dados Teste"), "Valor da propriedade 'Name' divergente.");
-                Assert.That(responseRealizaLogin.Data.NickName, Is.EqualTo("Sr Put"), "Valor da propriedade 'NickName' divergente.");
-                Assert.That(responseRealizaLogin.Data.Gender, Is.EqualTo("F"), "Valor da propriedade 'Gender' divergente.");
+                Assert.That(responseRealizaLogin.Data.Name, Is.EqualTo("Automatic Test"), "Valor da propriedade 'Name' divergente.");
+                Assert.That(responseRealizaLogin.Data.NickName, Is.EqualTo("QA"), "Valor da propriedade 'NickName' divergente.");
+                Assert.That(responseRealizaLogin.Data.Gender, Is.EqualTo("M"), "Valor da propriedade 'Gender' divergente.");
                 Assert.That(responseRealizaLogin.Data.Email, Is.EqualTo(email), "Valor da propriedade 'Email' divergente.");
                 Assert.That(responseRealizaLogin.Data.CPF, Is.EqualTo(cpf), "Valor da propriedade 'CPF' divergente.");
-                Assert.That(responseRealizaLogin.Data.DateOfBirth, Is.EqualTo("1996-04-12T00:00:00Z"), "Valor da propriedade 'Member.DateOfBirth' divergente.");
-                Assert.That(responseRealizaLogin.Data.CityId, Is.EqualTo("1"), "Valor da propriedade 'Member.CityId' divergente.");
+                Assert.That(responseRealizaLogin.Data.DateOfBirth, Is.EqualTo("2002-11-04T00:00:00Z"), "Valor da propriedade 'Member.DateOfBirth' divergente.");
+                Assert.That(responseRealizaLogin.Data.CityId, Is.EqualTo("12789"), "Valor da propriedade 'Member.CityId' divergente.");
                 Assert.That(responseRealizaLogin.Data.City.CityId, Is.EqualTo(12789), "Valor da propriedade 'City.CityId' divergente.");
-                Assert.That(responseRealizaLogin.Data.City.Name, Is.EqualTo("Acrelândia"), "Valor da propriedade 'City.Name' divergente.");
-                Assert.That(responseRealizaLogin.Data.City.StateId, Is.EqualTo(2), "Valor da propriedade 'City.StateId' divergente.");
-                Assert.That(responseRealizaLogin.Data.City.State.Code, Is.EqualTo("AC"), "Valor da propriedade 'City.State.Code' divergente.");
-                Assert.That(responseRealizaLogin.Data.City.State.Name, Is.EqualTo("Acre"), "Valor da propriedade 'City.State.Name' divergente.");
-                Assert.That(responseRealizaLogin.Data.Phone1, Is.EqualTo("1136333333"), "Valor da propriedade 'Phone1' divergente.");
+                Assert.That(responseRealizaLogin.Data.City.Name, Is.EqualTo("Taguatinga"), "Valor da propriedade 'City.Name' divergente.");
+                Assert.That(responseRealizaLogin.Data.City.StateId, Is.EqualTo(7), "Valor da propriedade 'City.StateId' divergente.");
+                Assert.That(responseRealizaLogin.Data.City.State.Code, Is.EqualTo("DF"), "Valor da propriedade 'City.State.Code' divergente.");
+                Assert.That(responseRealizaLogin.Data.City.State.Name, Is.EqualTo("Distrito Federal"), "Valor da propriedade 'City.State.Name' divergente.");
+                Assert.That(responseRealizaLogin.Data.Phone1, Is.EqualTo("1133333336"), "Valor da propriedade 'Phone1' divergente.");
                 test.Log(Status.Info, "Validação ok, os dados do usuário foram alterados com sucesso.");
             }
             catch (Exception e) 
@@ -570,12 +570,73 @@ namespace DemoRestSharp
 
                 //Validando o Status Code de retorno da requisição
                 test.Log(Status.Info, "Validando se o Status Code da requisição é 200.");
-                Assert.That((int)responseRealizaLogin.StatusCode, Is.EqualTo(200), "Status Code divergente.");
+                Assert.That((int)responseRealizaLogin.StatusCode, Is.EqualTo(200), "Status Code diferente do esperado ao realizar requisição responsável por realizar login.");
 
-                
+                //Validando o valor de retorno das propriedades
+                test.Log(Status.Info, "Validando o retorno das propriedades.");
+                Assert.That((int)responseRealizaLogin.StatusCode, Is.EqualTo(200), "Status Code diferente do esperado ao enviar requisição responsável por realizar login com o usuário que teve seus dados editados");
+                Assert.That(responseRealizaLogin.Data.Name, Is.EqualTo("Altera Dados Teste"), "Valor da propriedade 'Name' divergente.");
+                Assert.That(responseRealizaLogin.Data.NickName, Is.EqualTo("Sr Put"), "Valor da propriedade 'NickName' divergente.");
+                Assert.That(responseRealizaLogin.Data.Gender, Is.EqualTo("F"), "Valor da propriedade 'Gender' divergente.");
+                Assert.That(responseRealizaLogin.Data.Email, Is.EqualTo(email), "Valor da propriedade 'Email' divergente.");
+                Assert.That(responseRealizaLogin.Data.CPF, Is.EqualTo("24636944089"), "Valor da propriedade 'CPF' divergente.");
+                Assert.That(responseRealizaLogin.Data.DateOfBirth, Is.EqualTo("1996-04-12T00:00:00Z"), "Valor da propriedade 'Member.DateOfBirth' divergente.");
+                Assert.That(responseRealizaLogin.Data.CityId, Is.EqualTo("1"), "Valor da propriedade 'Member.CityId' divergente.");
+                Assert.That(responseRealizaLogin.Data.City.CityId, Is.EqualTo(1), "Valor da propriedade 'City.CityId' divergente.");
+                Assert.That(responseRealizaLogin.Data.City.Name, Is.EqualTo("Acrelândia"), "Valor da propriedade 'City.Name' divergente.");
+                Assert.That(responseRealizaLogin.Data.City.StateId, Is.EqualTo(2), "Valor da propriedade 'City.StateId' divergente.");
+                Assert.That(responseRealizaLogin.Data.City.State.Code, Is.EqualTo("AC"), "Valor da propriedade 'City.State.Code' divergente.");
+                Assert.That(responseRealizaLogin.Data.City.State.Name, Is.EqualTo("Acre"), "Valor da propriedade 'City.State.Name' divergente.");
+                Assert.That(responseRealizaLogin.Data.Phone1, Is.EqualTo("1136333333"), "Valor da propriedade 'Phone1' divergente.");
+                test.Log(Status.Info, "Validação ok, os dados do usuário foram alterados com sucesso.");
 
+                //Criando requisição alterando os dados novamente, realizando rollback
+                test.Log(Status.Info, "Criando a requisição responsável por realizar o rollback dos dados usuário.");
+                var requestRealizaRollback = new RestRequest("bus/v1/users", Method.PUT);
+                requestRealizaRollback.RequestFormat = DataFormat.Json;
 
+                //Montando o body da requisição que será enviada
+                requestRealizaRollback.AddJsonBody(new
+                {
+                    DateOfBirth = "2020-01-02T00:00:00.000Z",
+                    City = new
+                    {
+                        CityId = 2369,
+                        Name = "Açailândia",
+                        State = new
+                        {
+                            Code = "MA",
+                            StateId = 10,
+                            Name = "Maranhão"
+                        },
+                        StateId = 10
+                    },
+                    CityId = 2369,
+                    CPF = "24636944089",
+                    CpfNf = true,
+                    Email = email,
+                    Gender = "F",
+                    UserId = 6947553,
+                    MiddleName = "",
+                    Name = "Altera Dados Rollback",
+                    NickName = "Sr Rollback",
+                    Password = "_",
+                    Phone1 = "1136333335",
+                    Id = "5e14dfe966d1850001ee105c"
+                }
+                );
 
+                //Setando header de autenticação "X-CISIdentity"
+                test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
+                utils.Utils.setCisToken(requestRealizaRollback);
+
+                //Enviando a requisição
+                test.Log(Status.Info, "Enviando a requisição editando os dados do usuário.");
+                var responseRealizaRollback = client.Execute<ModelUsers>(requestRealizaRollback);
+
+                //Validando Status Code de retorno da requisição
+                test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
+                Assert.That((int)responseRealizaRollback.StatusCode, Is.EqualTo(200), "Status Code diferente do esperado ao enviar requisição responsável por realizar rollback dos dados do usuário.");
             }
             catch (Exception e) 
             {
