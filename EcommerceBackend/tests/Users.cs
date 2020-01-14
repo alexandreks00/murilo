@@ -1,19 +1,13 @@
 ﻿using System.Configuration;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DemoRestSharp.Models.Users;
+using EcommerceBackend.Models.Users;
 using NUnit.Framework;
-using NUnit.Framework.Interfaces;
 using RestSharp;
 using AventStack.ExtentReports;
 using AventStack.ExtentReports.Reporter;
 using AventStack.ExtentReports.Reporter.Configuration;
 
-namespace DemoRestSharp
+namespace EcommerceBackend
 {
     [TestFixture]
     public class Users
@@ -83,8 +77,8 @@ namespace DemoRestSharp
             } 
             catch (Exception e)
             {
-                throw new Exception("Falha ao validar dados do login do usuário: " + e.Message);
                 test.Log(Status.Fail, e.ToString());
+                throw new Exception("Falha ao validar dados do login do usuário: " + e.Message);        
             }
         }
 

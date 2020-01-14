@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
-using DemoRestSharp.Models;
+using EcommerceBackend.Models;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using RestSharp;
 using RestSharp.Serialization.Json;
-using DemoRestSharp.Models.Users;
+using EcommerceBackend.Models.Users;
 
-namespace DemoRestSharp.utils
+namespace EcommerceBackend.utils
 {
     public static class Utils
     {

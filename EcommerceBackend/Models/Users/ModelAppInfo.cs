@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DemoRestSharp.Models.Users
+namespace EcommerceBackend.Models.Users
 {
     class ModelAppInfo
     {

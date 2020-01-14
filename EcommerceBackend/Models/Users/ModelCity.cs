@@ -1,11 +1,11 @@
-﻿using DemoRestSharp.Models.Users;
+﻿using EcommerceBackend.Models.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DemoRestSharp.Models.City
+namespace EcommerceBackend.Models.City
 
 {
     class ModelCity
