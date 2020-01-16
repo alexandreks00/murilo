@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace DemoRestSharp.models.Social
 {
-    class ModelSocial
+    public class ModelSocial 
     {
         public string EntityId { get; set; }
-
-
     }
 }

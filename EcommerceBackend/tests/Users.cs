@@ -37,7 +37,7 @@ namespace EcommerceBackend
             try
             {
                 //Criando e enviando requisição
-                test.Log(Status.Info, "Criando requisição.");
+                test.Log(Status.Info, "Criando requisição responsável por realizar login.");
                 var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
                 var request = new RestRequest("bus/v1/users/login/byapp", Method.POST);
                 request.RequestFormat = DataFormat.Json;

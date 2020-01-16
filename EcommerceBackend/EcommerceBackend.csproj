@@ -177,6 +177,7 @@
     <Compile Include="models\Users\ModelMember.cs" />
     <Compile Include="models\Users\ModelState.cs" />
     <Compile Include="models\Users\ModelUsers.cs" />
+    <Compile Include="tests\Bookings.cs" />
     <Compile Include="tests\Social.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="tests\Users.cs" />
