@@ -81,7 +81,7 @@ namespace EcommerceBackend
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição");
                 utils.Utils.setAuthorizationToken(requestFavoritaCinema, authorizationToken);
                 test.Log(Status.Info, "Enviando requisição responsável por favoritar o cinema");
-                var responseFavoritaCinema = client.Execute<List<ModelSocial>>(requestFavoritaCinema);
+                var responseFavoritaCinema = client.Execute<ModelSocial>(requestFavoritaCinema);
 
                 //Validando Status Code de retorno da requisição
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
@@ -93,15 +93,14 @@ namespace EcommerceBackend
                 utils.Utils.setAuthorizationToken(requestConsultaCinema, authorizationToken);
                 utils.Utils.setCisToken(requestConsultaCinema);
                 test.Log(Status.Info, "Enviando requisição responsável por consultar se o cinema foi favoritado");
-                var responseConsultaCinema = client.Execute(requestConsultaCinema);
+                var responseConsultaCinema = client.Execute<ModelSocial>(requestConsultaCinema);
 
-                System.Diagnostics.Debug.WriteLine(responseConsultaCinema.ToString());
-
+                
                 //Início das validações
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
                 Assert.That((int)responseConsultaCinema.StatusCode, Is.EqualTo(200), "Status Code divergente.");
                 
-                //Assert.That(responseConsultaCinema.Data.EntityId, Is.EqualTo(688), "Valor da propriedade 'EntityId' divergente");
+                //Assert.That(responseConsultaCinema.Data.Lists, Is.EqualTo(688), "Valor da propriedade 'EntityId' divergente");
                 test.Log(Status.Info, "Validações ok!");
 
                 //Criando e enviando requisição realizando rollback

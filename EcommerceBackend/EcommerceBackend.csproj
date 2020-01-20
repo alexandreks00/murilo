@@ -171,6 +171,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="models\Social\ModelSocial.cs" />
+    <Compile Include="models\Social\SocialResponse.cs" />
     <Compile Include="models\Users\ModelAppInfo.cs" />
     <Compile Include="models\Users\ModelCity.cs" />
     <Compile Include="models\Users\ModelCountry.cs" />

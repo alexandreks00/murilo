@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
-using EcommerceBackend.Models;
-using Newtonsoft.Json.Linq;
+using AventStack.ExtentReports;
+using AventStack.ExtentReports.Reporter;
 using NUnit.Framework;
 using RestSharp;
 using RestSharp.Serialization.Json;
@@ -15,6 +15,7 @@ namespace EcommerceBackend.utils
 {
     public static class Utils
     {
+        
         public static RestRequest setCisToken(RestRequest request)
         {
             request.AddHeader("X-CISIdentity", ConfigurationManager.AppSettings["CISToken"]);
@@ -88,7 +89,19 @@ namespace EcommerceBackend.utils
             return semente;
         }
 
-
+        public static void validaContrato (string[] properties, string responseContent, ExtentTest test) 
+        {
+            test.Log(Status.Info, "Inicío da validação de contrato.");
+            for (int i = 0; i < properties.Length; i++)
+            {
+                var isPropertyInResponse = responseContent.Contains(properties[i]);
+                if (isPropertyInResponse != true)
+                {
+                    Assert.That(isPropertyInResponse, Is.EqualTo(true), "Propriedade: " + properties[i] + " não existente na resposta da requisição.");
+                }
+                test.Log(Status.Info, "Propriedade: " + properties[i] + " presente na resposta do serviço.");
+            }
+        }
 
 
     }
