@@ -6,6 +6,7 @@ using RestSharp;
 using AventStack.ExtentReports;
 using AventStack.ExtentReports.Reporter;
 using AventStack.ExtentReports.Reporter.Configuration;
+using EcommerceBackend.utils;
 
 namespace DemoRestSharp.tests
 {
@@ -29,58 +30,122 @@ namespace DemoRestSharp.tests
         }
 
         [Test]
-        public void ValidaConsultaDetalhesFilme()
+        public void ValidaContratoDetalhesFilme()
         {
             ExtentTest test = null;
             test = extent.CreateTest("ValidaConsultaDetalhesFilme").Info("Início do teste.");
+            string idDeadpool = "6132";
 
             try
             {
                 //Criando e enviando requisição
                 test.Log(Status.Info, "Criando requisição.");
                 var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
-                var request = new RestRequest("", Method.POST);
+                var request = new RestRequest("bus/v1/bookings/showtimes/movies/"+idDeadpool, Method.GET);
                 request.RequestFormat = DataFormat.Json;
-                request.AddJsonBody(new
-                {
-                    Email = "automaticusers@mailinator.com",
-                    Password = "112233"
-                }
-                );
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
-                EcommerceBackend.utils.Utils.setCisToken(request);
+                Utils.setCisToken(request);
                 test.Log(Status.Info, "Enviando requisição.");
-                var response = client.Execute<ModelUsers>(request);
+                var response = client.Execute(request);
+
+                string responseContent = response.Content.ToString();
+                //Declarando as propriedades que deverão obrigatoriamente estar na resposta da requisição
+                string[] properties = new string[] { "\"Movies\":", "\"MovieCode\":", "\"Dates\":", "\"Date\":",
+                "\"ExhibitionDate\":", "\"ShowTimes\":", "\"id\":", "\"ShowTimeId\":", "\"date\":", "\"cm\":", "\"tht\":",
+                "\"mov\":", "\"aud\":", "\"xd\":", "\"prime\":", "\"dbox\":", "\"d3d\":", "\"pre\":", "\"psl\":",
+                "\"deb\":", "\"time\":", "\"loc\":", "\"MoviePrintCode\":", "\"IsSessionExpired\":", "\"TheaterAllow\":" ,
+                "\"Utc\":", "\"level\":", "\"Suggestions\":", "\"SnackCategoryId\":" ,"\"SnackCategoryIconUrl\":"};
 
                 //Início das validações
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
+
                 Assert.That((int)response.StatusCode, Is.EqualTo(200), "Status Code divergente.");
-                test.Log(Status.Info, "Validando o retorno das propriedades.");
-                Assert.That(response.Data.Id, Is.EqualTo("5e0dfe5b1a4fe4000190ac85"), "Valor da propriedade 'Id' divergente.");
-                Assert.That(response.Data.UserId, Is.EqualTo(6947486), "Valor da propriedade 'UserId' divergente.");
-                Assert.That(response.Data.Name, Is.EqualTo("Teste Users"), "Valor da propriedade 'Name' divergente.");
-                Assert.That(response.Data.NickName, Is.EqualTo("Users"), "Valor da propriedade 'NickName' divergente.");
-                Assert.That(response.Data.Gender, Is.EqualTo("F"), "Valor da propriedade 'Gender' divergente.");
-                Assert.That(response.Data.Email, Is.EqualTo("automaticusers@mailinator.com"), "Valor da propriedade 'Email' divergente.");
-                Assert.That(response.Data.CPF, Is.EqualTo("05163366068"), "Valor da propriedade 'CPF' divergente.");
-                Assert.That(response.Data.DateOfBirth, Is.EqualTo("1996-04-12T00:00:00Z"), "Valor da propriedade 'DateOfBirth' divergente.");
-                Assert.That(response.Data.Member.CityId, Is.EqualTo("12789"), "Valor da propriedade 'CityId' divergente.");
-                Assert.That(response.Data.Member.City.CityId, Is.EqualTo(12789), "Valor da propriedade 'City.CityId' divergente.");
-                Assert.That(response.Data.Member.City.Name, Is.EqualTo("Taguatinga"), "Valor da propriedade 'City.Name' divergente.");
-                Assert.That(response.Data.Member.City.StateId, Is.EqualTo(7), "Valor da propriedade 'City.StateId' divergente.");
-                Assert.That(response.Data.Member.City.State.Code, Is.EqualTo("DF"), "Valor da propriedade 'City.State.Code' divergente.");
-                Assert.That(response.Data.Member.City.State.Name, Is.EqualTo("Distrito Federal"), "Valor da propriedade 'City.State.Name' divergente.");
-                Assert.That(response.Data.City.State.CountryId, Is.EqualTo(0), "Valor da propriedade 'City.State.CountryId' divergente.");
-                Assert.That(response.Data.Member.Phone1, Is.EqualTo("1136362525"), "Valor da propriedade 'Phone1' divergente.");
-                Assert.That(response.Data.NLPActive, Is.EqualTo("True"), "Valor da propriedade 'NLPActive' divergente.");
+                Utils.validaContrato(properties, responseContent, test);
+
                 test.Log(Status.Pass, "Teste ok, todas as verificações foram realizadas com sucesso.");
             }
             catch (Exception e)
             {
                 test.Log(Status.Fail, e.ToString());
-                throw new Exception("Falha ao validar dados do login do usuário: " + e.Message);
+                throw new Exception("Falha ao validar contrato: " + e.Message);
             }
         }
 
+        [Test]
+        public void ValidaContratoDisplayArea()
+        {
+            ExtentTest test = null;
+            test = extent.CreateTest("ValidaContratoDisplayArea").Info("Início do teste.");
+
+            try
+            {
+                //Criando e enviando requisição
+                test.Log(Status.Info, "Criando requisição.");
+                var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
+                var request = new RestRequest("showtime/displayarea/all", Method.GET);
+                request.RequestFormat = DataFormat.Json;
+                test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
+                Utils.setCisToken(request);
+                test.Log(Status.Info, "Enviando requisição.");
+                var response = client.Execute(request);
+
+                string responseContent = response.Content.ToString();
+                //Declarando as propriedades que deverão obrigatoriamente estar na resposta da requisição
+                string[] properties = new string[] { "\"Id\":", "\"Title\":", "\"AreaType\":", "\"AreaTypeName\":",
+                "\"Movies\":", "\"Code\":", "\"Name\":", "\"LocalTitle\":", "\"Runtime\":", "\"Rating\":", "\"ReleaseDate\":",
+                "\"ImageUrl\":", "\"TrailerImageUrl\":", "\"TrailerVideoUrl\":", "\"ImageLabel\":", "\"Synopsis\":", "\"Director\":",
+                "\"Distributor\":", "\"Cast\":", "\"Genre\":", "\"Nationality\":"};
+
+                //Início das validações
+                test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
+                Assert.That((int)response.StatusCode, Is.EqualTo(200), "Status Code divergente.");
+                Utils.validaContrato(properties, responseContent, test);
+                test.Log(Status.Pass, "Teste ok, todas as verificações foram realizadas com sucesso.");
+            }
+            catch (Exception e)
+            {
+                test.Log(Status.Fail, e.ToString());
+                throw new Exception("Falha ao validar contrato: " + e.Message);
+            }
+        }
+
+        [Test]
+        public void ValidaContratoExibeProgramacao()
+        {
+            ExtentTest test = null;
+            test = extent.CreateTest("ValidaContratoExibeProgramacao").Info("Início do teste.");
+
+            try
+            {
+                //Criando e enviando requisição
+                test.Log(Status.Info, "Criando requisição.");
+                var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
+                var request = new RestRequest("bus/v1/bookings/showtimes/theaters/688", Method.GET);
+                request.RequestFormat = DataFormat.Json;
+                test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
+                Utils.setCisToken(request);
+                test.Log(Status.Info, "Enviando requisição.");
+                var response = client.Execute(request);
+
+                string responseContent = response.Content.ToString();
+                //Declarando as propriedades que deverão obrigatoriamente estar na resposta da requisição
+                string[] properties = new string[] { "\"Theaters\":", "\"TheaterCode\":", "\"Utc\":", "\"Dates\":",
+                "\"Date\":", "\"ExhibitionDate\":", "\"ShowTimes\":", "\"id\":", "\"ShowTimeId\":", "\"date\":", "\"cm\":",
+                "\"tht\":", "\"mov\":", "\"aud\":", "\"xd\":", "\"prime\":", "\"dbox\":", "\"d3d\":", "\"pre\":", "\"psl\":",
+                "\"deb\":", "\"time\":", "\"loc\":", "\"MoviePrintCode\":", "\"IsSessionExpired\":", "\"TheaterAllow\":", "\"Utc\":",
+                "\"level\":", "\"Suggestions\":", "\"SnackCategoryId\":", "\"SnackCategoryIconUrl\":"};
+
+                //Início das validações
+                test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
+                Assert.That((int)response.StatusCode, Is.EqualTo(200), "Status Code divergente.");
+                Utils.validaContrato(properties, responseContent, test);
+                test.Log(Status.Pass, "Teste ok, todas as verificações foram realizadas com sucesso.");
+            }
+            catch (Exception e)
+            {
+                test.Log(Status.Fail, e.ToString());
+                throw new Exception("Falha ao validar contrato: " + e.Message);
+            }
+        }
     }
 }

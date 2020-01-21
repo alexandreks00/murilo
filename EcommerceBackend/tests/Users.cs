@@ -52,11 +52,6 @@ namespace EcommerceBackend
                 test.Log(Status.Info, "Enviando requisição.");
                 var response = client.Execute<ModelUsers>(request);
 
-                string responseContent = response.Content.ToString();
-                string[] properties = new string[] {"\"Id\":", "\"UserId\":", "\"Name\":", "\"Opa\":"};
-
-                utils.Utils.validaContrato(properties, responseContent, test);
-       
                 //Início das validações
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
                 Assert.That((int)response.StatusCode, Is.EqualTo(200), "Status Code divergente.");
@@ -732,13 +727,7 @@ namespace EcommerceBackend
             }
 
 
-        }
-
-        [Test]
-        public void AlterarEmailUsuarioRecemCriado()
-        {
-
-        }
+        }       
 
     }
 }
