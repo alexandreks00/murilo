@@ -1,11 +1,11 @@
-﻿using EcommerceBackend.Models.City;
+﻿using EcommerceBackend.models.City;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EcommerceBackend.Models.Users
+namespace EcommerceBackend.models.Loyalty
 {
     class ModelMember
     {

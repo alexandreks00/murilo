@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EcommerceBackend.Models.Users
+namespace EcommerceBackend.models.Loyalty
 {
     class ModelCountry
     {

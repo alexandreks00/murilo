@@ -1,11 +1,11 @@
-﻿using EcommerceBackend.Models.Users;
+﻿using EcommerceBackend.models.Loyalty;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EcommerceBackend.Models.City
+namespace EcommerceBackend.models.City
 
 {
     class ModelCity

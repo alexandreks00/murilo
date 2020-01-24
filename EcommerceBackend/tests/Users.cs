@@ -1,6 +1,6 @@
 ﻿using System.Configuration;
 using System;
-using EcommerceBackend.Models.Users;
+using EcommerceBackend.models.Loyalty;
 using NUnit.Framework;
 using RestSharp;
 using AventStack.ExtentReports;

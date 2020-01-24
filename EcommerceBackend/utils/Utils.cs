@@ -9,7 +9,7 @@ using AventStack.ExtentReports.Reporter;
 using NUnit.Framework;
 using RestSharp;
 using RestSharp.Serialization.Json;
-using EcommerceBackend.Models.Users;
+using EcommerceBackend.models.Loyalty;
 
 namespace EcommerceBackend.utils
 {
@@ -19,6 +19,12 @@ namespace EcommerceBackend.utils
         public static RestRequest setCisToken(RestRequest request)
         {
             request.AddHeader("X-CISIdentity", ConfigurationManager.AppSettings["CISToken"]);
+            return request;
+        }
+
+        public static RestRequest setCisTokenDEV(RestRequest request)
+        {
+            request.AddHeader("X-CISIdentity", ConfigurationManager.AppSettings["CISTokenDEV"]);
             return request;
         }
 

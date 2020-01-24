@@ -1,6 +1,6 @@
 ﻿using System.Configuration;
 using System;
-using EcommerceBackend.Models.Users;
+using EcommerceBackend.models.Loyalty;
 using NUnit.Framework;
 using RestSharp;
 using AventStack.ExtentReports;
@@ -8,7 +8,7 @@ using AventStack.ExtentReports.Reporter;
 using AventStack.ExtentReports.Reporter.Configuration;
 using EcommerceBackend.utils;
 
-namespace DemoRestSharp.tests
+namespace EcommerceBackend
 {
     [TestFixture]
     public class Bookings
