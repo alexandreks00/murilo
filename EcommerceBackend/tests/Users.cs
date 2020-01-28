@@ -124,7 +124,7 @@ namespace EcommerceBackend
         public void ValidaMensagemCriticaLoginInvalido()
         {
             ExtentTest test = null;
-            test = extent.CreateTest("ValidaEsqueciMinhaSenha").Info("Início do teste.");
+            test = extent.CreateTest("ValidaMensagemCriticaLoginInvalido").Info("Início do teste.");
 
             try {
                 //Criando e enviando a requisição
@@ -147,6 +147,7 @@ namespace EcommerceBackend
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 400.");
                 Assert.That((int)response.StatusCode, Is.EqualTo(400), "Status Code divergente.");
                 Assert.That(response.Data.Message, Is.EqualTo("Usuário ou Senha divergentes !"), "Valor da propriedade 'Message' divergente.");
+                test.Log(Status.Pass, "Teste ok! As validações foram realizadas com sucesso.");
             }
             catch(Exception e)
             {
@@ -302,6 +303,7 @@ namespace EcommerceBackend
                 //Inicio das validações
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
                 Assert.That((int)responseRealizaLogin.StatusCode, Is.EqualTo(200), "Status Code diferente do esperado ao enviar requisição responsável por realizar login com o usuário que teve seus dados editados");
+                test.Log(Status.Info, "Validando o retorno das propriedades.");
                 Assert.That(responseRealizaLogin.Data.Name, Is.EqualTo("Automatic Test"), "Valor da propriedade 'Name' divergente.");
                 Assert.That(responseRealizaLogin.Data.NickName, Is.EqualTo("QA"), "Valor da propriedade 'NickName' divergente.");
                 Assert.That(responseRealizaLogin.Data.Gender, Is.EqualTo("M"), "Valor da propriedade 'Gender' divergente.");
@@ -315,7 +317,7 @@ namespace EcommerceBackend
                 Assert.That(responseRealizaLogin.Data.City.State.Code, Is.EqualTo("DF"), "Valor da propriedade 'City.State.Code' divergente.");
                 Assert.That(responseRealizaLogin.Data.City.State.Name, Is.EqualTo("Distrito Federal"), "Valor da propriedade 'City.State.Name' divergente.");
                 Assert.That(responseRealizaLogin.Data.Phone1, Is.EqualTo("1133333336"), "Valor da propriedade 'Phone1' divergente.");
-                test.Log(Status.Info, "Validação ok, os dados do usuário foram alterados com sucesso.");
+                test.Log(Status.Pass, "Validação ok, os dados do usuário foram alterados com sucesso.");
             }
             catch (Exception e) 
             {
@@ -394,6 +396,7 @@ namespace EcommerceBackend
 
                 test.Log(Status.Info, "Validando se a mensagem de crítica é exibida.");
                 Assert.That(responseCriaUsuario.Data.Message, Is.EqualTo("O e-mail \""+emailJaCadastrado+"\" informado já está sendo utilizado! Por favor, informe um endereço de e-mail diferente."), "Valor da propriedade 'Message' divergente.");
+                test.Log(Status.Pass, "Teste ok! As validações foram realizadas com sucesso.");
             }
             catch (Exception e)
             {
@@ -472,6 +475,8 @@ namespace EcommerceBackend
 
                 test.Log(Status.Info, "Validando se a mensagem de crítica é exibida.");
                 Assert.That(responseCriaUsuario.Data.Message, Is.EqualTo("O CPF informado (\"19100000000\") já está sendo utilizado pelo e-mail testeqa@mailinator.com. Caso não tenha mais acesso ao e-mail, entre em contato com o Fale Conosco."), "Valor da propriedade 'Message' divergente.");
+                test.Log(Status.Pass, "Teste ok! As validações foram realizadas com sucesso.");
+
             }
             catch (Exception e)
             {
@@ -581,8 +586,7 @@ namespace EcommerceBackend
                 Assert.That(responseRealizaLogin.Data.City.State.Code, Is.EqualTo("AC"), "Valor da propriedade 'City.State.Code' divergente.");
                 Assert.That(responseRealizaLogin.Data.City.State.Name, Is.EqualTo("Acre"), "Valor da propriedade 'City.State.Name' divergente.");
                 Assert.That(responseRealizaLogin.Data.Phone1, Is.EqualTo("1136333333"), "Valor da propriedade 'Phone1' divergente.");
-                test.Log(Status.Info, "Validação ok, os dados do usuário foram alterados com sucesso.");
-
+                
                 //Criando requisição alterando os dados novamente, realizando rollback
                 test.Log(Status.Info, "Criando a requisição responsável por realizar o rollback dos dados usuário.");
                 var requestRealizaRollback = new RestRequest("bus/v1/users", Method.PUT);
@@ -630,6 +634,8 @@ namespace EcommerceBackend
                 //Validando Status Code de retorno da requisição
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
                 Assert.That((int)responseRealizaRollback.StatusCode, Is.EqualTo(200), "Status Code diferente do esperado ao enviar requisição responsável por realizar rollback dos dados do usuário.");
+                test.Log(Status.Pass, "Validação ok, os dados do usuário foram alterados com sucesso.");
+
             }
             catch (Exception e) 
             {
@@ -718,7 +724,7 @@ namespace EcommerceBackend
                 //Início das validações
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
                 Assert.That((int)responseRollbackSenha.StatusCode, Is.EqualTo(200), "Status Code diferente do esperado ao enviar a requisição responsável por realizar o rollback da senha.");
-
+                test.Log(Status.Pass, "Teste ok! As validações foram realizadas com sucesso.");
             }
             catch (Exception e)
             {
