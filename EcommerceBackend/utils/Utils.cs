@@ -10,7 +10,6 @@ using NUnit.Framework;
 using RestSharp;
 using RestSharp.Serialization.Json;
 using EcommerceBackend.models.Loyalty;
-using System.Threading;
 
 namespace EcommerceBackend.utils
 {
@@ -93,12 +92,7 @@ namespace EcommerceBackend.utils
                 resto = 11 - resto;
 
             semente = semente + resto;
-
-            Thread.Sleep(3000);
-
             return semente;
-
-            
         }
 
         public static void validaContrato (string[] properties, string responseContent, ExtentTest test) 
