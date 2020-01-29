@@ -10,6 +10,7 @@ using NUnit.Framework;
 using RestSharp;
 using RestSharp.Serialization.Json;
 using EcommerceBackend.models.Loyalty;
+using System.Threading;
 
 namespace EcommerceBackend.utils
 {
@@ -92,6 +93,9 @@ namespace EcommerceBackend.utils
                 resto = 11 - resto;
 
             semente = semente + resto;
+
+            Thread.Sleep(1000);
+
             return semente;
         }
 
