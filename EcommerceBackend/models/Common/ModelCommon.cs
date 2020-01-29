@@ -8,19 +8,14 @@ namespace DemoRestSharp.models.Common
 {
     public class ModelCommon
     {
-        public int CityId { get; set; }
-        
-        public int StateId { get; set; }
-        
-        public string IbgeCode { get; set; }
-        
-        public string Name { get; set; }
 
-        public string Code { get; set; }
+        public List<int> CityId { get; set; }
 
-        public string CountryId { get; set; }
+        public List<string> Name { get; set; }
 
-        public string Cities { get; set; }
+        public List<int> StateId { get; set; }
+
+        public List<string> IbgeCode { get; set; }
 
     }
 }
