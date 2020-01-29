@@ -38,7 +38,7 @@ namespace EcommerceBackend
             test = extent.CreateTest("ValidaConsultaDetalhesFilme").Info("Início do teste.");
             string cpfGerar = utils.Utils.gerarCpf();
             //string[] cpfGerado = new string[] { cpfGerar };
-            string[] cpfGerado = new string[] { "99999" };
+            string[] cpfGerado = new string[] { "99999", "" };
             string[] DDDD = new string[] { "CPF '99999' inválido!" };
 
             try
@@ -64,7 +64,7 @@ namespace EcommerceBackend
 
                 Assert.That((int)responseConsultaCPF.StatusCode, Is.EqualTo(400), "Status Code divergente.");
                 Assert.That(responseConsultaCPF.Data.Ok,Is.EqualTo(false), "Valor da propriedade 'Ok' divergente.");
-                Assert.That(responseConsultaCPF.Data.Messages, Is.EqualTo(DDDD[0]), "Valor da propriedade 'messages' divergente.");
+                Assert.That(responseConsultaCPF.Data.Messages, Is.EqualTo(DDDD), "Valor da propriedade 'messages' divergente.");
 
                 test.Log(Status.Pass, "Teste ok, todas as verificações foram realizadas com sucesso.");
 
