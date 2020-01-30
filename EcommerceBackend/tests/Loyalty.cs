@@ -37,7 +37,7 @@ namespace EcommerceBackend
 
 
             ExtentTest test = null;
-            test = extent.CreateTest("ValidaConsultaDetalhesFilme").Info("Início do teste.");
+            test = extent.CreateTest("Consultar CPF's SEM Adesão").Info("Início do teste.");
             string cpfGerarVUSR1 = utils.Utils.gerarCpf();
             string cpfGerarVUSR2 = utils.Utils.gerarCpf();
             string[] cpfGerado = new string[] { cpfGerarVUSR1, cpfGerarVUSR2 };
@@ -63,9 +63,10 @@ namespace EcommerceBackend
 
                 //Início das validações
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
-
                 Assert.That((int)responseConsultaCPF.StatusCode, Is.EqualTo(200), "Status Code divergente.");
+                test.Log(Status.Info, "Validando se o valor da propriedade 'ok' é igual a 'true'");
                 Assert.That(responseConsultaCPF.Data.Ok, Is.EqualTo(true), "Valor da propriedade 'Ok' divergente.");
+                test.Log(Status.Info, "Validando se o valor da propriedade 'messages' esta vazio");
                 Assert.That(responseConsultaCPF.Data.Messages, Is.EqualTo(""), "Valor da propriedade 'messages' divergente.");
 
                 test.Log(Status.Pass, "Teste ok, todas as verificações foram realizadas com sucesso.");
@@ -87,7 +88,7 @@ namespace EcommerceBackend
 
 
             ExtentTest test = null;
-            test = extent.CreateTest("ValidaConsultaDetalhesFilme").Info("Início do teste.");
+            test = extent.CreateTest("Registrar CPF's SEM Adesão").Info("Início do teste.");
             string cpfGerarRUSR1 = utils.Utils.gerarCpf();
             string cpfGerarRUSR2 = utils.Utils.gerarCpf();
             string[] cpfGerado = new string[] { cpfGerarRUSR1, cpfGerarRUSR2 };
@@ -113,9 +114,10 @@ namespace EcommerceBackend
 
                 //Início das validações
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
-
                 Assert.That((int)responseConsultaCPF.StatusCode, Is.EqualTo(200), "Status Code divergente.");
+                test.Log(Status.Info, "Validando se o valor da propriedade 'ok' é igual a 'true'");
                 Assert.That(responseConsultaCPF.Data.Ok, Is.EqualTo(true), "Valor da propriedade 'Ok' divergente.");
+                test.Log(Status.Info, "Validando se o valor da propriedade 'messages' esta vazio");
                 Assert.That(responseConsultaCPF.Data.Messages, Is.EqualTo(""), "Valor da propriedade 'messages' divergente.");
 
                 test.Log(Status.Pass, "Teste ok, todas as verificações foram realizadas com sucesso.");
@@ -137,7 +139,7 @@ namespace EcommerceBackend
 
 
             ExtentTest test = null;
-            test = extent.CreateTest("ValidaConsultaDetalhesFilme").Info("Início do teste.");            
+            test = extent.CreateTest("Registrar CPF's COM Adesão").Info("Início do teste.");            
             string[] cpfGerado = new string[] { "34890392114", "73168669180" };
 
 
@@ -161,10 +163,12 @@ namespace EcommerceBackend
 
                 //Início das validações
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 400.");
-
                 Assert.That((int)responseConsultaCPF.StatusCode, Is.EqualTo(400), "Status Code divergente.");
+                test.Log(Status.Info, "Validando se o valor da propriedade 'ok' é igual a 'false'");
                 Assert.That(responseConsultaCPF.Data.Ok, Is.EqualTo(false), "Valor da propriedade 'Ok' divergente.");
+                test.Log(Status.Info, "Validando o valor da propriedade 'messages' para o primeiro CPF informado");
                 Assert.That(responseConsultaCPF.Data.Messages[0], Is.EqualTo("CPF '34890392114' Já possui plano de fidelidade associado!"), "Valor da propriedade 'messages' divergente.");
+                test.Log(Status.Info, "Validando o valor da propriedade 'messages' para o segundo CPF informado");
                 Assert.That(responseConsultaCPF.Data.Messages[1], Is.EqualTo("CPF '73168669180' Já possui plano de fidelidade associado!"), "Valor da propriedade 'messages' divergente.");
 
                 test.Log(Status.Pass, "Teste ok, todas as verificações foram realizadas com sucesso.");
