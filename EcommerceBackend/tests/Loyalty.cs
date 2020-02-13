@@ -34,7 +34,7 @@ namespace EcommerceBackend
 
         public void ValidarUsuarios()
         {
-
+                
 
             ExtentTest test = null;
             test = extent.CreateTest("Consultar CPF's SEM Adesão").Info("Início do teste.");
@@ -47,8 +47,8 @@ namespace EcommerceBackend
             {
                 //Criando e enviando requisição
                 test.Log(Status.Info, "Criando requisição.");
-                var client = new RestClient(ConfigurationManager.AppSettings["dnsSensediaDEV"]);
-                var requestConsultaCPF = new RestRequest(ConfigurationManager.AppSettings["SensediaValidateDEV"], Method.POST);
+                var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
+                var requestConsultaCPF = new RestRequest(ConfigurationManager.AppSettings["SensediaValidate"], Method.POST);
                 requestConsultaCPF.RequestFormat = DataFormat.Json;
                 requestConsultaCPF.AddJsonBody(new
                 {
@@ -57,7 +57,7 @@ namespace EcommerceBackend
                 }
                 );
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
-                utils.Utils.setCisTokenDEV(requestConsultaCPF);
+                utils.Utils.setCisToken(requestConsultaCPF);
                 test.Log(Status.Info, "Enviando requisição.");
                 var responseConsultaCPF = client.Execute<ModelLoyalty>(requestConsultaCPF);
 
@@ -98,8 +98,8 @@ namespace EcommerceBackend
             {
                 //Criando e enviando requisição
                 test.Log(Status.Info, "Criando requisição.");
-                var client = new RestClient(ConfigurationManager.AppSettings["dnsSensediaDEV"]);
-                var requestConsultaCPF = new RestRequest(ConfigurationManager.AppSettings["SensediaRegisterDEV"], Method.POST);
+                var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
+                var requestConsultaCPF = new RestRequest(ConfigurationManager.AppSettings["SensediaRegister"], Method.POST);
                 requestConsultaCPF.RequestFormat = DataFormat.Json;
                 requestConsultaCPF.AddJsonBody(new
                 {
@@ -108,7 +108,7 @@ namespace EcommerceBackend
                 }
                 );
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
-                utils.Utils.setCisTokenDEV(requestConsultaCPF);
+                utils.Utils.setCisToken(requestConsultaCPF);
                 test.Log(Status.Info, "Enviando requisição.");
                 var responseConsultaCPF = client.Execute<ModelLoyalty>(requestConsultaCPF);
 
@@ -147,8 +147,8 @@ namespace EcommerceBackend
             {
                 //Criando e enviando requisição
                 test.Log(Status.Info, "Criando requisição.");
-                var client = new RestClient(ConfigurationManager.AppSettings["dnsSensediaDEV"]);
-                var requestConsultaCPF = new RestRequest(ConfigurationManager.AppSettings["SensediaRegisterDEV"], Method.POST);
+                var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
+                var requestConsultaCPF = new RestRequest(ConfigurationManager.AppSettings["SensediaRegister"], Method.POST);
                 requestConsultaCPF.RequestFormat = DataFormat.Json;
                 requestConsultaCPF.AddJsonBody(new
                 {
@@ -157,7 +157,7 @@ namespace EcommerceBackend
                 }
                 );
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
-                utils.Utils.setCisTokenDEV(requestConsultaCPF);
+                utils.Utils.setCisToken(requestConsultaCPF);
                 test.Log(Status.Info, "Enviando requisição.");
                 var responseConsultaCPF = client.Execute<ModelLoyalty>(requestConsultaCPF);
 
@@ -170,6 +170,56 @@ namespace EcommerceBackend
                 Assert.That(responseConsultaCPF.Data.Messages[0], Is.EqualTo("CPF '34890392114' Já possui plano de fidelidade associado!"), "Valor da propriedade 'messages' divergente.");
                 test.Log(Status.Info, "Validando o valor da propriedade 'messages' para o segundo CPF informado");
                 Assert.That(responseConsultaCPF.Data.Messages[1], Is.EqualTo("CPF '73168669180' Já possui plano de fidelidade associado!"), "Valor da propriedade 'messages' divergente.");
+
+                test.Log(Status.Pass, "Teste ok, todas as verificações foram realizadas com sucesso.");
+
+
+            }
+            catch (Exception e)
+            {
+                test.Log(Status.Fail, e.ToString());
+                throw new Exception("Falha ao validar contrato: " + e.Message);
+            }
+
+        }
+
+        [Test]
+
+        public void RegistrarUsuariosCPFDuplicado()
+        {
+
+
+            ExtentTest test = null;
+            test = extent.CreateTest("Registrar CPF's SEM Adesão").Info("Início do teste.");
+            string cpfGerarRUSR1 = utils.Utils.gerarCpf();            
+            string[] cpfGerado = new string[] { cpfGerarRUSR1, cpfGerarRUSR1 };
+
+
+            try
+            {
+                //Criando e enviando requisição
+                test.Log(Status.Info, "Criando requisição.");
+                var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
+                var requestConsultaCPF = new RestRequest(ConfigurationManager.AppSettings["SensediaRegister"], Method.POST);
+                requestConsultaCPF.RequestFormat = DataFormat.Json;
+                requestConsultaCPF.AddJsonBody(new
+                {
+                    cpf = cpfGerado,
+                    orderNumber = "332211"
+                }
+                );
+                test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
+                utils.Utils.setCisToken(requestConsultaCPF);
+                test.Log(Status.Info, "Enviando requisição.");
+                var responseConsultaCPF = client.Execute<ModelLoyalty>(requestConsultaCPF);
+
+                //Início das validações
+                test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
+                Assert.That((int)responseConsultaCPF.StatusCode, Is.EqualTo(400), "Status Code divergente.");
+                test.Log(Status.Info, "Validando se o valor da propriedade 'ok' é igual a 'true'");
+                Assert.That(responseConsultaCPF.Data.Ok, Is.EqualTo(false), "Valor da propriedade 'Ok' divergente.");
+                test.Log(Status.Info, "Validando o valor da propriedade 'messages' para CPF's duplicados");
+                Assert.That(responseConsultaCPF.Data.Messages[0], Is.EqualTo("CPF(s) '"+cpfGerarRUSR1+"' duplicado(s)!"), "Valor da propriedade 'messages' divergente.");
 
                 test.Log(Status.Pass, "Teste ok, todas as verificações foram realizadas com sucesso.");
 
