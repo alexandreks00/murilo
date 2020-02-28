@@ -39,6 +39,8 @@ namespace EcommerceBackend
             try
             {
                 //Criando e enviando requisição
+                //comentario
+                
                 test.Log(Status.Info, "Criando requisição.");
                 var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
                 var request = new RestRequest("bus/v1/bookings/showtimes/movies/"+idDeadpool, Method.GET);
