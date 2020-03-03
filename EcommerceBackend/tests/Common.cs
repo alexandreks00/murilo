@@ -38,6 +38,7 @@ namespace EcommerceBackend
 
             string idEstado = "25";
 
+
             try
             {
                 //Criando e enviando requisição

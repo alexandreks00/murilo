@@ -733,7 +733,110 @@ namespace EcommerceBackend
             }
 
 
-        }       
+        }
+
+        [Test]
+        public void ValidaAlterarEmailUsuarioRecemCriado()
+        {
+            ExtentTest test = null;
+            test = extent.CreateTest("ValidaAlterarEmailUsuarioRecemCriado").Info("Início do teste.");
+
+            try
+            {
+                //Gerando um e-mail aleatório que será utilizado na criação do usuário
+                test.Log(Status.Info, "Gerando e-mail aleatório que será utilizado no request de criação do usuário.");
+                string email = utils.Utils.gerarEmailAleatorio(8);
+
+                //Gerando um cpf aleatório que será utilizado na criação do usuário
+                test.Log(Status.Info, "Gerando CPF aleatório que será utilizado no request de criação do usuário.");
+                string cpf = utils.Utils.gerarCpf();
+
+
+                //Criando a requisição responsável por criar um usuário
+                test.Log(Status.Info, "Criando a requisição responsável por criar usuário.");
+                var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
+                var requestCriaUsuario = new RestRequest("bus/v1/users", Method.POST);
+                requestCriaUsuario.RequestFormat = DataFormat.Json;
+
+                //Montando o body da requisição que será enviada
+                requestCriaUsuario.AddJsonBody(new
+                {
+                    AppInfo = new
+                    {
+                        deviceModel = "Moto G Play",
+                        devicePlatform = "Android",
+                        deviceUUID = "62a0391e-9b4c-4870-ba11-40896b488506",
+                        version = "4.0.20",
+                    },
+                    DateOfBirth = "2002-11-04T00:00:00.000Z",
+                    CardNumber = "",
+                    City = new
+                    {
+                        CityId = 12789,
+                        Name = "Taguatinga",
+                        State = new
+                        {
+                            Code = "DF",
+                            StateId = 7,
+                            Name = "Distrito Federal"
+                        },
+                        StateId = 7
+                    },
+                    CityId = 12789,
+                    CPF = cpf,
+                    CpfNf = false,
+                    Email = email,
+                    EndUserPolicyId = 3,
+                    Gender = "M",
+                    Name = "Test01",
+                    NickName = "QA",
+                    Password = "112233",
+                    Phone1 = "1133333336"
+                }
+                );
+
+                //Setando header de autenticação "X-CISIdentity"
+                test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
+                utils.Utils.setCisToken(requestCriaUsuario);
+
+
+                //Enviando a requisição
+                test.Log(Status.Info, "Enviando a requisição.");
+                var responseCriaUsuario = client.Execute<ModelUsers>(requestCriaUsuario);
+ 
+
+                //Validando Status Code de retorno da requisição
+                test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
+                Assert.That((int)responseCriaUsuario.StatusCode, Is.EqualTo(200), "Status Code diferente do esperado ao enviar requisição responsável por criar um usuário.");
+
+
+                //Criando a requisição responsável por realizar login com o usuário recém criado
+                test.Log(Status.Info, "Criando a requisição responsável por realizar login com o usuário recém criado.");
+                var requestRealizaLogin = new RestRequest("bus/v1/users/login/byapp", Method.POST);
+                requestRealizaLogin.RequestFormat = DataFormat.Json;
+
+                //Montando o body da requisição que será enviada para alteração de usuário
+                requestRealizaLogin.AddJsonBody(new
+                {
+                    Email = "iphone82020@mailinator.com",
+                    Password = "112233"
+                }
+                );
+
+                //Setando header de autenticação "X-CISIdentity"
+                test.Log(Status.Info, "Setando os headers necessários para enviar a requisição.");
+                utils.Utils.setCisToken(requestRealizaLogin);
+
+                //Enviando a requisição realizando login com o usuário difrente do criado
+                var responseRealizaLogin = client.Execute<ModelUsers>(requestRealizaLogin);
+            }
+
+            catch (Exception e)
+            {
+                test.Log(Status.Fail, e.ToString());
+                throw new Exception("Falha ao validar a segunda entrada de usuário: " + e.Message);
+            }
+        }
 
     }
 }

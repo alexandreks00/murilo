@@ -40,10 +40,10 @@ namespace EcommerceBackend
             {
                 //Criando e enviando requisição
                 //comentario
-                
+
                 test.Log(Status.Info, "Criando requisição.");
                 var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
-                var request = new RestRequest("bus/v1/bookings/showtimes/movies/"+idDeadpool, Method.GET);
+                var request = new RestRequest("bus/v1/bookings/showtimes/movies/" + idDeadpool, Method.GET);
                 request.RequestFormat = DataFormat.Json;
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
                 Utils.setCisToken(request);
@@ -71,6 +71,46 @@ namespace EcommerceBackend
                 test.Log(Status.Fail, e.ToString());
                 throw new Exception("Falha ao validar contrato: " + e.Message);
             }
+        }
+
+        [Test]
+        public void ValidaConsultaDisplayArea()
+        {
+            ExtentTest test = null;
+            test = extent.CreateTest("ValidaConsultaDisplayArea").Info("Início de teste.");
+
+            try
+            {
+                //Criando e enviando a requisição
+                test.Log(Status.Info, "Criando requisição.");
+                var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
+                var request = new RestRequest("bus/v1/bookings/showtimes/displayareas/", Method.GET);
+                request.RequestFormat = DataFormat.Json;
+                test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
+                Utils.setCisToken(request);
+                test.Log(Status.Info, "Enviando requisição.");
+                var response = client.Execute(request);
+
+                string responseContent = response.Content.ToString();
+
+                //Declarando as propriedades que deverão obrigatoriamente estar na resposta da requisição
+                string[] properties = new string[] { "\"Title\":", "\"AreaType\":", "\"AreaTypeName\":", "\"ImageURL\":",
+                "\"ApplicationTarget\":", "\"Movies\":"};
+
+                //Início das validações
+                test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
+                Assert.That((int)response.StatusCode, Is.EqualTo(200), "Status Code divergente.");
+                Utils.validaContrato(properties, responseContent, test);
+                test.Log(Status.Pass, "Teste ok, todas as verificações foram realizadas com sucesso.");
+
+
+            }
+            catch (Exception e)
+            {
+                test.Log(Status.Fail, e.ToString());
+                throw new Exception("Falha ao validar contrato: " + e.Message);
+            }
+
         }
 
         [Test]
