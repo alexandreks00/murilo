@@ -32,7 +32,7 @@ namespace EcommerceBackend
         [Test]
         public void ValidaLimparCache()
         {
-            ExtentTest test = null;
+              ExtentTest test = null;
             test = extent.CreateTest("ValidaLimparCache").Info("Início do teste.");
 
             try
@@ -64,7 +64,6 @@ namespace EcommerceBackend
                 throw new Exception("Falha ao validar limpeza de cache: " + e.Message);
             }
         }
-            
 
     }
 }
