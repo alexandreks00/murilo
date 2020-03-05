@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EcommerceBackend.models.Loyalty
+namespace EcommerceBackend.models.Users
 {
-    class ModelAppInfo
+    public class ModelAppInfo
     {
         public string deviceModel { get; set; }
 

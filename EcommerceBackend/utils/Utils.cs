@@ -9,8 +9,8 @@ using AventStack.ExtentReports.Reporter;
 using NUnit.Framework;
 using RestSharp;
 using RestSharp.Serialization.Json;
-using EcommerceBackend.models.Loyalty;
 using System.Threading;
+using EcommerceBackend.models.Users;
 
 namespace EcommerceBackend.utils
 {

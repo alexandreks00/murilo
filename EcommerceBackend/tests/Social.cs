@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EcommerceBackend.models.Loyalty;
+// using EcommerceBackend.models.Loyalty;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using RestSharp;

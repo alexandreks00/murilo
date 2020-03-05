@@ -1,6 +1,6 @@
 ﻿using System.Configuration;
 using System;
-using EcommerceBackend.models.Loyalty;
+using EcommerceBackend.models.Users;
 using NUnit.Framework;
 using RestSharp;
 using AventStack.ExtentReports;
@@ -49,7 +49,7 @@ namespace EcommerceBackend
                 );
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
                 utils.Utils.setCisToken(request);
-                test.Log(Status.Info, "Enviando requisição.");
+                test.Log(Status.Info, "Enviando requisição.");                
                 var response = client.Execute<ModelUsers>(request);
 
                 //Início das validações
