@@ -87,8 +87,8 @@ namespace EcommerceBackend
                 test.Log(Status.Info, "Validando o contrato.");
                 utils.Utils.validaContrato(properties, responseContent, test);
                 test.Log(Status.Info, "Valida a mensagem de retorno do SUPERSAVER.");
-                Assert.That(response.Content.Contains("Convite inválido ou código incorreto."), "Status Code divergente.");
-
+                Assert.That(response.Content.Contains("\"mensagem\":\"Convite inválido ou código incorreto.\""), "Status Code divergente.");
+                test.Log(Status.Info, "Mensagem validada com sucesso!");
             }
             catch (Exception e)
             {
