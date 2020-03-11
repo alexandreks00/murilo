@@ -40,7 +40,6 @@ namespace EcommerceBackend
         {
 
             ExtentTest test = null;
-            var IDSession = "5FE0F955-AD78-4E08-A3B4-8B68622268CD";
             test = extent.CreateTest("ValidaTipoIngresso").Info("Início do teste.");
 
             try
@@ -48,7 +47,7 @@ namespace EcommerceBackend
                 //Criando e enviando requisição
                 test.Log(Status.Info, "Criando requisição responsável por realizar login.");
                 var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
-                var request = new RestRequest("ticket/v1/types?TheaterId=688&SessionCode=5FE0F955-AD78-4E08-A3B4-8B68622268CD", Method.GET);
+                var request = new RestRequest("ticket/v1/types?TheaterId=688&SessionCode=925B58F7-A635-43E9-ACBD-45B9EB60EBA2", Method.GET);
                 request.RequestFormat = DataFormat.Json;
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
                 Utils.setCisToken(request);
