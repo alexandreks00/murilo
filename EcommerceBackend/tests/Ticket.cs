@@ -5,7 +5,6 @@ using RestSharp;
 using AventStack.ExtentReports;
 using AventStack.ExtentReports.Reporter;
 using AventStack.ExtentReports.Reporter.Configuration;
-using EcommerceBackend.models.SuperSaver;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -14,7 +13,10 @@ using EcommerceBackend.utils;
 
 
 
+
 namespace EcommerceBackend
+
+
 {
     [TestFixture]
     public class Ticket
@@ -27,6 +29,7 @@ namespace EcommerceBackend
             extent = new ExtentReports();
             var htmlReporter = new ExtentHtmlReporter(@"C:\EcommerceBackendReports\Reports\Ticket\");
             extent.AttachReporter(htmlReporter);
+
         }
 
         [OneTimeTearDown]
@@ -40,7 +43,6 @@ namespace EcommerceBackend
         {
 
             ExtentTest test = null;
-            var IDSession = "031052EC-06B8-43DE-B95B-82A1950B2044";
             test = extent.CreateTest("ValidaTipoIngresso").Info("Início do teste.");
 
             try
@@ -48,7 +50,7 @@ namespace EcommerceBackend
                 //Criando e enviando requisição
                 test.Log(Status.Info, "Criando requisição responsável por realizar login.");
                 var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
-                var request = new RestRequest("ticket/v1/types?TheaterId=688&SessionCode=" + IDSession, Method.GET);
+                var request = new RestRequest("ticket/v1/types?TheaterId=688&SessionCode=031052EC-06B8-43DE-B95B-82A1950B2044", Method.GET);
                 request.RequestFormat = DataFormat.Json;
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
                 Utils.setCisToken(request);
