@@ -9,11 +9,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using EcommerceBackend.utils;
-
-
-
-
-
+using EcommerceBackend.models.Bookings.ShowTimes;
 
 namespace EcommerceBackend
 
@@ -56,9 +52,15 @@ namespace EcommerceBackend
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
                 Utils.setCisToken(requestSession);
                 test.Log(Status.Info, "Enviando requisição.");
-                var responseSession = clientSession.Execute(requestSession);
-                string responseContentSession = responseSession.Content.ToString();
+                var responseSession = clientSession.Execute<ModelTheaters>(requestSession);
+
+                //string responseContentSession = responseSession.Content.ToString();
                 Assert.That((int)responseSession.StatusCode, Is.EqualTo(200), "Status Code divergente.");
+
+                String theaterCodeNumber = responseSession.Data.
+
+                //Assert.That (responseSession.Data[0].TheaterCode, Is.EqualTo(688), "Código do Cinema 'TheaterCode' divergente");
+
                 //Assert.That(responseSession.Data[0].Theaters.dates.showtimes.ShowTimeId, Is.EqualTo("031052EC-06B8-43DE-B95B-82A1950B2044"), "Status Code divergente.");
 
 
