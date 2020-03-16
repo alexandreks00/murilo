@@ -52,17 +52,15 @@ namespace EcommerceBackend
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
                 Utils.setCisToken(requestSession);
                 test.Log(Status.Info, "Enviando requisição.");
-                var responseSession = clientSession.Execute<ModelTheaters>(requestSession);
+                var responseSession = clientSession.Execute<ModelTheatersShowTimes>(requestSession);
 
-                //string responseContentSession = responseSession.Content.ToString();
+                //Valida retorno
                 Assert.That((int)responseSession.StatusCode, Is.EqualTo(200), "Status Code divergente.");
+                Assert.That (responseSession.Data.Theaters[0].TheaterCode, Is.EqualTo("688"), "Código do Cinema 'TheaterCode' divergente");
+                Assert.That(responseSession.Data.Theaters[0].Dates[0].ExhibitionDate, !Is.Null, "Data de exibição não informada");
+                Assert.That(responseSession.Data.Theaters[0].Dates[0].ShowTimes[0].tht, Is.EqualTo("688"), "Id do Cinema diferente do que foi filtrado");
 
-                String theaterCodeNumber = responseSession.Data.
-
-                //Assert.That (responseSession.Data[0].TheaterCode, Is.EqualTo(688), "Código do Cinema 'TheaterCode' divergente");
-
-                //Assert.That(responseSession.Data[0].Theaters.dates.showtimes.ShowTimeId, Is.EqualTo("031052EC-06B8-43DE-B95B-82A1950B2044"), "Status Code divergente.");
-
+                String ShowTime = responseSession.Data.Theaters[0].Dates[0].ShowTimes[0].ShowTimeId;
 
                 //Criando e enviando requisição
                 test.Log(Status.Info, "Criando requisição responsável por realizar login.");

@@ -173,6 +173,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="models\Bookings\ShowTimes\ModelDate.cs" />
+    <Compile Include="models\Bookings\ShowTimes\ModelTheatersShowTimes.cs" />
     <Compile Include="models\Bookings\ShowTimes\ModelTheaters.cs" />
     <Compile Include="models\Bookings\ShowTimes\ModelShowTime.cs" />
     <Compile Include="models\Bookings\ShowTimes\ModelSuggestion.cs" />
