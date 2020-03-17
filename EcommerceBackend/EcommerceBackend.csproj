@@ -12,7 +12,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EcommerceBackend</RootNamespace>
     <AssemblyName>EcommerceBackend</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">15.0</VisualStudioVersion>
@@ -22,6 +22,7 @@
     <TestProjectType>UnitTest</TestProjectType>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -171,6 +172,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="models\Bookings\ShowTimes\ModelDate.cs" />
+    <Compile Include="models\Bookings\ShowTimes\ModelTheatersShowTimes.cs" />
+    <Compile Include="models\Bookings\ShowTimes\ModelTheaters.cs" />
+    <Compile Include="models\Bookings\ShowTimes\ModelShowTime.cs" />
+    <Compile Include="models\Bookings\ShowTimes\ModelSuggestion.cs" />
     <Compile Include="models\Common\ModelCommon.cs" />
     <Compile Include="models\Cache\ModelLimparCache.cs" />
     <Compile Include="models\Loyalty\ModelLoyalty.cs" />

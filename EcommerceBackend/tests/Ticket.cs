@@ -9,11 +9,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using EcommerceBackend.utils;
-
-
-
-
-
+using EcommerceBackend.models.Bookings.ShowTimes;
 
 namespace EcommerceBackend
 
@@ -49,18 +45,22 @@ namespace EcommerceBackend
             try
             {
 
-                // Preparando a massa em tempo de execução ----- terei que refatorar
-                //var clientSession = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
-                //var requestSession = new RestRequest("bus/v1/bookings/showtimes/theaters/688", Method.GET);
-                //requestSession.RequestFormat = DataFormat.Json;
-                //test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
-                //Utils.setCisToken(requestSession);
-                //test.Log(Status.Info, "Enviando requisição.");
-                //var responseSession = clientSession.Execute(requestSession);
-                //string responseContentSession = responseSession.Content.ToString();
-                //Assert.That((int)responseSession.StatusCode, Is.EqualTo(200), "Status Code divergente.");
-                //Assert.That(responseSession.Data[0].Theaters.dates.showtimes.ShowTimeId, Is.EqualTo("031052EC-06B8-43DE-B95B-82A1950B2044"), "Status Code divergente.");
+                // Preparando a massa em tempo de execução
+                var clientSession = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
+                var requestSession = new RestRequest("bus/v1/bookings/showtimes/theaters/688", Method.GET);
+                requestSession.RequestFormat = DataFormat.Json;
+                test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
+                Utils.setCisToken(requestSession);
+                test.Log(Status.Info, "Enviando requisição.");
+                var responseSession = clientSession.Execute<ModelTheatersShowTimes>(requestSession);
 
+                //Valida retorno
+                Assert.That((int)responseSession.StatusCode, Is.EqualTo(200), "Status Code divergente.");
+                Assert.That (responseSession.Data.Theaters[0].TheaterCode, Is.EqualTo("688"), "Código do Cinema 'TheaterCode' divergente");
+                Assert.That(responseSession.Data.Theaters[0].Dates[0].ExhibitionDate, !Is.Null, "Data de exibição não informada");
+                Assert.That(responseSession.Data.Theaters[0].Dates[0].ShowTimes[0].tht, Is.EqualTo("688"), "Id do Cinema diferente do que foi filtrado");
+
+                String ShowTime = responseSession.Data.Theaters[0].Dates[0].ShowTimes[0].ShowTimeId;
 
                 //Criando e enviando requisição
                 test.Log(Status.Info, "Criando requisição responsável por realizar login.");
