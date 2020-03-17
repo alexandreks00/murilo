@@ -242,7 +242,7 @@ namespace EcommerceBackend
                 );
                 //utils.Utils.setAuthorizationToken(request, authorizationToken);
                 test.Log(Status.Info, "Enviando requisição.");
-                var response = client.Execute(request);
+                var response = client.Execute<List<ModelOrderResgate>>(request);
 
                 //Início das validações
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
