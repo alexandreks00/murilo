@@ -40,7 +40,7 @@ namespace EcommerceBackend
         {
             ExtentTest test = null;
             var codValido = "02T5HNLK0";
-            var codInvalido = "02QAKGA89";
+            //var codInvalido = "02QAKGA89";
             test = extent.CreateTest("ValidaSuperSaverValidate").Info("Início do teste.");
 
             try

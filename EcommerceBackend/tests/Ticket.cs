@@ -49,16 +49,16 @@ namespace EcommerceBackend
             try
             {
 
-                // Preparando a massa em tempo de execução
-                var clientSession = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
-                var requestSession = new RestRequest("bus/v1/bookings/showtimes/theaters/688", Method.GET);
-                requestSession.RequestFormat = DataFormat.Json;
-                test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
-                Utils.setCisToken(requestSession);
-                test.Log(Status.Info, "Enviando requisição.");
-                var responseSession = clientSession.Execute(requestSession);
-                string responseContentSession = responseSession.Content.ToString();
-                Assert.That((int)responseSession.StatusCode, Is.EqualTo(200), "Status Code divergente.");
+                // Preparando a massa em tempo de execução ----- terei que refatorar
+                //var clientSession = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
+                //var requestSession = new RestRequest("bus/v1/bookings/showtimes/theaters/688", Method.GET);
+                //requestSession.RequestFormat = DataFormat.Json;
+                //test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
+                //Utils.setCisToken(requestSession);
+                //test.Log(Status.Info, "Enviando requisição.");
+                //var responseSession = clientSession.Execute(requestSession);
+                //string responseContentSession = responseSession.Content.ToString();
+                //Assert.That((int)responseSession.StatusCode, Is.EqualTo(200), "Status Code divergente.");
                 //Assert.That(responseSession.Data[0].Theaters.dates.showtimes.ShowTimeId, Is.EqualTo("031052EC-06B8-43DE-B95B-82A1950B2044"), "Status Code divergente.");
 
 
