@@ -191,6 +191,10 @@
     <Compile Include="models\Social\ModelSocial.cs" />
     <Compile Include="models\Social\SocialResponse.cs" />
     <Compile Include="models\SuperSaver\ModelSuperSaver.cs" />
+    <Compile Include="models\Theaters\ModelAuditoriums.cs" />
+    <Compile Include="models\Theaters\ModelState.cs" />
+    <Compile Include="models\Theaters\ModelCity .cs" />
+    <Compile Include="models\Theaters\ModelTheater.cs" />
     <Compile Include="models\Ticket\ModelTicket.cs" />
     <Compile Include="models\Users\ModelAppInfo.cs" />
     <Compile Include="models\Users\ModelCity.cs" />
@@ -198,6 +202,7 @@
     <Compile Include="models\Users\ModelMember.cs" />
     <Compile Include="models\Users\ModelState.cs" />
     <Compile Include="models\Users\ModelUsers.cs" />
+    <Compile Include="tests\Theaters.cs" />
     <Compile Include="tests\SeatMap.cs" />
     <Compile Include="tests\Bookings.cs" />
     <Compile Include="tests\Loyalty.cs" />

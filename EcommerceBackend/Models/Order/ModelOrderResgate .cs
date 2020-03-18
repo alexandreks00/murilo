@@ -9,9 +9,9 @@ namespace DemoRestSharp.models.Order
     public class ModelOrderResgate
     {
 
-        public string orderId { get; set; }
-        public string barCode { get; set; }
-        public int status { get; set; }
+        //public string orderId { get; set; }
+        //public string barCode { get; set; }
+        //public int status { get; set; }
 
     }
 }
