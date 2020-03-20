@@ -22,7 +22,7 @@ namespace EcommerceBackend
         public void StartReport()
         {
             extent = new ExtentReports();
-            var htmlReporter = new ExtentHtmlReporter(@"C:\EcommerceBackendReports\Reports\Theater\");
+            var htmlReporter = new ExtentHtmlReporter(@"C:\EcommerceBackendReports\Reports\Theaters\");
             extent.AttachReporter(htmlReporter);
 
         }
