@@ -649,7 +649,7 @@ namespace EcommerceBackend
         {
             ExtentTest test = null;
             test = extent.CreateTest("ValidaAlteraSenhaUsuario").Info("Início do teste.");
-            string email = "testealteradados@mailinator.com";
+            string email = "alterasenha@mailinator.com";
             double userId = 6947512;
 
             try

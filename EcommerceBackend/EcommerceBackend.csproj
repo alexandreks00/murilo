@@ -192,6 +192,7 @@
     <Compile Include="models\Social\SocialResponse.cs" />
     <Compile Include="models\SuperSaver\ModelSuperSaver.cs" />
     <Compile Include="models\Theaters\ModelAuditoriums.cs" />
+    <Compile Include="models\Theaters\ModelDetalhesCinema.cs" />
     <Compile Include="models\Theaters\ModelState.cs" />
     <Compile Include="models\Theaters\ModelCity .cs" />
     <Compile Include="models\Theaters\ModelTheater.cs" />
