@@ -203,6 +203,7 @@
     <Compile Include="models\Users\ModelMember.cs" />
     <Compile Include="models\Users\ModelState.cs" />
     <Compile Include="models\Users\ModelUsers.cs" />
+    <Compile Include="tests\SnackBar.cs" />
     <Compile Include="tests\Support.cs" />
     <Compile Include="tests\Marketing.cs" />
     <Compile Include="tests\Theaters.cs" />
