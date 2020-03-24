@@ -179,6 +179,8 @@
     <Compile Include="models\Bookings\ShowTimes\ModelSuggestion.cs" />
     <Compile Include="models\Common\ModelCommon.cs" />
     <Compile Include="models\Cache\ModelLimparCache.cs" />
+    <Compile Include="models\Loyalty\ModelMenus.cs" />
+    <Compile Include="models\Loyalty\ModelBenefits.cs" />
     <Compile Include="models\Loyalty\ModelLoyalty.cs" />
     <Compile Include="models\Order\ModelAccount.cs" />
     <Compile Include="models\Order\ModelOrderResgate .cs" />
