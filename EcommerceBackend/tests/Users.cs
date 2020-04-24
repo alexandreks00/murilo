@@ -18,7 +18,7 @@ namespace EcommerceBackend
         public void StartReport()
         {
             extent = new ExtentReports();
-            var htmlReporter = new ExtentHtmlReporter(@"C:\EcommerceBackendReports\Reports\Users\");
+            var htmlReporter = new ExtentHtmlReporter(@"C:\EcommerceBackendReports\Reports\Users\");            
             extent.AttachReporter(htmlReporter);
         }
 
@@ -118,6 +118,49 @@ namespace EcommerceBackend
                 throw new Exception("Falha ao validar a funcionalidade 'Esqueci minha senha'. " + e.Message);
             }
             
+        }
+
+        [Test]
+        public void ValidaEsqueciMinhaSenhaNovo()
+        {
+            ExtentTest test = null;
+            test = extent.CreateTest("ValidaEsqueciMinhaSenhaNovo").Info("Início do teste.");
+
+            try
+            {
+                //Criando e enviando a requisição
+                test.Log(Status.Info, "Criando requisição.");
+                var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
+                var request = new RestRequest("bus/v1/users/createmessagelocaweb", Method.POST);
+                request.RequestFormat = DataFormat.Json;
+                request.AddJsonBody(new
+                {
+
+                    "MessageFrom": "noreply@cinemark.com.br",
+                    "MessageTo": "testeSemDominio",
+                    "Subject": "Recuperação de senha",
+                    "Body": "PCFET0NUWVBFIGh0bWwgUFVCTElDICItLy9XM0MvL0RURCBYSFRNTCAxLjAgVHJhbnNpdGlvbmFsLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL1RSL3hodG1sMS9EVEQveGh0bWwxLXRyYW5zaXRpb25hbC5kdGQiPjxodG1sIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hodG1sIj48aGVhZD4gPG1ldGEgaHR0cC1lcXVpdj0iWC1VQS1Db21wYXRpYmxlIiBjb250ZW50PSJJRT04IiAvPjwvaGVhZD48Ym9keT4gPHRhYmxlIGJvcmRlcj0iMCIgYWxpZ249ImNlbnRlciIgc3R5bGU9IndpZHRoOjYwMHB4O2ZvbnQtc2l6ZTogMTJweDtjb2xvcjogIzY2NjsgZm9udC1mYW1pbHk6IFZlcmRhbmEsIEdlbmV2YSwgQXJpYWwsIEhlbHZldGljYSwgc2Fucy1zZXJpZjsiPiA8dHI+IDx0ZCB3aWR0aD0iMTYycHg7Ij48aW1nIHNyYz0iaHR0cDovL2hvbW9sb2ctY25rLWJ1cy5jaW5lbWFyay5jb20uYnIvaW1hZ2VzL2NvbW1vbi9jaW5lbWFyay5qcGciIGJvcmRlcj0iMCIgLz48L3RkPiA8dGQ+PGhyIG5vc2hhZGU94oCdbm9zaGFkZeKAnSB3aWR0aD0iMTAwJSIgc2l6ZT0iMSIgYWxpZ249InJpZ2h0IiBjb2xvcj0iI0I1MTIxQiIgLz48L3RkPiA8L3RyPiA8dHI+IDx0ZCBjb2xzcGFuPSIyIj4gPHA+T2zDoSA8c3Ryb25nPkFkcmlhbm8gU21va292aXRaIERvaXM8L3N0cm9uZz4hPC9wPiA8YnIgLz5BdGVuZGVuZG8gYW8gc2V1IHBlZGlkbyBkZSByZWN1cGVyYcOnw6NvIGRlIHNlbmhhLCBzZWd1ZSBhIG5vdmEgc2VuaGEgY3JpYWRhOiA8cD4gPHNwYW4gc3R5bGU9ImNvbG9yOiMwMDA7IGZvbnQtd2VpZ2h0OmJvbGQiPng0MW0zajwvc3Bhbj4gPC9wPiBBdGVuY2lvc2FtZW50ZSwgPGJyIC8+IENsdWJlIENpbmVtYXJrIDxwPiA8ZGl2IHN0eWxlPSJmbG9hdDpsZWZ0O3BhZGRpbmc6NXB4OyB3aWR0aDoxMDAlO2JhY2tncm91bmQtY29sb3I6I2Y0ZjRmNDtmb250LXNpemU6IDExcHg7Y29sb3I6IzY2NjtsaW5lLWhlaWdodDogMThweDttYXJnaW46IDAgMTBweCAxMHB4IDA7Zm9udC1mYW1pbHk6VmVyZGFuYSwgR2VuZXZhLCBBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmOyI+IFBhcmEgc3VhIHNlZ3VyYW7Dp2EgbsOjbyByZXZlbGUgc3VhIHNlbmhhIGEgbmluZ3XDqW0uPGJyIC8+IFNlIHZvY8OqIG7Do28gc29saWNpdG91IHN1YSBzZW5oYSwgbsOjbyBzZSBwcmVvY3VwZS4gRXNzYSBtZW5zYWdlbSBmb2kgZW52aWFkYSBhcGVuYXMgcGFyYSBvIHNldSBlLW1haWwsIGUgc8OzIHZvY8OqIHRlbSBhY2Vzc28gYSBlbGEuIDwvZGl2PiA8L3A+IDwvdGQ+IDwvdHI+IDx0cj4gPHRkIGNvbHNwYW49IjIiPjxociBub3NoYWRlPeKAnW5vc2hhZGXigJ0gd2lkdGg9IjEwMCUiIHNpemU9IjEiIGFsaWduPSJyaWdodCIgY29sb3I9IiNCNTEyMUIiIC8+PC90ZD4gPC90cj4gPC90YWJsZT48L2JvZHk+PC9odG1sPg==",
+                    "MessageType": 10
+                }
+                );
+                test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
+                utils.Utils.setCisToken(request);
+                test.Log(Status.Info, "Enviando requisição.");
+                var response = client.Execute<ModelUsers>(request);
+
+
+                //Início da validação
+                test.Log(Status.Info, "Início das validações.");
+                Assert.That((int)response.StatusCode, Is.EqualTo(200), "Status Code divergente.");
+                test.Log(Status.Pass, "Teste ok, todas as verificações foram realizadas com sucesso.");
+
+            }
+            catch (Exception e)
+            {
+                test.Log(Status.Fail, e.ToString());
+                throw new Exception("Falha ao validar a funcionalidade 'Esqueci minha senha'. " + e.Message);
+            }
+
         }
 
         [Test]
