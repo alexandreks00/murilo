@@ -6,6 +6,7 @@ using RestSharp;
 using AventStack.ExtentReports;
 using AventStack.ExtentReports.Reporter;
 using AventStack.ExtentReports.Reporter.Configuration;
+using System.Collections.Generic;
 
 namespace EcommerceBackend
 {
@@ -18,13 +19,13 @@ namespace EcommerceBackend
         public void StartReport()
         {
             extent = new ExtentReports();
-            var htmlReporter = new ExtentHtmlReporter(@"C:\EcommerceBackendReports\Reports\Users\");            
+            var htmlReporter = new ExtentHtmlReporter(@"C:\EcommerceBackendReports\Reports\Users\");
             extent.AttachReporter(htmlReporter);
         }
 
         [OneTimeTearDown]
         public void CloseReport()
-        {          
+        {
             extent.Flush();
         }
 
@@ -49,7 +50,7 @@ namespace EcommerceBackend
                 );
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
                 utils.Utils.setCisToken(request);
-                test.Log(Status.Info, "Enviando requisição.");                
+                test.Log(Status.Info, "Enviando requisição.");
                 var response = client.Execute<ModelUsers>(request);
 
                 //Início das validações
@@ -74,11 +75,11 @@ namespace EcommerceBackend
                 Assert.That(response.Data.Member.Phone1, Is.EqualTo("1136362525"), "Valor da propriedade 'Phone1' divergente.");
                 Assert.That(response.Data.NLPActive, Is.EqualTo("True"), "Valor da propriedade 'NLPActive' divergente.");
                 test.Log(Status.Pass, "Teste ok, todas as verificações foram realizadas com sucesso.");
-            } 
+            }
             catch (Exception e)
             {
                 test.Log(Status.Fail, e.ToString());
-                throw new Exception("Falha ao validar dados do login do usuário: " + e.Message);        
+                throw new Exception("Falha ao validar dados do login do usuário: " + e.Message);
             }
         }
 
@@ -88,7 +89,7 @@ namespace EcommerceBackend
             ExtentTest test = null;
             test = extent.CreateTest("ValidaEsqueciMinhaSenha").Info("Início do teste.");
 
-            try 
+            try
             {
                 //Criando e enviando a requisição
                 test.Log(Status.Info, "Criando requisição.");
@@ -117,41 +118,39 @@ namespace EcommerceBackend
                 test.Log(Status.Fail, e.ToString());
                 throw new Exception("Falha ao validar a funcionalidade 'Esqueci minha senha'. " + e.Message);
             }
-            
+
         }
 
         [Test]
-        public void ValidaEsqueciMinhaSenhaNovo()
+        public void ValidaEsqueciMinhaSenhaServicoNovo()
         {
             ExtentTest test = null;
-            test = extent.CreateTest("ValidaEsqueciMinhaSenhaNovo").Info("Início do teste.");
+            test = extent.CreateTest("ValidaEsqueciMinhaSenhaServicoNovo").Info("Início do teste.");
 
             try
             {
                 //Criando e enviando a requisição
                 test.Log(Status.Info, "Criando requisição.");
                 var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
-                var request = new RestRequest("bus/v1/users/createmessagelocaweb", Method.POST);
+                var request = new RestRequest("users/v1/users/passwordrecovery", Method.POST);
                 request.RequestFormat = DataFormat.Json;
                 request.AddJsonBody(new
+
                 {
 
-                    "MessageFrom": "noreply@cinemark.com.br",
-                    "MessageTo": "testeSemDominio",
-                    "Subject": "Recuperação de senha",
-                    "Body": "PCFET0NUWVBFIGh0bWwgUFVCTElDICItLy9XM0MvL0RURCBYSFRNTCAxLjAgVHJhbnNpdGlvbmFsLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL1RSL3hodG1sMS9EVEQveGh0bWwxLXRyYW5zaXRpb25hbC5kdGQiPjxodG1sIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hodG1sIj48aGVhZD4gPG1ldGEgaHR0cC1lcXVpdj0iWC1VQS1Db21wYXRpYmxlIiBjb250ZW50PSJJRT04IiAvPjwvaGVhZD48Ym9keT4gPHRhYmxlIGJvcmRlcj0iMCIgYWxpZ249ImNlbnRlciIgc3R5bGU9IndpZHRoOjYwMHB4O2ZvbnQtc2l6ZTogMTJweDtjb2xvcjogIzY2NjsgZm9udC1mYW1pbHk6IFZlcmRhbmEsIEdlbmV2YSwgQXJpYWwsIEhlbHZldGljYSwgc2Fucy1zZXJpZjsiPiA8dHI+IDx0ZCB3aWR0aD0iMTYycHg7Ij48aW1nIHNyYz0iaHR0cDovL2hvbW9sb2ctY25rLWJ1cy5jaW5lbWFyay5jb20uYnIvaW1hZ2VzL2NvbW1vbi9jaW5lbWFyay5qcGciIGJvcmRlcj0iMCIgLz48L3RkPiA8dGQ+PGhyIG5vc2hhZGU94oCdbm9zaGFkZeKAnSB3aWR0aD0iMTAwJSIgc2l6ZT0iMSIgYWxpZ249InJpZ2h0IiBjb2xvcj0iI0I1MTIxQiIgLz48L3RkPiA8L3RyPiA8dHI+IDx0ZCBjb2xzcGFuPSIyIj4gPHA+T2zDoSA8c3Ryb25nPkFkcmlhbm8gU21va292aXRaIERvaXM8L3N0cm9uZz4hPC9wPiA8YnIgLz5BdGVuZGVuZG8gYW8gc2V1IHBlZGlkbyBkZSByZWN1cGVyYcOnw6NvIGRlIHNlbmhhLCBzZWd1ZSBhIG5vdmEgc2VuaGEgY3JpYWRhOiA8cD4gPHNwYW4gc3R5bGU9ImNvbG9yOiMwMDA7IGZvbnQtd2VpZ2h0OmJvbGQiPng0MW0zajwvc3Bhbj4gPC9wPiBBdGVuY2lvc2FtZW50ZSwgPGJyIC8+IENsdWJlIENpbmVtYXJrIDxwPiA8ZGl2IHN0eWxlPSJmbG9hdDpsZWZ0O3BhZGRpbmc6NXB4OyB3aWR0aDoxMDAlO2JhY2tncm91bmQtY29sb3I6I2Y0ZjRmNDtmb250LXNpemU6IDExcHg7Y29sb3I6IzY2NjtsaW5lLWhlaWdodDogMThweDttYXJnaW46IDAgMTBweCAxMHB4IDA7Zm9udC1mYW1pbHk6VmVyZGFuYSwgR2VuZXZhLCBBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmOyI+IFBhcmEgc3VhIHNlZ3VyYW7Dp2EgbsOjbyByZXZlbGUgc3VhIHNlbmhhIGEgbmluZ3XDqW0uPGJyIC8+IFNlIHZvY8OqIG7Do28gc29saWNpdG91IHN1YSBzZW5oYSwgbsOjbyBzZSBwcmVvY3VwZS4gRXNzYSBtZW5zYWdlbSBmb2kgZW52aWFkYSBhcGVuYXMgcGFyYSBvIHNldSBlLW1haWwsIGUgc8OzIHZvY8OqIHRlbSBhY2Vzc28gYSBlbGEuIDwvZGl2PiA8L3A+IDwvdGQ+IDwvdHI+IDx0cj4gPHRkIGNvbHNwYW49IjIiPjxociBub3NoYWRlPeKAnW5vc2hhZGXigJ0gd2lkdGg9IjEwMCUiIHNpemU9IjEiIGFsaWduPSJyaWdodCIgY29sb3I9IiNCNTEyMUIiIC8+PC90ZD4gPC90cj4gPC90YWJsZT48L2JvZHk+PC9odG1sPg==",
-                    "MessageType": 10
+                    Email = "gqsilvaa@mailinator.com"
+
                 }
                 );
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
                 utils.Utils.setCisToken(request);
                 test.Log(Status.Info, "Enviando requisição.");
-                var response = client.Execute<ModelUsers>(request);
+                var response = client.Execute(request);
 
 
                 //Início da validação
                 test.Log(Status.Info, "Início das validações.");
-                Assert.That((int)response.StatusCode, Is.EqualTo(200), "Status Code divergente.");
+                Assert.That((int)response.StatusCode, Is.EqualTo(200), "Status Code divergente.");                
                 test.Log(Status.Pass, "Teste ok, todas as verificações foram realizadas com sucesso.");
 
             }
@@ -164,12 +163,59 @@ namespace EcommerceBackend
         }
 
         [Test]
+        public void ValidaDisparadorDeEmail()
+        {
+            ExtentTest test = null;
+            test = extent.CreateTest("ValidaDisparadorDeEmail").Info("Início do teste.");
+
+            try
+            {
+                //Criando e enviando a requisição
+                test.Log(Status.Info, "Criando requisição.");
+                var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
+                var request = new RestRequest("bus/v1/users/createmessagelocaweb", Method.POST);
+                request.RequestFormat = DataFormat.Json;
+                request.AddJsonBody(new
+
+                {
+
+                    MessageFrom= "automaticusers@mailinator.com",
+                    MessageTo= "testeSemDominio",
+                    Subject= "Recuperação de senha",
+                    Body= "PCFET0NUWVBFIGh0bWwgUFVCTElDICItLy9XM0MvL0RURCBYSFRNTCAxLjAgVHJhbnNpdGlvbmFsLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL1RSL3hodG1sMS9EVEQveGh0bWwxLXRyYW5zaXRpb25hbC5kdGQiPjxodG1sIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hodG1sIj48aGVhZD4gPG1ldGEgaHR0cC1lcXVpdj0iWC1VQS1Db21wYXRpYmxlIiBjb250ZW50PSJJRT04IiAvPjwvaGVhZD48Ym9keT4gPHRhYmxlIGJvcmRlcj0iMCIgYWxpZ249ImNlbnRlciIgc3R5bGU9IndpZHRoOjYwMHB4O2ZvbnQtc2l6ZTogMTJweDtjb2xvcjogIzY2NjsgZm9udC1mYW1pbHk6IFZlcmRhbmEsIEdlbmV2YSwgQXJpYWwsIEhlbHZldGljYSwgc2Fucy1zZXJpZjsiPiA8dHI+IDx0ZCB3aWR0aD0iMTYycHg7Ij48aW1nIHNyYz0iaHR0cDovL2hvbW9sb2ctY25rLWJ1cy5jaW5lbWFyay5jb20uYnIvaW1hZ2VzL2NvbW1vbi9jaW5lbWFyay5qcGciIGJvcmRlcj0iMCIgLz48L3RkPiA8dGQ+PGhyIG5vc2hhZGU94oCdbm9zaGFkZeKAnSB3aWR0aD0iMTAwJSIgc2l6ZT0iMSIgYWxpZ249InJpZ2h0IiBjb2xvcj0iI0I1MTIxQiIgLz48L3RkPiA8L3RyPiA8dHI+IDx0ZCBjb2xzcGFuPSIyIj4gPHA+T2zDoSA8c3Ryb25nPkFkcmlhbm8gU21va292aXRaIERvaXM8L3N0cm9uZz4hPC9wPiA8YnIgLz5BdGVuZGVuZG8gYW8gc2V1IHBlZGlkbyBkZSByZWN1cGVyYcOnw6NvIGRlIHNlbmhhLCBzZWd1ZSBhIG5vdmEgc2VuaGEgY3JpYWRhOiA8cD4gPHNwYW4gc3R5bGU9ImNvbG9yOiMwMDA7IGZvbnQtd2VpZ2h0OmJvbGQiPng0MW0zajwvc3Bhbj4gPC9wPiBBdGVuY2lvc2FtZW50ZSwgPGJyIC8+IENsdWJlIENpbmVtYXJrIDxwPiA8ZGl2IHN0eWxlPSJmbG9hdDpsZWZ0O3BhZGRpbmc6NXB4OyB3aWR0aDoxMDAlO2JhY2tncm91bmQtY29sb3I6I2Y0ZjRmNDtmb250LXNpemU6IDExcHg7Y29sb3I6IzY2NjtsaW5lLWhlaWdodDogMThweDttYXJnaW46IDAgMTBweCAxMHB4IDA7Zm9udC1mYW1pbHk6VmVyZGFuYSwgR2VuZXZhLCBBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmOyI+IFBhcmEgc3VhIHNlZ3VyYW7Dp2EgbsOjbyByZXZlbGUgc3VhIHNlbmhhIGEgbmluZ3XDqW0uPGJyIC8+IFNlIHZvY8OqIG7Do28gc29saWNpdG91IHN1YSBzZW5oYSwgbsOjbyBzZSBwcmVvY3VwZS4gRXNzYSBtZW5zYWdlbSBmb2kgZW52aWFkYSBhcGVuYXMgcGFyYSBvIHNldSBlLW1haWwsIGUgc8OzIHZvY8OqIHRlbSBhY2Vzc28gYSBlbGEuIDwvZGl2PiA8L3A+IDwvdGQ+IDwvdHI+IDx0cj4gPHRkIGNvbHNwYW49IjIiPjxociBub3NoYWRlPeKAnW5vc2hhZGXigJ0gd2lkdGg9IjEwMCUiIHNpemU9IjEiIGFsaWduPSJyaWdodCIgY29sb3I9IiNCNTEyMUIiIC8+PC90ZD4gPC90cj4gPC90YWJsZT48L2JvZHk+PC9odG1sPg==",
+                    MessageType= 10
+
+                }
+                );
+                test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
+                utils.Utils.setCisToken(request);
+                test.Log(Status.Info, "Enviando requisição.");
+                var response = client.Execute(request);
+
+
+                //Início da validação
+                test.Log(Status.Info, "Início das validações.");
+                Assert.That((int)response.StatusCode, Is.EqualTo(200), "Status Code divergente.");
+                Assert.That(response.Content, Is.EqualTo("true"), "Serviço retornou false");
+                test.Log(Status.Pass, "Teste ok, todas as verificações foram realizadas com sucesso.");
+
+            }
+            catch (Exception e)
+            {
+                test.Log(Status.Fail, e.ToString());
+                throw new Exception("Falha ao validar a funcionalidade 'Disparador de Email'. " + e.Message);
+            }
+
+        }
+
+        [Test]
         public void ValidaMensagemCriticaLoginInvalido()
         {
             ExtentTest test = null;
             test = extent.CreateTest("ValidaMensagemCriticaLoginInvalido").Info("Início do teste.");
 
-            try {
+            try
+            {
                 //Criando e enviando a requisição
                 test.Log(Status.Info, "Criando requisição");
                 var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
@@ -192,12 +238,12 @@ namespace EcommerceBackend
                 Assert.That(response.Data.Message, Is.EqualTo("Usuário ou Senha divergentes !"), "Valor da propriedade 'Message' divergente.");
                 test.Log(Status.Pass, "Teste ok! As validações foram realizadas com sucesso.");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 test.Log(Status.Fail, e.ToString());
                 throw new Exception("Falha ao validar a mensagem de crítica ao realizar login com um login inválido: " + e.Message);
             }
-            
+
         }
 
         [Test]
@@ -243,21 +289,21 @@ namespace EcommerceBackend
                 Assert.That(response.Data.Member.Phone1, Is.EqualTo("1136362525"), "Valor da propriedade 'Phone1' divergente.");
                 test.Log(Status.Pass, "Teste ok, todas as verificações foram realizadas com sucesso.");
             }
-            catch(Exception e)
-            {               
+            catch (Exception e)
+            {
                 test.Log(Status.Fail, e.ToString());
                 throw new Exception("Falha ao validar dados do usuário: " + e.Message);
             }
-            
+
         }
 
         [Test]
-        public void ValidaCriacaoUsuario() 
+        public void ValidaCriacaoUsuario()
         {
             ExtentTest test = null;
             test = extent.CreateTest("ValidaCriacaoUsuario").Info("Início do teste.");
 
-            try 
+            try
             {
                 //Gerando um e-mail aleatório que será utilizado na criação do usuário
                 test.Log(Status.Info, "Gerando e-mail aleatório que será utilizado no request de criação do usuário.");
@@ -342,7 +388,7 @@ namespace EcommerceBackend
 
                 //Enviando a requisição realizando login com o usuário que acabou de ser criado
                 var responseRealizaLogin = client.Execute<ModelUsers>(requestRealizaLogin);
-        
+
                 //Inicio das validações
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
                 Assert.That((int)responseRealizaLogin.StatusCode, Is.EqualTo(200), "Status Code diferente do esperado ao enviar requisição responsável por realizar login com o usuário que teve seus dados editados");
@@ -362,11 +408,11 @@ namespace EcommerceBackend
                 Assert.That(responseRealizaLogin.Data.Phone1, Is.EqualTo("1133333336"), "Valor da propriedade 'Phone1' divergente.");
                 test.Log(Status.Pass, "Validação ok, os dados do usuário foram alterados com sucesso.");
             }
-            catch (Exception e) 
+            catch (Exception e)
             {
                 test.Log(Status.Fail, e.ToString());
                 throw new Exception("Falha ao validar a criação de um usuário: " + e.Message);
-            }           
+            }
         }
 
         [Test]
@@ -438,7 +484,7 @@ namespace EcommerceBackend
                 Assert.That((int)responseCriaUsuario.StatusCode, Is.EqualTo(400), "Status Code diferente do esperado ao enviar requisição criando um usuário utilizando um e-mail já cadastrado.");
 
                 test.Log(Status.Info, "Validando se a mensagem de crítica é exibida.");
-                Assert.That(responseCriaUsuario.Data.Message, Is.EqualTo("O e-mail \""+emailJaCadastrado+"\" informado já está sendo utilizado! Por favor, informe um endereço de e-mail diferente."), "Valor da propriedade 'Message' divergente.");
+                Assert.That(responseCriaUsuario.Data.Message, Is.EqualTo("O e-mail \"" + emailJaCadastrado + "\" informado já está sendo utilizado! Por favor, informe um endereço de e-mail diferente."), "Valor da propriedade 'Message' divergente.");
                 test.Log(Status.Pass, "Teste ok! As validações foram realizadas com sucesso.");
             }
             catch (Exception e)
@@ -527,7 +573,7 @@ namespace EcommerceBackend
                 throw new Exception("Falha ao validar a mensagem de crítica que é exibida ao criar um usuário utilizando e-mail já cadastrado: " + e.Message);
             }
         }
-        
+
         [Test]
         public void ValidaAlteraDadosUsuario()
         {
@@ -535,10 +581,10 @@ namespace EcommerceBackend
             test = extent.CreateTest("ValidaAlteraDadosUsuario").Info("Início do teste.");
             string email = "testealteradados@mailinator.com";
 
-            try 
+            try
             {
                 string authorizationToken = utils.Utils.getAuthorization(email, "112233");
-                
+
                 //Criando a requisição responsável por editar os dados de um usuário
                 test.Log(Status.Info, "Criando a requisição responsável por editar os dados usuário.");
                 var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
@@ -553,7 +599,7 @@ namespace EcommerceBackend
                     {
                         CityId = 1,
                         Name = "Acrelândia",
-                        State = new 
+                        State = new
                         {
                             Code = "AC",
                             StateId = 2,
@@ -629,7 +675,7 @@ namespace EcommerceBackend
                 Assert.That(responseRealizaLogin.Data.City.State.Code, Is.EqualTo("AC"), "Valor da propriedade 'City.State.Code' divergente.");
                 Assert.That(responseRealizaLogin.Data.City.State.Name, Is.EqualTo("Acre"), "Valor da propriedade 'City.State.Name' divergente.");
                 Assert.That(responseRealizaLogin.Data.Phone1, Is.EqualTo("1136333333"), "Valor da propriedade 'Phone1' divergente.");
-                
+
                 //Criando requisição alterando os dados novamente, realizando rollback
                 test.Log(Status.Info, "Criando a requisição responsável por realizar o rollback dos dados usuário.");
                 var requestRealizaRollback = new RestRequest("bus/v1/users", Method.PUT);
@@ -680,7 +726,7 @@ namespace EcommerceBackend
                 test.Log(Status.Pass, "Validação ok, os dados do usuário foram alterados com sucesso.");
 
             }
-            catch (Exception e) 
+            catch (Exception e)
             {
                 test.Log(Status.Fail, e.ToString());
                 throw new Exception("Falha ao validar a edição de dados de um usuário: " + e.Message);
@@ -713,11 +759,11 @@ namespace EcommerceBackend
         //            PasswordConfirmation = "111111"
         //        }
         //        );
-                
+
         //        test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
         //        utils.Utils.setCisToken(requestAlteraSenha);
         //        utils.Utils.setAuthorizationToken(requestAlteraSenha, authorizationToken);
-                
+
         //        test.Log(Status.Info, "Enviando requisição.");
         //        var responseAlteraSenha = client.Execute<ModelUsers>(requestAlteraSenha);
 
@@ -846,7 +892,7 @@ namespace EcommerceBackend
                 //Enviando a requisição
                 test.Log(Status.Info, "Enviando a requisição.");
                 var responseCriaUsuario = client.Execute<ModelUsers>(requestCriaUsuario);
- 
+
 
                 //Validando Status Code de retorno da requisição
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");

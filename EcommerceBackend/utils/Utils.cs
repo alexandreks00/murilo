@@ -16,7 +16,7 @@ namespace EcommerceBackend.utils
 {
     public static class Utils
     {
-        
+
         public static RestRequest setCisToken(RestRequest request)
         {
             request.AddHeader("X-CISIdentity", ConfigurationManager.AppSettings["CISToken"]);
@@ -41,7 +41,7 @@ namespace EcommerceBackend.utils
             string authorizationToken = response.Headers.ToList()
                              .Find(x => x.Name == "authorization")
                              .Value.ToString();
-            return authorizationToken;            
+            return authorizationToken;
         }
 
         public static RestRequest setAuthorizationToken(RestRequest request, string authorizationToken)
@@ -58,7 +58,7 @@ namespace EcommerceBackend.utils
                 Enumerable.Repeat(chars, qtdCaracteres)
                           .Select(s => s[random.Next(s.Length)])
                           .ToArray());
-            return result+"@mailinator.com";
+            return result + "@mailinator.com";
         }
 
         public static String gerarCpf()
@@ -99,7 +99,7 @@ namespace EcommerceBackend.utils
             return semente;
         }
 
-        public static void validaContrato (string[] properties, string responseContent, ExtentTest test) 
+        public static void validaContrato(string[] properties, string responseContent, ExtentTest test)
         {
             test.Log(Status.Info, "Inicío da validação de contrato.");
             for (int i = 0; i < properties.Length; i++)
@@ -112,7 +112,6 @@ namespace EcommerceBackend.utils
                 test.Log(Status.Info, "Propriedade: " + properties[i] + " presente na resposta do serviço.");
             }
         }
-
 
     }
 }
