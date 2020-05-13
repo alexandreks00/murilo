@@ -19,7 +19,7 @@ namespace EcommerceBackend
         public void StartReport()
         {
             extent = new ExtentReports();
-            var htmlReporter = new ExtentHtmlReporter(@"C:\EcommerceBackendReports\Reports\LimparCache\");
+            var htmlReporter = new ExtentHtmlReporter(@"C:\AutomationTools\EcommerceBackendReports\Reports\LimparCache\");
             extent.AttachReporter(htmlReporter);
         }
 
