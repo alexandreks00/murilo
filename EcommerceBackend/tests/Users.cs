@@ -235,7 +235,7 @@ namespace EcommerceBackend
                 //Início das validações
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 400.");
                 Assert.That((int)response.StatusCode, Is.EqualTo(400), "Status Code divergente.");
-                Assert.That(response.Data.Message, Is.EqualTo("Usuário ou Senha divergentes !"), "Valor da propriedade 'Message' divergente.");
+                Assert.That(response.Data.Message, Is.EqualTo("Usuário e/ou Senha inválidos !"), "Valor da propriedade 'Message' divergente.");
                 test.Log(Status.Pass, "Teste ok! As validações foram realizadas com sucesso.");
             }
             catch (Exception e)
@@ -484,7 +484,7 @@ namespace EcommerceBackend
                 Assert.That((int)responseCriaUsuario.StatusCode, Is.EqualTo(400), "Status Code diferente do esperado ao enviar requisição criando um usuário utilizando um e-mail já cadastrado.");
 
                 test.Log(Status.Info, "Validando se a mensagem de crítica é exibida.");
-                Assert.That(responseCriaUsuario.Data.Message, Is.EqualTo("O e-mail \"" + emailJaCadastrado + "\" informado já está sendo utilizado! Por favor, informe um endereço de e-mail diferente."), "Valor da propriedade 'Message' divergente.");
+                Assert.That(responseCriaUsuario.Data.Message, Is.EqualTo("O e-mail informado já está sendo utilizado. Por favor, informe um endereço de e-mail diferente."), "Valor da propriedade 'Message' divergente.");
                 test.Log(Status.Pass, "Teste ok! As validações foram realizadas com sucesso.");
             }
             catch (Exception e)
@@ -563,7 +563,7 @@ namespace EcommerceBackend
                 Assert.That((int)responseCriaUsuario.StatusCode, Is.EqualTo(400), "Status Code diferente do esperado ao enviar requisição criando um usuário utilizando um cpf já cadastrado.");
 
                 test.Log(Status.Info, "Validando se a mensagem de crítica é exibida.");
-                Assert.That(responseCriaUsuario.Data.Message, Is.EqualTo("O CPF informado (\"19100000000\") já está sendo utilizado pelo e-mail testeqa@mailinator.com. Caso não tenha mais acesso ao e-mail, entre em contato com o Fale Conosco."), "Valor da propriedade 'Message' divergente.");
+                Assert.That(responseCriaUsuario.Data.Message, Is.EqualTo("O CPF informado já está sendo utilizado."), "Valor da propriedade 'Message' divergente.");
                 test.Log(Status.Pass, "Teste ok! As validações foram realizadas com sucesso.");
 
             }
