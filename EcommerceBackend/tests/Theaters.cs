@@ -361,10 +361,10 @@ namespace EcommerceBackend
                         test.Log(Status.Fail, "Cinema Inexistente!");
                     }
                     test.Log(Status.Info, "Validando a sala específica na posição [0].");
-                    Assert.That(response.Data[0].Auditoriums[0].TheaterCode, Is.EqualTo("2115"), "TheaterCode divergente.");
+                    Assert.That(response.Data[0].Auditoriums[0].TheaterCode, Is.EqualTo("716"), "TheaterCode divergente.");
                     Assert.That(response.Data[0].Auditoriums[0].Description, Is.EqualTo(""), "Description divergente.");
                     Assert.That(response.Data[0].Auditoriums[0].AuditoriumCode, Is.EqualTo("4"), "AuditoriumCode divergente.");
-                    Assert.That(response.Data[0].Auditoriums[0].TotalSeats, Is.EqualTo("226"), "TotalSeats divergente.");
+                    Assert.That(response.Data[0].Auditoriums[0].TotalSeats, Is.EqualTo("133"), "TotalSeats divergente.");
                     Assert.That(response.Data[0].Auditoriums[0].XD, Is.EqualTo("False"), "XD divergente.");
                     Assert.That(response.Data[0].Auditoriums[0].Prime, Is.EqualTo("False"), "Prime divergente.");
                     Assert.That(response.Data[0].Auditoriums[0].DBOX, Is.EqualTo("False"), "DBOX divergente.");
