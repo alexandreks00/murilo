@@ -61,40 +61,40 @@ namespace EcommerceBackend
                 {
 
                     test.Log(Status.Info, "Início da validação de cinemas.");
-                    Assert.That(response.Data[0].TheaterCode, Is.EqualTo("2115"), "TheaterCode divergente.");
-                    Assert.That(response.Data[0].Name, Is.EqualTo("Atrium Shopping"), "Name divergente.");
-                    Assert.That(response.Data[0].Latitude, Is.EqualTo("-23.6644134"), "Latitude divergente.");
-                    Assert.That(response.Data[0].Longitude, Is.EqualTo("-46.5078915"), "Longitude divergente.");
-                    Assert.That(response.Data[0].Address1, Is.EqualTo("RUA GIOVANNI BATTISTA PIRELLI, 155  /  ATRIUM SHOPPING SANTO ANDRE - 2 ANDAR - LUC/SUC CINEMA"), "Address1 divergente.");
-                    Assert.That(response.Data[0].StateId, Is.EqualTo("25"), "StateId divergente.");
-                    Assert.That(response.Data[0].City[0].CityId, Is.EqualTo("9625"), "CityId divergente.");
-                    Assert.That(response.Data[0].City[0].Name, Is.EqualTo("SANTO ANDRÉ"), "Name divergente.");
-                    Assert.That(response.Data[0].City[0].StateId, Is.EqualTo("25"), "' divergente.");
-                    Assert.That(response.Data[0].City[0].IbgeCode, Is.EqualTo("3547809"), "IbgeCode divergente.");
-                    Assert.That(response.Data[0].State[0].StateId, Is.EqualTo("25"), "StateId divergente.");
-                    Assert.That(response.Data[0].State[0].Code, Is.EqualTo("SP"), "Code divergente.");
-                    Assert.That(response.Data[0].State[0].Name, Is.EqualTo("São Paulo"), "Name divergente.");
-                    Assert.That(response.Data[0].State[0].CountryId, Is.EqualTo("1"), "CountryId divergente.");
-                    Assert.That(response.Data[0].Phone1, Is.EqualTo("(11) 5180-3292"), "Phone1 divergente.");
+                    Assert.That(response.Data[1].TheaterCode, Is.EqualTo("2115"), "TheaterCode divergente.");
+                    Assert.That(response.Data[1].Name, Is.EqualTo("Atrium Shopping"), "Name divergente.");
+                    Assert.That(response.Data[1].Latitude, Is.EqualTo("-23.6644134"), "Latitude divergente.");
+                    Assert.That(response.Data[1].Longitude, Is.EqualTo("-46.5078915"), "Longitude divergente.");
+                    Assert.That(response.Data[1].Address1, Is.EqualTo("RUA GIOVANNI BATTISTA PIRELLI, 155  /  ATRIUM SHOPPING SANTO ANDRE - 2 ANDAR - LUC/SUC CINEMA"), "Address1 divergente.");
+                    Assert.That(response.Data[1].StateId, Is.EqualTo("25"), "StateId divergente.");
+                    Assert.That(response.Data[1].City[0].CityId, Is.EqualTo("9625"), "CityId divergente.");
+                    Assert.That(response.Data[1].City[0].Name, Is.EqualTo("SANTO ANDRÉ"), "Name divergente.");
+                    Assert.That(response.Data[1].City[0].StateId, Is.EqualTo("25"), "' divergente.");
+                    Assert.That(response.Data[1].City[0].IbgeCode, Is.EqualTo("3547809"), "IbgeCode divergente.");
+                    Assert.That(response.Data[1].State[0].StateId, Is.EqualTo("25"), "StateId divergente.");
+                    Assert.That(response.Data[1].State[0].Code, Is.EqualTo("SP"), "Code divergente.");
+                    Assert.That(response.Data[1].State[0].Name, Is.EqualTo("São Paulo"), "Name divergente.");
+                    Assert.That(response.Data[1].State[0].CountryId, Is.EqualTo("1"), "CountryId divergente.");
+                    Assert.That(response.Data[1].Phone1, Is.EqualTo("(11) 5180-3292"), "Phone1 divergente.");
 
                     test.Log(Status.Info, "Início da validação de auditórios.");
-                    Assert.That(response.Data[0].Auditoriums[0].TheaterCode, Is.EqualTo("2115"), "TheaterCode divergente.");
-                    Assert.That(response.Data[0].Auditoriums[0].Description, Is.EqualTo(""), "Description divergente.");
-                    Assert.That(response.Data[0].Auditoriums[0].AuditoriumCode, Is.EqualTo("4"), "AuditoriumCode divergente.");
-                    Assert.That(response.Data[0].Auditoriums[0].TotalSeats, Is.EqualTo("226"), "TotalSeats divergente.");
-                    Assert.That(response.Data[0].Auditoriums[0].DboxDescription, Is.EqualTo(""), "DboxDescription divergente.");
-                    Assert.That(response.Data[0].Auditoriums[0].XD, Is.EqualTo("False"), "XD divergente.");
-                    Assert.That(response.Data[0].Auditoriums[0].Prime, Is.EqualTo("False"), "Prime divergente.");
-                    Assert.That(response.Data[0].Auditoriums[0].DBOX, Is.EqualTo("False"), "DBOX divergente.");
-                    Assert.That(response.Data[0].Auditoriums[0].Status, Is.EqualTo("10"), "Status divergente.");
+                    Assert.That(response.Data[1].Auditoriums[0].TheaterCode, Is.EqualTo("2115"), "TheaterCode divergente.");
+                    Assert.That(response.Data[1].Auditoriums[0].Description, Is.EqualTo(""), "Description divergente.");
+                    Assert.That(response.Data[1].Auditoriums[0].AuditoriumCode, Is.EqualTo("4"), "AuditoriumCode divergente.");
+                    Assert.That(response.Data[1].Auditoriums[0].TotalSeats, Is.EqualTo("226"), "TotalSeats divergente.");
+                    Assert.That(response.Data[1].Auditoriums[0].DboxDescription, Is.EqualTo(""), "DboxDescription divergente.");
+                    Assert.That(response.Data[1].Auditoriums[0].XD, Is.EqualTo("False"), "XD divergente.");
+                    Assert.That(response.Data[1].Auditoriums[0].Prime, Is.EqualTo("False"), "Prime divergente.");
+                    Assert.That(response.Data[1].Auditoriums[0].DBOX, Is.EqualTo("False"), "DBOX divergente.");
+                    Assert.That(response.Data[1].Auditoriums[0].Status, Is.EqualTo("10"), "Status divergente.");
 
-                    Assert.That(response.Data[0].InvoiceEnabled, Is.EqualTo("False"), "InvoiceEnabled divergente.");
-                    Assert.That(response.Data[0].SnackbarEnabled, Is.EqualTo("True"), "SnackbarEnabled divergente.");
-                    Assert.That(response.Data[0].IngressoSiteCode, Is.EqualTo("1173"), "IngressoSiteCode divergente.");
-                    Assert.That(response.Data[0].SnackbarPOSCode, Is.EqualTo("75"), "SnackbarPOSCode divergente.");
-                    Assert.That(response.Data[0].CNPJ, Is.EqualTo("00779721006778"), "CNPJ divergente.");
-                    Assert.That(response.Data[0].ZipCode, Is.EqualTo("09111340"), "ZipCode divergente.");
-                    Assert.That(response.Data[0].EconomicGroupId, Is.EqualTo(1), "EconomicGroupId divergente.");
+                    Assert.That(response.Data[1].InvoiceEnabled, Is.EqualTo("False"), "InvoiceEnabled divergente.");
+                    Assert.That(response.Data[1].SnackbarEnabled, Is.EqualTo("True"), "SnackbarEnabled divergente.");
+                    Assert.That(response.Data[1].IngressoSiteCode, Is.EqualTo("1173"), "IngressoSiteCode divergente.");
+                    Assert.That(response.Data[1].SnackbarPOSCode, Is.EqualTo("75"), "SnackbarPOSCode divergente.");
+                    Assert.That(response.Data[1].CNPJ, Is.EqualTo("00779721006778"), "CNPJ divergente.");
+                    Assert.That(response.Data[1].ZipCode, Is.EqualTo("09111340"), "ZipCode divergente.");
+                    Assert.That(response.Data[1].EconomicGroupId, Is.EqualTo(1), "EconomicGroupId divergente.");
 
                     test.Log(Status.Info, "Validação de tabela de preços.");
                     Assert.That(response.Content.Contains("PriceTableHTML"), "Status Code divergente.");
@@ -150,7 +150,7 @@ namespace EcommerceBackend
                 if (response.IsSuccessful)
                 {
 
-                    test.Log(Status.Info, "Validando dados de theater 668.");
+                    test.Log(Status.Info, "Validando dados de theater 688.");
 
                     Assert.That(response.Data[0].Id, Is.EqualTo("762cb89b-51cb-4c7d-8dba-a862310af75f"), "Id divergente.");
                     Assert.That(response.Data[0].TheaterCode, Is.EqualTo("688"), "TheaterCode divergente.");
@@ -214,7 +214,7 @@ namespace EcommerceBackend
 
                 test.Log(Status.Info, "Valida Quantidade de cinemas FULL - primeiro da lista [0] e ultimo da lista[82].");
                 qtdCinemasAtivos = response.Data.Count;
-                if (qtdCinemasAtivos == 83 && response.Data[0].Name == "Atrium Shopping" && response.Data[82].Name == "West Plaza")
+                if (qtdCinemasAtivos == 83 && response.Data[0].Name == "Aricanduva" && response.Data[82].Name == "West Plaza")
                 {
                     test.Log(Status.Info, "Lista de todos os cinemas OK.");
                 }
@@ -230,36 +230,36 @@ namespace EcommerceBackend
                     }
                     else if (response.Data[0].TheaterCode != null && response.Data[0].TheaterCode != "")
                     {
-                        Assert.That(response.Data[0].TheaterCode, Is.EqualTo("2115"), "TheaterCode divergente.");
-                        Assert.That(response.Data[0].Name, Is.EqualTo("Atrium Shopping"), "Name divergente.");
-                        Assert.That(response.Data[0].Latitude, Is.EqualTo("-23.6644134"), "Latitude divergente.");
-                        Assert.That(response.Data[0].Longitude, Is.EqualTo("-46.5078915"), "Longitude divergente.");
-                        Assert.That(response.Data[0].CityId, Is.EqualTo("9625"), "CityId divergente.");
+                        Assert.That(response.Data[0].TheaterCode, Is.EqualTo("716"), "TheaterCode divergente.");
+                        Assert.That(response.Data[0].Name, Is.EqualTo("Aricanduva"), "Name divergente.");
+                        Assert.That(response.Data[0].Latitude, Is.EqualTo("-23.56582"), "Latitude divergente.");
+                        Assert.That(response.Data[0].Longitude, Is.EqualTo("-46.50364"), "Longitude divergente.");
+                        Assert.That(response.Data[0].CityId, Is.EqualTo("9668"), "CityId divergente.");
                         Assert.That(response.Data[0].StateId, Is.EqualTo("25"), "StateId divergente.");
-                        Assert.That(response.Data[0].Phone1, Is.EqualTo("(11) 5180-3292"), "Phone1 divergente.");
+                        Assert.That(response.Data[0].Phone1, Is.EqualTo("(11) 5180-3419"), "Phone1 divergente.");
                         Assert.That(response.Data[0].Remarks.Contains("Matinê: Sessões iniciadas até as 17h"), "Remarks divergente.");
                         Assert.That(response.Data[0].InvoiceEnabled, Is.EqualTo("False"), "InvoiceEnabled divergente.");
                         Assert.That(response.Data[0].SnackbarEnabled, Is.EqualTo("True"), "SnackbarEnabled divergente.");
-                        Assert.That(response.Data[0].IngressoSiteCode, Is.EqualTo("1173"), "IngressoSiteCode divergente.");
-                        Assert.That(response.Data[0].SnackbarPOSCode, Is.EqualTo("75"), "SnackbarPOSCode divergente.");
-                        Assert.That(response.Data[0].CNPJ, Is.EqualTo("00779721006778"), "CNPJ divergente.");
-                        Assert.That(response.Data[0].ZipCode, Is.EqualTo("09111340"), "ZipCode divergente.");
+                        Assert.That(response.Data[0].IngressoSiteCode, Is.EqualTo("348"), "IngressoSiteCode divergente.");
+                        Assert.That(response.Data[0].SnackbarPOSCode, Is.EqualTo("13"), "SnackbarPOSCode divergente.");
+                        Assert.That(response.Data[0].CNPJ, Is.EqualTo("00779721000575"), "CNPJ divergente.");
+                        Assert.That(response.Data[0].ZipCode, Is.EqualTo("03527000"), "ZipCode divergente.");
                         Assert.That(response.Data[0].EconomicGroupId, Is.EqualTo(1), "EconomicGroupId divergente.");
 
-                        Assert.That(response.Data[0].City[0].CityId, Is.EqualTo("9625"), "CityId divergente.");
-                        Assert.That(response.Data[0].City[0].Name, Is.EqualTo("SANTO ANDRÉ"), "Name divergente.");
+                        Assert.That(response.Data[0].City[0].CityId, Is.EqualTo("9668"), "CityId divergente.");
+                        Assert.That(response.Data[0].City[0].Name, Is.EqualTo("SÃO PAULO"), "Name divergente.");
                         Assert.That(response.Data[0].City[0].StateId, Is.EqualTo("25"), "StateId divergente.");
-                        Assert.That(response.Data[0].City[0].IbgeCode, Is.EqualTo("3547809"), "IbgeCode divergente.");
+                        Assert.That(response.Data[0].City[0].IbgeCode, Is.EqualTo("3550308"), "IbgeCode divergente.");
 
                         Assert.That(response.Data[0].State[0].StateId, Is.EqualTo("25"), "StateId divergente.");
                         Assert.That(response.Data[0].State[0].Code, Is.EqualTo("SP"), "Code divergente.");
                         Assert.That(response.Data[0].State[0].Name, Is.EqualTo("São Paulo"), "Name divergente.");
                         Assert.That(response.Data[0].State[0].CountryId, Is.EqualTo("1"), "CountryId divergente.");
 
-                        Assert.That(response.Data[0].Auditoriums[0].TheaterCode, Is.EqualTo("2115"), "TheaterCode divergente.");
+                        Assert.That(response.Data[0].Auditoriums[0].TheaterCode, Is.EqualTo("716"), "TheaterCode divergente.");
                         Assert.That(response.Data[0].Auditoriums[0].Description, Is.EqualTo(""), "Description divergente.");
                         Assert.That(response.Data[0].Auditoriums[0].AuditoriumCode, Is.EqualTo("4"), "AuditoriumCode divergente.");
-                        Assert.That(response.Data[0].Auditoriums[0].TotalSeats, Is.EqualTo("226"), "TotalSeats divergente.");
+                        Assert.That(response.Data[0].Auditoriums[0].TotalSeats, Is.EqualTo("133"), "TotalSeats divergente.");
                         Assert.That(response.Data[0].Auditoriums[0].XD, Is.EqualTo("False"), "XD divergente.");
                         Assert.That(response.Data[0].Auditoriums[0].Prime, Is.EqualTo("False"), "Prime divergente.");
                         Assert.That(response.Data[0].Auditoriums[0].DBOX, Is.EqualTo("False"), "DBOX divergente.");
@@ -411,10 +411,10 @@ namespace EcommerceBackend
                     if (response.Data[0].Auditoriums[0].TheaterCode != null && response.Data[0].Auditoriums[0].TheaterCode != "")
                     {
                         test.Log(Status.Info, "Validando a sala específica na posição [0].");
-                        Assert.That(response.Data[0].Auditoriums[0].TheaterCode, Is.EqualTo("2115"), "TheaterCode divergente.");
+                        Assert.That(response.Data[0].Auditoriums[0].TheaterCode, Is.EqualTo("716"), "TheaterCode divergente.");
                         Assert.That(response.Data[0].Auditoriums[0].Description, Is.EqualTo(""), "Description divergente.");
                         Assert.That(response.Data[0].Auditoriums[0].AuditoriumCode, Is.EqualTo("4"), "AuditoriumCode divergente.");
-                        Assert.That(response.Data[0].Auditoriums[0].TotalSeats, Is.EqualTo("226"), "TotalSeats divergente.");
+                        Assert.That(response.Data[0].Auditoriums[0].TotalSeats, Is.EqualTo("133"), "TotalSeats divergente.");
                         Assert.That(response.Data[0].Auditoriums[0].XD, Is.EqualTo("False"), "XD divergente.");
                         Assert.That(response.Data[0].Auditoriums[0].Prime, Is.EqualTo("False"), "Prime divergente.");
                         Assert.That(response.Data[0].Auditoriums[0].DBOX, Is.EqualTo("False"), "DBOX divergente.");
