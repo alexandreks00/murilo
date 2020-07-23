@@ -8,6 +8,7 @@ namespace DemoRestSharp.models.Order
 {
     public class ModelProduct
     {
+        public  string fee { get; set; }
         public string name { get; set; }
         public string theaterName { get; set; }
         public string theaterAddress { get; set; }

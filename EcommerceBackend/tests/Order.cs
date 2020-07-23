@@ -8,6 +8,8 @@ using DemoRestSharp.models.Order;
 using System.Collections.Generic;
 using EcommerceBackend.utils;
 using Newtonsoft.Json;
+using System.Reflection;
+using EcommerceBackend.models.Order;
 
 namespace EcommerceBackend
 
@@ -16,6 +18,7 @@ namespace EcommerceBackend
     [TestFixture]
     public class Order
     {
+
         ExtentReports extent = null;
 
         [OneTimeSetUp]
@@ -177,7 +180,7 @@ namespace EcommerceBackend
                 utils.Utils.setAuthorizationToken(request, authorizationToken);
 
                 var response = client.Execute<List<ModelOrderLast>>(request);
-
+              
                 //Início das validações
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
                 Assert.That((int)response.StatusCode, Is.EqualTo(200), "Status Code divergente.");
@@ -216,47 +219,113 @@ namespace EcommerceBackend
             }
         }
 
-        // procurando solução no momento para o caso abaixo
-
-        //[Test]
-        //public void ValidaRealizaResgateIngresso()
-        //{
-        //    ExtentTest test = null;
-        //    test = extent.CreateTest("ValidaRealizaResgateIngresso").Info("Início do teste.");
-        //    try
-        //    {
-
-        //        //Criando e enviando requisição
-        //        test.Log(Status.Info, "Criando requisição responsável por realizar login.");
-        //        var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
-        //        var requestResgataIngresso = new RestRequest("order/v1/updateticketstatus", Method.POST);
-        //        requestResgataIngresso.RequestFormat = DataFormat.Json;
-        //        test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
-        //        utils.Utils.setCisToken(requestResgataIngresso);
-
-        //        requestResgataIngresso.AddJsonBody(new
-        //        {
-        //            orderId = "363aa89c-2d6d-4ad5-9955-f9c71977bbd4",
-        //            barCode = "8332249503394278478139",
-        //            status = 1
-        //        }
-        //        );
-           
-        //        test.Log(Status.Info, "Enviando requisição.");
-        //        var response = client.Execute<ModelOrderResgate>(requestResgataIngresso);
-
-        //        //Início das validações
-        //        test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
-        //        Assert.That((int)response.StatusCode, Is.EqualTo(200), "Status Code divergente.");
 
 
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        test.Log(Status.Fail, e.ToString());
-        //        throw new Exception("Falha ao validar resgate de ingresso supersaver: " + e.Message);
-        //    }
-        //}
-     }
+        [Test]
+        public void ValidaRealizaPedidoSnack()
+        {
+            ExtentTest test = null;
+            test = extent.CreateTest("ValidaRealizaPedidoSnack").Info("Início do teste.");
+            try
+            {
+
+                //Criando e enviando requisição
+                test.Log(Status.Info, "Criando requisição responsável por realizar login.");
+                var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
+                var requestRealizaPedidoSnack = new RestRequest("order/v2/startorder", Method.POST);
+                requestRealizaPedidoSnack.RequestFormat = DataFormat.Json;
+                test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
+                utils.Utils.setCisToken(requestRealizaPedidoSnack);
+
+                //var response = client.Execute<List<ModelStartOrder>>(requestRealizaPedidoSnack);
+                    var body = @"{
+                                  ""account"": {
+                                    ""email"": ""absilva112233@mailinator.com"",
+                                    ""identification"": ""35074705940"",
+                                    ""name"": ""Teste Hml""
+  
+                                  },
+                                  ""appInfo"": {
+                                    ""Fingerprint"": ""atmxcmqlyqyydanpimtf94ysv91uunvy"",
+                                    ""deviceModel"": ""SM-J701MT"",
+                                    ""devicePlatform"": ""Android"",
+                                    ""deviceUUID"": ""75e73711-71ae-41c8-b883-b12c4151898c"",
+                                    ""geolocation"": {
+                                      ""latitude"": -23.577729,
+                                      ""longitude"": -46.7969339
+                                    },
+                                    ""version"": ""4.1.9""
+                                  },
+                                  ""theaterId"": 785,
+                                  ""fee"": {
+                                    ""price"": 10.0
+                                  },
+                                  ""movieId"": 0,
+                                  ""payment"": {
+                                    ""number"": ""mTSBDAgF/PbX+jicDGuqOEjpWAMo7rOuQ/LuLGGIesg="",
+                                    ""cpf"": ""35074705940"",
+                                    ""cvc"": ""737"",
+                                    ""expiryMonth"": ""02"",
+                                    ""expiryYear"": ""2025"",
+                                    ""holderName"": ""Tggg Hhhhh"",
+                                    ""saveCardInformation"": true
+                                  },
+                                  ""products"": [
+                                    {
+                                      ""fee"": {
+                                        ""price"": 5.0
+                                             },
+                                      ""id"": 3375,
+                                      ""name"": ""Coca-Cola Grande"",
+                                      ""quantity"": 1,
+                                      ""subTotal"": 26,
+                                      ""theaterAddress"": ""Av. Dr. Chucri Zaidan, 920 - Vila Cordeiro"",
+                                      ""theaterName"": ""Market Place"",
+                                      ""theaterPOS"": 3,
+                                      ""unitPrice"": 21,
+                                      ""urlImagem"": ""https://cdnim.hml.cineticket.com.br/snackbar/product/product_3375_20170605164929.png""
+                                    }
+                                  ],
+                                  ""total"": 27.0
+                                }";
+
+
+
+
+
+// requestRealizaPedidoSnack.AddParameter("application/json", body, ParameterType.RequestBody);
+
+                var response = client.Execute(requestRealizaPedidoSnack);
+                test.Log(Status.Info, "Enviando requisição.");
+                Console.WriteLine(response);
+              
+              
+
+                //Início das validações
+                test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
+                Assert.That((int)response.StatusCode, Is.EqualTo(200), "Status Code divergente.");
+
+
+            }
+            catch (Exception e)
+            {
+                test.Log(Status.Fail, e.ToString());
+                throw new Exception("Falha ao validar resgate de ingresso supersaver: " + e.Message);
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+    
 
 }
