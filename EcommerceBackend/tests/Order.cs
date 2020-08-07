@@ -187,7 +187,7 @@ namespace EcommerceBackend
 
                 if ((int)response.StatusCode == 200 && authorizationToken != null)
                 {
-
+                    //testes realizados de forma unitaria
                     test.Log(Status.Info, "Início de validações de propriedades e valores.");
                     Assert.That(response.Data[0].id, Is.EqualTo("26a33aed-a360-451b-8f6d-a9ff00fc1118"), "Status Code divergente.");
                     Assert.That(response.Data[0].account[0].userId, Is.EqualTo(5640490), "Status Code divergente.");
@@ -240,7 +240,9 @@ namespace EcommerceBackend
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
                 utils.Utils.setAuthorizationToken(request, authorizationToken);
 
-
+                //json original (do postman) foi alterado de aspas dupla para aspas simples 
+                //site https://csvjson.com/json_beautifier
+                
                 string json = @"{
                                   'account': {
                                     'email': 'alexandre.ksss@gmail.com',
@@ -303,6 +305,9 @@ namespace EcommerceBackend
                 //Início das validações
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
                 Assert.That((int)response.StatusCode, Is.EqualTo(200), "Status Code divergente.");
+
+
+
 
 
             }
