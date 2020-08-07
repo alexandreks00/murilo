@@ -226,79 +226,78 @@ namespace EcommerceBackend
         {
             ExtentTest test = null;
             test = extent.CreateTest("ValidaRealizaPedidoSnack").Info("Início do teste.");
+
             try
             {
 
+                string authorizationToken = utils.Utils.getAuthorization("alexandre.ksss@gmail.com", "batata@1010");
                 //Criando e enviando requisição
                 test.Log(Status.Info, "Criando requisição responsável por realizar login.");
                 var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
-                var requestRealizaPedidoSnack = new RestRequest("order/v2/startorder", Method.POST);
-                requestRealizaPedidoSnack.RequestFormat = DataFormat.Json;
+                var request = new RestRequest("order/v2/startorder", Method.POST);
+                request.RequestFormat = DataFormat.Json;
+                utils.Utils.setCisToken(request);
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
-                utils.Utils.setCisToken(requestRealizaPedidoSnack);
+                utils.Utils.setAuthorizationToken(request, authorizationToken);
 
-                //var response = client.Execute<List<ModelStartOrder>>(requestRealizaPedidoSnack);
-                    var body = @"{
-                                  ""account"": {
-                                    ""email"": ""absilva112233@mailinator.com"",
-                                    ""identification"": ""35074705940"",
-                                    ""name"": ""Teste Hml""
-  
+
+                string json = @"{
+                                  'account': {
+                                    'email': 'alexandre.ksss@gmail.com',
+                                    'name': 'Alexandre Kenji Shimizu',
+                                    'userId': 7365872
                                   },
-                                  ""appInfo"": {
-                                    ""Fingerprint"": ""atmxcmqlyqyydanpimtf94ysv91uunvy"",
-                                    ""deviceModel"": ""SM-J701MT"",
-                                    ""devicePlatform"": ""Android"",
-                                    ""deviceUUID"": ""75e73711-71ae-41c8-b883-b12c4151898c"",
-                                    ""geolocation"": {
-                                      ""latitude"": -23.577729,
-                                      ""longitude"": -46.7969339
+                                  'appInfo': {
+                                    'Fingerprint': 'atmxcmqlyqyydanpimtf94ysv91uunvy',
+                                    'deviceModel': 'SM-J701MT',
+                                    'devicePlatform': 'Android',
+                                    'deviceUUID': '75e73711-71ae-41c8-b883-b12c4151898c',
+                                    'geolocation': {
+                                      'latitude': -23.577729,
+                                      'longitude': -46.7969339
                                     },
-                                    ""version"": ""4.1.9""
+                                    'version': '4.1.9'
                                   },
-                                  ""theaterId"": 785,
-                                  ""fee"": {
-                                    ""price"": 10.0
+                                  'theaterId': 785,
+                                  'fee': {
+                                    'price': 10
                                   },
-                                  ""movieId"": 0,
-                                  ""payment"": {
-                                    ""number"": ""mTSBDAgF/PbX+jicDGuqOEjpWAMo7rOuQ/LuLGGIesg="",
-                                    ""cpf"": ""35074705940"",
-                                    ""cvc"": ""737"",
-                                    ""expiryMonth"": ""02"",
-                                    ""expiryYear"": ""2025"",
-                                    ""holderName"": ""Tggg Hhhhh"",
-                                    ""saveCardInformation"": true
+                                  'movieId': 0,
+                                  'payment': {
+                                    'number': 'mTSBDAgF/PbX+jicDGuqOEjpWAMo7rOuQ/LuLGGIesg=',
+                                    'cpf': '35074705940',
+                                    'cvc': '737',
+                                    'expiryMonth': '02',
+                                    'expiryYear': '2025',
+                                    'holderName': 'Tggg Hhhhh',
+                                    'saveCardInformation': true
                                   },
-                                  ""products"": [
+                                  'products': [
                                     {
-                                      ""fee"": {
-                                        ""price"": 5.0
-                                             },
-                                      ""id"": 3375,
-                                      ""name"": ""Coca-Cola Grande"",
-                                      ""quantity"": 1,
-                                      ""subTotal"": 26,
-                                      ""theaterAddress"": ""Av. Dr. Chucri Zaidan, 920 - Vila Cordeiro"",
-                                      ""theaterName"": ""Market Place"",
-                                      ""theaterPOS"": 3,
-                                      ""unitPrice"": 21,
-                                      ""urlImagem"": ""https://cdnim.hml.cineticket.com.br/snackbar/product/product_3375_20170605164929.png""
+                                      'fee': {
+                                        'price': 5
+                                      },
+                                      'id': 3375,
+                                      'name': 'Coca-Cola Grande',
+                                      'quantity': 1,
+                                      'subTotal': 26,
+                                      'theaterAddress': 'Av. Dr. Chucri Zaidan, 920 - Vila Cordeiro',
+                                      'theaterName': 'Market Place',
+                                      'theaterPOS': 3,
+                                      'unitPrice': 21,
+                                      'urlImagem': 'https://cdnim.hml.cineticket.com.br/snackbar/product/product_3375_20170605164929.png'
                                     }
                                   ],
-                                  ""total"": 27.0
+                                  'total': 27
                                 }";
 
-
-
-
-
-// requestRealizaPedidoSnack.AddParameter("application/json", body, ParameterType.RequestBody);
-
-                var response = client.Execute(requestRealizaPedidoSnack);
+             
+                request.AddParameter("application /json", json , ParameterType.RequestBody);
+  
+                var response = client.Execute(request);
                 test.Log(Status.Info, "Enviando requisição.");
                 Console.WriteLine(response);
-              
+                
               
 
                 //Início das validações
@@ -310,7 +309,7 @@ namespace EcommerceBackend
             catch (Exception e)
             {
                 test.Log(Status.Fail, e.ToString());
-                throw new Exception("Falha ao validar resgate de ingresso supersaver: " + e.Message);
+                throw new Exception("Falha ao validar geracao do pedido: " + e.Message);
             }
         }
 

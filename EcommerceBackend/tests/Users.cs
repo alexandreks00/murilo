@@ -42,12 +42,25 @@ namespace EcommerceBackend
                 var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
                 var request = new RestRequest("bus/v1/users/login/byapp", Method.POST);
                 request.RequestFormat = DataFormat.Json;
-                request.AddJsonBody(new
-                {
-                    Email = "automaticusers@mailinator.com",
-                    Password = "112233"
-                }
-                );
+
+                //metodo que o andre fazia, era necessario atribuir um valor aos campos criados na model
+                //criar uma model 
+
+                //request.AddJsonBody(new
+                //{
+                //    Email = "automaticusers@mailinator.com",
+                //    Password = "112233"
+                //}
+                //);
+
+
+     
+                string json = @"{
+                              'email': 'automaticusers@mailinator.com',
+                              'password': '112233'
+                                 }";
+                    
+                request.AddParameter("application/json", json, ParameterType.RequestBody);
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
                 utils.Utils.setCisToken(request);
                 test.Log(Status.Info, "Enviando requisição.");
