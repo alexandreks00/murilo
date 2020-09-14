@@ -11,11 +11,23 @@ using RestSharp;
 using RestSharp.Serialization.Json;
 using System.Threading;
 using EcommerceBackend.models.Users;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace EcommerceBackend.utils
 {
     public static class Utils
     {
+        public static string RetornaStringJson(string jsonFilePath)
+        {
+            if (string.IsNullOrEmpty(jsonFilePath))
+            {
+                throw new Exception("Caminho/Path invalido");
+            }
+            string jsonContent = File.ReadAllText(jsonFilePath);
+            return jsonContent;
+        }
+
 
         public static RestRequest setCisToken(RestRequest request)
         {

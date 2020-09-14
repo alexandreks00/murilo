@@ -231,6 +231,7 @@
     <Compile Include="tests\Ticket.cs" />
     <Compile Include="tests\SuperSaver.cs" />
     <Compile Include="tests\Users.cs" />
+    <Compile Include="utils\ResponseProperties.cs" />
     <Compile Include="utils\Utils.cs" />
   </ItemGroup>
   <ItemGroup>

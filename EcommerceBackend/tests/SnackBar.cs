@@ -9,6 +9,13 @@ using EcommerceBackend.utils;
 
 namespace EcommerceBackend
 {
+    /*
+        tipoMenu: 20 (prime) e 10 (normal)
+        idCat: -1 todos os produtos de todas as categorias, 24-Combos, 23 - bebidas
+        categoryType == idCat
+        menuType == 10 ou 20
+
+     */
     [TestFixture]
     public class SnackBar
     {
