@@ -12,7 +12,14 @@ using EcommerceBackend.utils;
 using EcommerceBackend.models.Bookings.ShowTimes;
 
 namespace EcommerceBackend
-
+    /*
+     * Atualmente o campo TOTAL em /startorder aceita:
+     * 1. Valores maiores ou iguais a soma dos produtos (qt*unitPrice)
+     * 2. Mesmo que a soma seja muito superior ao valor total de fato, o sistema aceita. 
+     * Não ocorre o arredondamento dos centavos.
+     * 
+     * 
+     */
 
 {
     [TestFixture]
@@ -66,6 +73,7 @@ namespace EcommerceBackend
                 test.Log(Status.Info, "Criando requisição responsável por realizar login.");
                 var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
                 var request = new RestRequest("ticket/v1/types?TheaterId=688&SessionCode=" + ShowTime, Method.GET);
+
                 request.RequestFormat = DataFormat.Json;
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
                 Utils.setCisToken(request);
@@ -188,7 +196,7 @@ namespace EcommerceBackend
 
                 request.AddJsonBody(new
                 {
-                    theater = "688",
+                    theater = "785",
                     code = "999999"
                 }
                );

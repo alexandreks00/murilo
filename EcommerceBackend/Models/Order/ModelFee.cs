@@ -8,7 +8,7 @@ namespace DemoRestSharp.models.Order
 {
     public class ModelFee
     {
-        public int price { get; set; }
+        public double price { get; set; }
  
     }
 }

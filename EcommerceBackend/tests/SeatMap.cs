@@ -39,10 +39,14 @@ namespace EcommerceBackend
         {
             ExtentTest test = null;
             test = extent.CreateTest("ValidaMapaSessaoDisponivel").Info("Início do teste.");
+
             string Idtheater = "688";
             string Idsession = "5445B76F-E8B1-4C7D-BB8F-5CAAA13ADCCE";
 
-          
+            //string Idtheater = "785";
+            //string Idsession = "4B5E8F7F-2A16-4FE7-82C3-D993B9ACA3F7";
+
+
             try
             {
                 //Criando e enviando requisição
@@ -87,7 +91,7 @@ namespace EcommerceBackend
             ExtentTest test = null;
             test = extent.CreateTest("ValidaMapaSessaoInexistente").Info("Início do teste.");
             string Idtheater = "688";
-            string Idsession = "5445B76F-E8B1-4C7D-BB8F-5CAAA13ADCCE";
+            string Idsession = "4B5E8F7F-2A16-4FE7-82C3-D993B9ACA3F7";
 
             try
             {
@@ -95,15 +99,13 @@ namespace EcommerceBackend
                 //comentario
                 test.Log(Status.Info, "Criando requisição.");
                 var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
-                var request = new RestRequest("theater/v1/map/" + Idtheater + "/" + Idsession, Method.GET);
+                var request = new RestRequest("theater/v1/map/" + Idtheater + Idsession, Method.GET);
 
                 request.RequestFormat = DataFormat.Json;
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
                 Utils.setCisToken(request);
                 test.Log(Status.Info, "Enviando requisição.");
                 var response = client.Execute<ModelSeatMap>(request);
-
-
                 string responseContent = response.Content.ToString();
                 //Declarando as propriedades que deverão obrigatoriamente estar na resposta da requisição
                 string[] properties = new string[] { "\"Room\":", "\"Id\":", "\"Name\":", "\"Avail\":",
@@ -114,9 +116,11 @@ namespace EcommerceBackend
                 if (responseContent != null)
                 {
                     //Início das validações
+         
                     test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
-                    Assert.That((int)response.StatusCode, Is.EqualTo(200), "Status Code divergente.");
-                    Utils.validaContrato(properties, responseContent, test);
+                    Assert.That((int)response.StatusCode, Is.EqualTo(404), "Status Code divergente.");
+                
+                    //Utils.validaContrato(properties, responseContent, test);
 
                     // Solução temporária até resolver a melhoria de tratar a mensagem de sessão inexistente
                    // test.Log(Status.Info, "Forçando erro de id inexistente");
@@ -137,7 +141,7 @@ namespace EcommerceBackend
         {
             ExtentTest test = null;
             test = extent.CreateTest("ValidaMapaSessaoInvalida").Info("Início do teste.");
-            string Idtheater = "688";
+            string Idtheater = "785";
 
             try
             {
@@ -145,7 +149,7 @@ namespace EcommerceBackend
                 //comentario
                 test.Log(Status.Info, "Criando requisição.");
                 var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
-                var request = new RestRequest("theater/v1/map/" + Idtheater + "/20186/4/2018/6/99/99/00", Method.GET);
+                var request = new RestRequest("theater/v1/map/" + Idtheater + "/4B5E8F74D993B9ACA3F7", Method.GET);
 
                 request.RequestFormat = DataFormat.Json;
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
@@ -154,11 +158,10 @@ namespace EcommerceBackend
                 var response = client.Execute<ModelSeatMap>(request);
 
                 //Início das validações
-                test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 500.");
-                Assert.That(response.Data.status, Is.EqualTo(500), "Status Code divergente.");
-                Assert.That(response.Data.message.Trim(), Is.EqualTo("Erro inesperado"), "Mensagem diferente");
-                Assert.That(response.Data.result.Trim(), Is.EqualTo("Error"), "Result diferente do esperado");
-
+                test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 400.");
+                Assert.That(response.Data.status, Is.EqualTo(400), "Status Code divergente.");
+                
+ 
                 // "message": "Erro inesperado"
 
                 test.Log(Status.Pass, "Teste ok para o retorno 500, todas as verificações foram realizadas com sucesso.");

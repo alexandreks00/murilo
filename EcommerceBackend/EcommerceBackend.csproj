@@ -12,7 +12,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EcommerceBackend</RootNamespace>
     <AssemblyName>EcommerceBackend</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">15.0</VisualStudioVersion>
@@ -79,6 +79,8 @@
     <Reference Include="nunit.framework, Version=3.12.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.12.0\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="RazorEngine, Version=3.10.0.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
       <HintPath>..\packages\RazorEngine.3.10.0\lib\net45\RazorEngine.dll</HintPath>
     </Reference>
@@ -162,6 +164,7 @@
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Razor.3.0.0\lib\net45\System.Web.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="TechTalk.SpecFlow, Version=3.1.0.0, Culture=neutral, PublicKeyToken=0778194805d6db41, processorArchitecture=MSIL">
       <HintPath>..\packages\SpecFlow.3.1.67\lib\net45\TechTalk.SpecFlow.dll</HintPath>
@@ -182,6 +185,10 @@
     <Compile Include="models\Loyalty\ModelMenus.cs" />
     <Compile Include="models\Loyalty\ModelBenefits.cs" />
     <Compile Include="models\Loyalty\ModelLoyalty.cs" />
+    <Compile Include="models\Order\ModelAppInfo.cs" />
+    <Compile Include="models\Order\ModelGeolocation.cs" />
+    <Compile Include="models\Order\ModelPayment.cs" />
+    <Compile Include="models\Order\ModelStartOrder.cs" />
     <Compile Include="models\Order\ModelAccount.cs" />
     <Compile Include="models\Order\ModelOrderResgate .cs" />
     <Compile Include="models\Order\ModelOrderLast.cs" />
@@ -189,6 +196,9 @@
     <Compile Include="models\Order\ModelTickets .cs" />
     <Compile Include="models\Order\ModelProduct .cs" />
     <Compile Include="models\Order\ModelOrder.cs" />
+    <Compile Include="models\Order\UserControl1.xaml.cs">
+      <DependentUpon>UserControl1.xaml</DependentUpon>
+    </Compile>
     <Compile Include="models\SeatMap\ModelSeatMap.cs" />
     <Compile Include="models\Social\ModelSocial.cs" />
     <Compile Include="models\Social\SocialResponse.cs" />
@@ -206,6 +216,7 @@
     <Compile Include="models\Users\ModelState.cs" />
     <Compile Include="models\Users\ModelUsers.cs" />
     <Compile Include="tests\SnackBar.cs" />
+    <Compile Include="tests\StartOrder.cs" />
     <Compile Include="tests\Support.cs" />
     <Compile Include="tests\Marketing.cs" />
     <Compile Include="tests\Theaters.cs" />
@@ -220,13 +231,19 @@
     <Compile Include="tests\Ticket.cs" />
     <Compile Include="tests\SuperSaver.cs" />
     <Compile Include="tests\Users.cs" />
+    <Compile Include="utils\ResponseProperties.cs" />
     <Compile Include="utils\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Page Include="models\Order\UserControl1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
