@@ -54,7 +54,7 @@ namespace EcommerceBackend
 
                 // Preparando a massa em tempo de execução
                 var clientSession = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
-                var requestSession = new RestRequest("bus/v1/bookings/showtimes/theaters/688", Method.GET);
+                var requestSession = new RestRequest("bus/v1/bookings/showtimes/theaters/785", Method.GET);
                 requestSession.RequestFormat = DataFormat.Json;
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
                 Utils.setCisToken(requestSession);
@@ -63,16 +63,16 @@ namespace EcommerceBackend
 
                 //Valida retorno
                 Assert.That((int)responseSession.StatusCode, Is.EqualTo(200), "Status Code divergente.");
-                Assert.That (responseSession.Data.Theaters[0].TheaterCode, Is.EqualTo("688"), "Código do Cinema 'TheaterCode' divergente");
+                Assert.That (responseSession.Data.Theaters[0].TheaterCode, Is.EqualTo("785"), "Código do Cinema 'TheaterCode' divergente");
                 Assert.That(responseSession.Data.Theaters[0].Dates[0].ExhibitionDate, !Is.Null, "Data de exibição não informada");
-                Assert.That(responseSession.Data.Theaters[0].Dates[0].ShowTimes[0].tht, Is.EqualTo("688"), "Id do Cinema diferente do que foi filtrado");
+                Assert.That(responseSession.Data.Theaters[0].Dates[0].ShowTimes[0].tht, Is.EqualTo("785"), "Id do Cinema diferente do que foi filtrado");
 
                 String ShowTime = responseSession.Data.Theaters[0].Dates[0].ShowTimes[0].ShowTimeId;
 
                 //Criando e enviando requisição
                 test.Log(Status.Info, "Criando requisição responsável por realizar login.");
                 var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
-                var request = new RestRequest("ticket/v1/types?TheaterId=688&SessionCode=" + ShowTime, Method.GET);
+                var request = new RestRequest("ticket/v1/types?TheaterId=785&SessionCode=" + ShowTime, Method.GET);
 
                 request.RequestFormat = DataFormat.Json;
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
@@ -92,10 +92,7 @@ namespace EcommerceBackend
 
                 test.Log(Status.Info,"Pré validação - Valida se existe o corpo do json");
                 if (responseContent != null)
-                {
-                    test.Log(Status.Info, "Validando o retorno das propriedades.");
-                    test.Log(Status.Info, "Validando o contrato.");
-                    utils.Utils.validaContrato(properties, responseContent, test);
+                { 
                     test.Log(Status.Info, "Termino de cenário com sucesso.");
                 }
  

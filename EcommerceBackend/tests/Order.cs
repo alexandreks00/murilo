@@ -231,7 +231,7 @@ namespace EcommerceBackend
             try
             {
 
-                string authorizationToken = utils.Utils.getAuthorization("alexandre.ksss@gmail.com", "batata@1010");
+                string authorizationToken = utils.Utils.getAuthorization("mobile2020cinemark@gmail.com", "123456");
                 //Criando e enviando requisição
                 test.Log(Status.Info, "Criando requisição responsável por realizar login.");
                 var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);

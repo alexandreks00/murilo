@@ -40,7 +40,7 @@ namespace EcommerceBackend
             ExtentTest test = null;
             test = extent.CreateTest("ValidaMapaSessaoDisponivel").Info("Início do teste.");
 
-            string Idtheater = "688";
+            string Idtheater = "785";
             string Idsession = "5445B76F-E8B1-4C7D-BB8F-5CAAA13ADCCE";
 
             //string Idtheater = "785";
