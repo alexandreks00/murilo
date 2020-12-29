@@ -944,43 +944,79 @@ namespace EcommerceBackend
         public void ValidaContaExistente()
         {
             ExtentTest test = null;
-            test = extent.CreateTest("ValidaAlterarEmailUsuarioRecemCriado").Info("Início do teste.");
+            test = extent.CreateTest("ValidaCriticaCriacaoUsuarioCpfRepetido").Info("Início do teste.");
 
             try
             {
-                test.Log(Status.Info, "Verificação de conta existente por CPF.");
+                //Gerando um cpf aleatório que será utilizado na criação do usuário
+                test.Log(Status.Info, "Gerando email aleatório que será utilizado no request de criação do usuário.");
+                string cpfJaCadastrado = "58458830833";
+
+                //Criando a requisição responsável por criar um usuário
+                test.Log(Status.Info, "Criando a requisição responsável por criar um usuário utilizando cpf já existente.");
                 var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
-                var request = new RestRequest("bus/v1/users/login/byapp", Method.POST);
-                request.RequestFormat = DataFormat.Json;
-
-                //metodo que o andre fazia, era necessario atribuir um valor aos campos criados na model
-                //criar uma model 
-
-                //request.AddJsonBody(new
-                //{
-                //    Email = "automaticusers@mailinator.com",
-                //    Password = "112233"
-                //}
-                //);
+                var requestCriaUsuario = new RestRequest("bus/v1/users", Method.POST);
+                requestCriaUsuario.RequestFormat = DataFormat.Json;
 
 
+                //Montando o body da requisição que será enviada
+                requestCriaUsuario.AddJsonBody(new
+                {
+                    AppInfo = new
+                    {
+                        deviceModel = "Moto G Play",
+                        devicePlatform = "Android",
+                        deviceUUID = "62a0391e-9b4c-4870-ba11-40896b488506",
+                        version = "4.0.20",
+                    },
+                    DateOfBirth = "2002-11-04T00:00:00.000Z",
+                    CardNumber = "",
+                    City = new
+                    {
+                        CityId = 12789,
+                        Name = "Taguatinga",
+                        State = new
+                        {
+                            Code = "DF",
+                            StateId = 7,
+                            Name = "Distrito Federal"
+                        },
+                        StateId = 7
+                    },
+                    CityId = 12789,
+                    CPF = cpfJaCadastrado,
+                    CpfNf = false,
+                    Email = email,
+                    EndUserPolicyId = 3,
+                    Gender = "M",
+                    Name = "Automatic Test",
+                    NickName = "QA",
+                    Password = "112233",
+                    Phone1 = "1133333336"
+                }
+                );
 
-                string json = @"{
-                              'email': 'automaticusers@mailinator.com',
-                              'password': '112233'
-                                 }";
-
-                request.AddParameter("application/json", json, ParameterType.RequestBody);
+                //Setando header de autenticação "X-CISIdentity"
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
-                utils.Utils.setCisToken(request);
-                test.Log(Status.Info, "Enviando requisição.");
-                var response = client.Execute<ModelUsers>(request);
+                utils.Utils.setCisToken(requestCriaUsuario);
+
+                //Enviando a requisição
+                test.Log(Status.Info, "Enviando a requisição.");
+                var responseCriaUsuario = client.Execute<ModelUsers>(requestCriaUsuario);
+
+                //Validando Status Code de retorno da requisição
+                test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 400.");
+                Assert.That((int)responseCriaUsuario.StatusCode, Is.EqualTo(400), "Status Code diferente do esperado ao enviar requisição criando um usuário utilizando um cpf já cadastrado.");
+
+                test.Log(Status.Info, "Validando se a mensagem de crítica é exibida.");
+                Assert.That(responseCriaUsuario.Data.Message, Is.EqualTo("O CPF informado já está sendo utilizado."), "Valor da propriedade 'Message' divergente.");
+                test.Log(Status.Pass, "Teste ok! As validações foram realizadas com sucesso.");
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
-                throw;
+                test.Log(Status.Fail, e.ToString());
+                throw new Exception("Falha ao validar a mensagem de crítica que é exibida ao criar um usuário utilizando e-mail já cadastrado: " + e.Message);
             }
 
 
