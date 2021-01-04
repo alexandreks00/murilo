@@ -34,6 +34,7 @@ namespace EcommerceBackend
         {
               ExtentTest test = null;
             test = extent.CreateTest("ValidaConsultaPromocoes").Info("Início do teste.");
+            string qr_code_salvador = "b6a41a1c-c89d-4428-a320-2a2eeb1b2145";
 
             try
             {
@@ -41,21 +42,10 @@ namespace EcommerceBackend
                 //Criando e enviando requisição
                 test.Log(Status.Info, "Criando requisição");
                 var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
-                var request = new RestRequest("bus/v1/marketing/offers",  Method.GET);
+                var request = new RestRequest("discount/validate/"+qr_code_salvador,  Method.GET);
                 utils.Utils.setCisToken(request);
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição");
                 var response = client.Execute(request);
-
-                // Valida se Existe o campo de mensagem
-                test.Log(Status.Info, "Valida a mensagem de limpeza da lixeira");
-                string responseContent = response.Content.ToString();
-
-                // Sem promoções no momento no app - quando ter promoções descomentar a validação de contrato
-                string[] properties = new string[] { "\"OfferId\":", "\"Code\":", "\"Title\":", "\"Text\":", "\"RedirectUrl\":", "\"ImageUrl\":", "\"StartDate\":", "\"EndDate\":"
-                , "\"OfferType\":", "\"TwitterDescription\":", "\"FacebookDescription\":", "\"MobileImageUrl\":", "\"MobileText\":", "\"TabletImageUrl\":"
-                , "\"Theaters\":", "\"TheaterCode\":", "\"Name\":", "\"Latitude\":", "\"Longitude\":", "\"Address1\":"
-                , "\"Address2\":", "\"PriceTableHTML\":", "\"Status\":", "\"Auditoriums\":", "\"Notice\":", "\"InvoiceEnabled\":", "\"SnackbarEnabled\":"
-                , "\"IngressoSiteCode\":", "\"SnackbarPOSCode\":", "\"CNPJ\":", "\"ZipCode\":", "\"EconomicGroupId\":"};
 
                 //Início das validações
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");

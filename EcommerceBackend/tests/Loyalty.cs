@@ -350,7 +350,7 @@ namespace EcommerceBackend
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
                 Assert.That((int)response.StatusCode, Is.EqualTo(200), "Status Code divergente.");
 
-                Assert.That(response.Data[0].category, Is.EqualTo("Fã de carteirinha"), "category divergente.");
+                Assert.That(response.Data[0].category, Is.EqualTo("Fã sortudo"), "category divergente.");
                 Assert.That(response.Data[0].balance, Is.EqualTo(322.0), "category divergente.");
                 Assert.That(response.Data[0].expired, Is.EqualTo("False"), "expired divergente.");
                 Assert.That(response.Data[0].menus[0].title, Is.EqualTo("Extrato"), "title divergente.");
@@ -451,7 +451,7 @@ namespace EcommerceBackend
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
                 Assert.That((int)response.StatusCode, Is.EqualTo(200), "Status Code divergente.");
 
-                Assert.That(response.Data[0].category, Is.EqualTo("Fã de carteirinha"), "category divergente.");
+                Assert.That(response.Data[0].category, Is.EqualTo("Fã sortudo"), "category divergente.");
                 Assert.That(response.Data[0].balance, Is.EqualTo(322.0), "category divergente.");
                 Assert.That(response.Data[0].expired, Is.EqualTo("False"), "expired divergente.");
                 Assert.That(response.Data[0].menus[0].title, Is.EqualTo("Extrato"), "title divergente.");

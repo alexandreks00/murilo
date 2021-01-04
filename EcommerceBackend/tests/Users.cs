@@ -944,13 +944,14 @@ namespace EcommerceBackend
         public void ValidaContaExistente()
         {
             ExtentTest test = null;
-            test = extent.CreateTest("ValidaCriticaCriacaoUsuarioCpfRepetido").Info("Início do teste.");
+            test = extent.CreateTest("ValidaContaExistente").Info("Início do teste.");
 
             try
             {
                 //Gerando um cpf aleatório que será utilizado na criação do usuário
                 test.Log(Status.Info, "Gerando email aleatório que será utilizado no request de criação do usuário.");
                 string cpfJaCadastrado = "58458830833";
+                string email = utils.Utils.gerarEmailAleatorio(8);
 
                 //Criando a requisição responsável por criar um usuário
                 test.Log(Status.Info, "Criando a requisição responsável por criar um usuário utilizando cpf já existente.");
@@ -1018,7 +1019,7 @@ namespace EcommerceBackend
                 test.Log(Status.Fail, e.ToString());
                 throw new Exception("Falha ao validar a mensagem de crítica que é exibida ao criar um usuário utilizando e-mail já cadastrado: " + e.Message);
             }
-
+             
 
         }
 
