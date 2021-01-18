@@ -1,0 +1,77 @@
+{
+  "account": {
+    "email": "alexandrekenji@gmail.com",
+    "identification": "34266611870",
+    "name": "KENJI AUT",
+    "type": "PF"
+  },
+  "appInfo": {
+    "deviceModel": "iPhone",
+    "devicePlatform": "iOS",
+    "deviceUUID": "5DB268B8-D9E3-43BB-9CAC-1EAC96751435",
+    "simSerialNumber": null,
+    "simPhoneNumber": null,
+    "geolocation": {
+      "latitude": -23.561081245447614,
+      "longitude": -46.63589283975444
+    },
+    "fingerPrint": "7C934F2A-0F0D-46FD-B5A5-B2A9D8254420",
+    "clientIP": "189.120.73.203",
+    "version": "4.00.122",
+    "saleChannel": 2
+  },
+  "theaterId": 785,
+  "fee": {
+    "price": 0.75
+  },
+  "discount": {
+    "price": 0.0
+  },
+  "movieId": 21429,
+  "movieCode": 6215,
+  "payment": {
+    "number": "424242",
+    "ProtectedCardNumber": "7a02f76d-79a9-47d6-ac94-19f28195d812"
+  },
+  "products": [],
+  "tickets": [
+    {
+      "roomNumber": 7,
+      "theaterId": 785,
+      "is3D": false,
+      "isMat": false,
+      "isDbox": false,
+      "isPrime": false,
+      "isXD": false,
+      "Localization": 30,
+      "movieName": "Jogos Mortais: Jigsaw",
+      "quantity": 1,
+      "Rating": "14 Anos",
+      "seatCode": "298118",
+      "seatName": "I 6",
+      "seatType": "Normal",
+      "sectionCode": 1219,
+      "sessionCode": "3e9c5a7f-818a-4a02-9c4d-0acadb838bc5",
+      "sessionDateTime": "2021-01-18T22:55:00.000+00:00",
+      "theaterName": "Salvador Shopping",
+      "theaterAddress": "Avenida Tancredo Neves, 2915, Loja 3005",
+      "ticketCode": "Meia Elo",
+      "fee": {
+        "price": 4.5
+      },
+      "discount": {
+        "price": 0.0
+      },
+      "promotion": {
+        "partner": 7,
+        "code": "424242"
+
+      },
+      "unitPrice": 19.5,
+      "unitPriceBase": 19.5,
+      "urlBanner": "http://www.cinemark.com.br/content/uploads/movie/6132/deadpool-2-trailer-mobile.jpg",
+      "urlImage": "http://www.cinemark.com.br/content/uploads/movie/6132/deadpool-2-poster-desktop.png"
+    }
+  ],
+  "total": 19.5
+}

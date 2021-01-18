@@ -237,6 +237,10 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="utils\payloads\ValidaRealizaPedidoMeiaElo.json" />
+    <None Include="utils\payloads\ValidaRealizaPedidoSnack.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Page Include="models\Order\UserControl1.xaml">
@@ -258,4 +262,5 @@
   </Target>
   <Import Project="..\packages\MSTest.TestAdapter.1.3.2\build\net45\MSTest.TestAdapter.targets" Condition="Exists('..\packages\MSTest.TestAdapter.1.3.2\build\net45\MSTest.TestAdapter.targets')" />
   <Import Project="..\packages\SpecFlow.3.1.67\build\SpecFlow.targets" Condition="Exists('..\packages\SpecFlow.3.1.67\build\SpecFlow.targets')" />
+  <ProjectExtensions />
 </Project>

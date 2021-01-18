@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using System.Reflection;
 using EcommerceBackend.models.Order;
 using Newtonsoft.Json.Linq;
+using System.IO;
 
 namespace EcommerceBackend
 
@@ -246,7 +247,9 @@ namespace EcommerceBackend
                     conteudo do arquivo já de-serializado
       
                 */
-                string jsonFilePath = @"C:\AutomationTools\Massa\Order\ValidaRealizaPedidoSnack.json";
+
+                
+                string jsonFilePath = @"C:\Users\alexa\Downloads\restSharp\EcommerceBackendRestSharp\EcommerceBackend\utils\payloads\ValidaRealizaPedidoSnack.json";
                 string json = Utils.RetornaStringJson(jsonFilePath);
 
                 /*
@@ -279,7 +282,7 @@ namespace EcommerceBackend
             try
             {
 
-                string authorizationToken = utils.Utils.getAuthorization("alexandre.ksss@gmail.com", "batata@1010");
+                string authorizationToken = utils.Utils.getAuthorization("mobile2020cinemark@gmail.com", "123456");
                 //Criando e enviando requisição
                 test.Log(Status.Info, "Criando requisição responsável por realizar login.");
                 var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
@@ -317,6 +320,56 @@ namespace EcommerceBackend
             }
         }
 
+        [Test]
+        public void ValidaRealizaPedidoMeiaElo()
+        {
+            ExtentTest test = null;
+            test = extent.CreateTest("ValidaRealizaPedidoSnack").Info("Início do teste.");
+
+            try
+            {
+
+                string authorizationToken = utils.Utils.getAuthorization("mobile2020cinemark@gmail.com", "123456");
+                //Criando e enviando requisição
+                test.Log(Status.Info, "Criando requisição responsável por realizar login.");
+                var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
+                var request = new RestRequest("order/v2/startorder", Method.POST);
+                request.RequestFormat = DataFormat.Json;
+                utils.Utils.setCisToken(request);
+                test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
+                utils.Utils.setAuthorizationToken(request, authorizationToken);
+
+                /*
+                    enviando o payload / body atraves do arquivo.json de massa e retornando na variavel json o 
+                    conteudo do arquivo já de-serializado
+      
+                */
+
+
+                string jsonFilePath = @"C:\Users\alexa\Downloads\restSharp\EcommerceBackendRestSharp\EcommerceBackend\utils\payloads\ValidaRealizaPedidoMeiaElo.json";
+                string json = Utils.RetornaStringJson(jsonFilePath);
+
+                /*
+                     No metodo AddParameter especificamos o content-type como "application/json"
+                     Dessa forma não precisamos usar o deserializer
+                 */
+                request.AddParameter("application /json", json, ParameterType.RequestBody);
+                var response = client.Execute(request);
+                test.Log(Status.Info, "Enviando requisição.");
+                Console.WriteLine(response);
+
+
+                //Início das validações
+                test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
+                Assert.That((int)response.StatusCode, Is.EqualTo(200), "Status Code divergente.");
+
+            }
+            catch (Exception e)
+            {
+                test.Log(Status.Fail, e.ToString());
+                throw new Exception("Falha ao validar geracao do pedido: " + e.Message);
+            }
+        }
 
 
 
