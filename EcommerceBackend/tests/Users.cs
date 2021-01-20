@@ -7,6 +7,7 @@ using AventStack.ExtentReports;
 using AventStack.ExtentReports.Reporter;
 using AventStack.ExtentReports.Reporter.Configuration;
 using System.Collections.Generic;
+using System.IO;
 
 namespace EcommerceBackend
 {
@@ -321,7 +322,7 @@ namespace EcommerceBackend
                 //Gerando um e-mail aleatório que será utilizado na criação do usuário
                 test.Log(Status.Info, "Gerando e-mail aleatório que será utilizado no request de criação do usuário.");
                 string email = utils.Utils.gerarEmailAleatorio(8);
-
+                string email_massa = email;
                 //Gerando um cpf aleatório que será utilizado na criação do usuário
                 test.Log(Status.Info, "Gerando CPF aleatório que será utilizado no request de criação do usuário.");
                 string cpf = utils.Utils.gerarCpf();
@@ -380,6 +381,8 @@ namespace EcommerceBackend
 
                 //Validando Status Code de retorno da requisição
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
+                test.Log(Status.Info, email);
+
                 Assert.That((int)responseCriaUsuario.StatusCode, Is.EqualTo(200), "Status Code diferente do esperado ao enviar requisição responsável por criar um usuário.");
 
                 //Criando a requisição responsável por realizar login com o usuário recém criado
@@ -395,6 +398,8 @@ namespace EcommerceBackend
                 }
                 );
 
+               
+
                 //Setando header de autenticação "X-CISIdentity"
                 test.Log(Status.Info, "Setando os headers necessários para enviar a requisição.");
                 utils.Utils.setCisToken(requestRealizaLogin);
@@ -404,6 +409,14 @@ namespace EcommerceBackend
 
                 //Inicio das validações
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
+
+                //Massa para utilizar no App
+                using (StreamWriter UsuarioGerado = File.AppendText(@"C:\AutomationTools\EcommerceBackendReports\Users\UsuariosGerados\UsuariosGerados.txt"))
+                {
+                    UsuarioGerado.WriteLine("Email: " + email_massa + " Senha: 112233");
+
+                }
+
                 Assert.That((int)responseRealizaLogin.StatusCode, Is.EqualTo(200), "Status Code diferente do esperado ao enviar requisição responsável por realizar login com o usuário que teve seus dados editados");
                 test.Log(Status.Info, "Validando o retorno das propriedades.");
                 Assert.That(responseRealizaLogin.Data.Name, Is.EqualTo("Automatic Test"), "Valor da propriedade 'Name' divergente.");
@@ -420,6 +433,7 @@ namespace EcommerceBackend
                 Assert.That(responseRealizaLogin.Data.City.State.Name, Is.EqualTo("Distrito Federal"), "Valor da propriedade 'City.State.Name' divergente.");
                 Assert.That(responseRealizaLogin.Data.Phone1, Is.EqualTo("1133333336"), "Valor da propriedade 'Phone1' divergente.");
                 test.Log(Status.Pass, "Validação ok, os dados do usuário foram alterados com sucesso.");
+
             }
             catch (Exception e)
             {
@@ -629,7 +643,6 @@ namespace EcommerceBackend
                     MiddleName = "",
                     Name = "Altera Dados Teste",
                     NickName = "Sr Put",
-                    Password = "_",
                     Phone1 = "1136333333",
                     Id = "5e14dfe966d1850001ee105c"
                 }
