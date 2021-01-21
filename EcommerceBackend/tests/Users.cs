@@ -606,7 +606,7 @@ namespace EcommerceBackend
         {
             ExtentTest test = null;
             test = extent.CreateTest("ValidaAlteraDadosUsuario").Info("Início do teste.");
-            string email = "testealteradados@mailinator.com";
+            string email = "vsk0401j@mailinator.com";
 
             try
             {
@@ -635,16 +635,16 @@ namespace EcommerceBackend
                         StateId = 2
                     },
                     CityId = 1,
-                    CPF = "24636944089",
+                    CPF = "66062681252",
                     CpfNf = true,
                     Email = email,
                     Gender = "F",
-                    UserId = 6947553,
+                    UserId = 7369435,
                     MiddleName = "",
-                    Name = "Altera Dados Teste",
+                    Name = "Alexandre Kenji PUT USERS",
                     NickName = "Sr Put",
                     Phone1 = "1136333333",
-                    Id = "5e14dfe966d1850001ee105c"
+                    Id = "6009ba2c87fac80001538110"
                 }
                 );
 
@@ -688,11 +688,11 @@ namespace EcommerceBackend
                 //Validando o valor de retorno das propriedades
                 test.Log(Status.Info, "Validando o retorno das propriedades.");
                 Assert.That((int)responseRealizaLogin.StatusCode, Is.EqualTo(200), "Status Code diferente do esperado ao enviar requisição responsável por realizar login com o usuário que teve seus dados editados");
-                Assert.That(responseRealizaLogin.Data.Name, Is.EqualTo("Altera Dados Teste"), "Valor da propriedade 'Name' divergente.");
+                Assert.That(responseRealizaLogin.Data.Name, Is.EqualTo("Alexandre Kenji PUT USERS"), "Valor da propriedade 'Name' divergente.");
                 Assert.That(responseRealizaLogin.Data.NickName, Is.EqualTo("Sr Put"), "Valor da propriedade 'NickName' divergente.");
                 Assert.That(responseRealizaLogin.Data.Gender, Is.EqualTo("F"), "Valor da propriedade 'Gender' divergente.");
                 Assert.That(responseRealizaLogin.Data.Email, Is.EqualTo(email), "Valor da propriedade 'Email' divergente.");
-                Assert.That(responseRealizaLogin.Data.CPF, Is.EqualTo("24636944089"), "Valor da propriedade 'CPF' divergente.");
+                Assert.That(responseRealizaLogin.Data.CPF, Is.EqualTo("66062681252"), "Valor da propriedade 'CPF' divergente.");
                 Assert.That(responseRealizaLogin.Data.DateOfBirth, Is.EqualTo("1996-04-12T00:00:00Z"), "Valor da propriedade 'Member.DateOfBirth' divergente.");
                 Assert.That(responseRealizaLogin.Data.CityId, Is.EqualTo("1"), "Valor da propriedade 'Member.CityId' divergente.");
                 Assert.That(responseRealizaLogin.Data.City.CityId, Is.EqualTo(1), "Valor da propriedade 'City.CityId' divergente.");
@@ -724,17 +724,16 @@ namespace EcommerceBackend
                         StateId = 10
                     },
                     CityId = 2369,
-                    CPF = "24636944089",
+                    CPF = "66062681252",
                     CpfNf = true,
                     Email = email,
                     Gender = "F",
-                    UserId = 6947553,
+                    UserId = 7369435,
                     MiddleName = "",
-                    Name = "Altera Dados Rollback",
-                    NickName = "Sr Rollback",
-                    Password = "_",
-                    Phone1 = "1136333335",
-                    Id = "5e14dfe966d1850001ee105c"
+                    Name = "Alexandre Kenji PUT USERS",
+                    NickName = "Sr Put",
+                    Phone1 = "1136333333",
+                    Id = "6009ba2c87fac80001538110"
                 }
                 );
 
