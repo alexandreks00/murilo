@@ -13,11 +13,60 @@ using System.Threading;
 using EcommerceBackend.models.Users;
 using Newtonsoft.Json;
 using System.IO;
+using EcommerceBackend.models.Discount;
 
 namespace EcommerceBackend.utils
 {
     public static class Utils
+
+
     {
+        public static int VerificaCinemaFlagsAllTrue(int theaterId)
+        {
+            if (!(theaterId > 0 ))
+            {
+                throw new ArgumentException("theaterId nao é valido");
+            }
+
+            //Atualizar para receber massa do txt
+            string cinema_salvador = "b6a41a1c-c89d-4428-a320-2a2eeb1b2145";
+
+            try
+            {
+                var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
+                var request = new RestRequest("/discount/validate/" + cinema_salvador, Method.GET);
+                request.RequestFormat = DataFormat.Json;
+                utils.Utils.setCisToken(request);
+
+                var response = client.Execute<ModelDiscountValidate>(request);
+                Assert.That((int)response.StatusCode, Is.EqualTo(200),
+                    "Status Code diferente do esperado ao realizar requisição responsável validar desconto lobby");
+                Assert.That(response.Data.IsCodeValid, Is.EqualTo(true),
+                    "QR Code invalido!");
+                Assert.That(response.Data.TheaterId, Is.EqualTo(theaterId),
+                    "QR CODE informado na request nao é o codigo correto que vem do response: " + theaterId);
+                Assert.IsTrue(response.Data.RuleType > 0, "Propriedade ruleType invalido");
+                Assert.IsTrue(response.Data.EnabledTypes[0] == 1, "Nao habilitado para ingresso");
+                Assert.IsTrue(response.Data.EnabledTypes[1] == 2, "Nao habilitado para snack");
+
+                DateTime localDate = DateTime.Now;
+                Assert.IsTrue(response.Data.ValidUntil > localDate, "Codigo expirado");
+
+
+            }
+            catch (Exception e)
+                {
+                    throw new Exception("Cinema invalido, atualizar a massa!");
+                }
+
+            return theaterId;
+
+
+        }
+
+
+
+
         public static string RetornaStringJson(string jsonFilePath)
         {
             if (string.IsNullOrEmpty(jsonFilePath))
