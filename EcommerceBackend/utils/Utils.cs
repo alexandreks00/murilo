@@ -37,8 +37,8 @@ namespace EcommerceBackend.utils
                 var request = new RestRequest("/discount/validate/" + cinema_salvador, Method.GET);
                 request.RequestFormat = DataFormat.Json;
                 utils.Utils.setCisToken(request);
-
                 var response = client.Execute<ModelDiscountValidate>(request);
+
                 Assert.That((int)response.StatusCode, Is.EqualTo(200),
                     "Status Code diferente do esperado ao realizar requisição responsável validar desconto lobby");
                 Assert.That(response.Data.IsCodeValid, Is.EqualTo(true),
