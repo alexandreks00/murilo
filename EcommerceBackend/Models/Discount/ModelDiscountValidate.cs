@@ -1,33 +1,30 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace EcommerceBackend.models.Discount
 {
    public class ModelDiscountValidate
     {
-        [JsonPropertyName("isCodeValid")]
+        [JsonProperty("isCodeValid", Required = Required.Always)]
         public bool IsCodeValid { get; set; }
 
-        [JsonPropertyName("message")]
+        [JsonProperty("message", Required = Required.Always)]
         public string Message { get; set; }
 
-        [JsonPropertyName("description")]
+        [JsonProperty("description", Required = Required.Always)]
         public string Description { get; set; }
 
-        [JsonPropertyName("theaterId")]
-        public int TheaterId { get; set; }
+        [JsonProperty("theaterId", Required = Required.Always)]
+        public long TheaterId { get; set; }
 
-        [JsonPropertyName("ruleType")]
+        [JsonProperty("ruleType", Required = Required.Always)]
         public int RuleType { get; set; }
 
-        [JsonPropertyName("enabledTypes")]
-        public IList<int> EnabledTypes { get; set; }
+        [JsonProperty("enabledTypes", Required = Required.Always)]
+        public IList<int> enabledTypes { get; set; }
 
-        [JsonPropertyName("validUntil")]
-        public DateTime ValidUntil { get; set; }
+        [JsonProperty("validUntil", Required = Required.Always)]
+        public DateTimeOffset ValidUntil { get; set; }
     }
 }

@@ -124,7 +124,7 @@ namespace EcommerceBackend
                 //Criando e enviando requisição
                 test.Log(Status.Info, "Criando requisição responsável por realizar login.");
                 var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
-                var request = new RestRequest("bus/v1/theaters/688", Method.GET);
+                var request = new RestRequest("bus/v1/theaters/785", Method.GET);
                 request.RequestFormat = DataFormat.Json;
                 utils.Utils.setCisToken(request);
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
@@ -295,7 +295,7 @@ namespace EcommerceBackend
                 //Criando e enviando requisição
                 test.Log(Status.Info, "Criando requisição responsável por realizar login.");
                 var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
-                var request = new RestRequest("showtime/theater/688", Method.GET);
+                var request = new RestRequest("showtime/theater/785", Method.GET);
                 request.RequestFormat = DataFormat.Json;
                 utils.Utils.setCisToken(request);
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");

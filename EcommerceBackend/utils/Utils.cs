@@ -23,20 +23,37 @@ namespace EcommerceBackend.utils
     {
         public static int VerificaCinemaFlagsAllTrue(int theaterId)
         {
+            /*
+             *  public enum RuleType : int
+                {
+                    QRCode = 1,
+                    Coupon = 2
+                }
+ 
+                public enum ProductType : int
+                {
+                    Ticket = 1,
+                    Snack = 2
+                }
+            */
+
+
             if (!(theaterId > 0 ))
             {
                 throw new ArgumentException("theaterId nao é valido");
             }
 
             //Atualizar para receber massa do txt
-            string cinema_salvador = "b6a41a1c-c89d-4428-a320-2a2eeb1b2145";
+            string cinema_qr_code = "b6a41a1c-c89d-4428-a320-2a2eeb1b2145";
 
+            var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
+            var request = new RestRequest("/discount/validate/" + cinema_qr_code, Method.GET);
+            request.RequestFormat = DataFormat.Json;
+            utils.Utils.setCisToken(request);
+            
             try
             {
-                var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
-                var request = new RestRequest("/discount/validate/" + cinema_salvador, Method.GET);
-                request.RequestFormat = DataFormat.Json;
-                utils.Utils.setCisToken(request);
+
                 var response = client.Execute<ModelDiscountValidate>(request);
 
                 Assert.That((int)response.StatusCode, Is.EqualTo(200),
@@ -45,10 +62,14 @@ namespace EcommerceBackend.utils
                     "QR Code invalido!");
                 Assert.That(response.Data.TheaterId, Is.EqualTo(theaterId),
                     "QR CODE informado na request nao é o codigo correto que vem do response: " + theaterId);
-                Assert.IsTrue(response.Data.RuleType > 0, "Propriedade ruleType invalido");
-                Assert.IsTrue(response.Data.EnabledTypes[0] == 1, "Nao habilitado para ingresso");
-                Assert.IsTrue(response.Data.EnabledTypes[1] == 2, "Nao habilitado para snack");
+                Assert.IsTrue(response.Data.RuleType > 0, response.Data.Message);
+                //Caso ruleType seja 0 ou menor, retorna a propria mensagem de erro do response
 
+                if (response.Data.RuleType > 0)
+                {
+                    Assert.IsTrue(response.Data.enabledTypes[0] == 1, "Nao habilitado para ingresso");
+                    Assert.IsTrue(response.Data.enabledTypes[1] == 2, "Nao habilitado para snack");
+                }
                 DateTime localDate = DateTime.Now;
                 Assert.IsTrue(response.Data.ValidUntil > localDate, "Codigo expirado");
 
@@ -62,6 +83,11 @@ namespace EcommerceBackend.utils
             return theaterId;
 
 
+        }
+
+        public static double IsNullDouble(System.Object d)
+        {
+            return (d != null && d is double) ? (double)d : 0;
         }
 
 

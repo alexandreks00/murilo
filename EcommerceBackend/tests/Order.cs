@@ -248,8 +248,7 @@ namespace EcommerceBackend
       
                 */
 
-                
-                string jsonFilePath = @"C:\Users\alexa\Downloads\restSharp\EcommerceBackendRestSharp\EcommerceBackend\utils\payloads\ValidaRealizaPedidoSnack.json";
+                string jsonFilePath = @"C:\Users\alexa\CSharpProjects\backend\EcommerceBackendRestSharp\EcommerceBackend\utils\payloads\ValidaRealizaPedidoSnack.json";
                 string json = Utils.RetornaStringJson(jsonFilePath);
 
                 /*
@@ -273,7 +272,7 @@ namespace EcommerceBackend
                 throw new Exception("Falha ao validar geracao do pedido: " + e.Message);
             }
         }
-
+        [Test]
         public void ValidaPreparoDoPedido()
         {
             ExtentTest test = null;
@@ -291,7 +290,7 @@ namespace EcommerceBackend
                 utils.Utils.setCisToken(request);
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
                 utils.Utils.setAuthorizationToken(request, authorizationToken);
-                string jsonFilePath = @"C:\AutomationTools\Massa\Order\ValidaRealizaPedidoSnack.json";
+                string jsonFilePath = @"C:\Users\alexa\CSharpProjects\backend\EcommerceBackendRestSharp\EcommerceBackend\utils\payloads\ValidaRealizaPedidoSnack.json";
                 string json = Utils.RetornaStringJson(jsonFilePath);
                 request.AddParameter("application /json", json, ParameterType.RequestBody);
                 IRestResponse response = client.Execute(request);

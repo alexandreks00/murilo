@@ -202,6 +202,7 @@
     <Compile Include="models\Discount\ModelDiscountValidate.cs" />
     <Compile Include="models\Common\ModelCommon.cs" />
     <Compile Include="models\Cache\ModelLimparCache.cs" />
+    <Compile Include="models\Discount\ModelEnabledTypes.cs" />
     <Compile Include="models\Loyalty\ModelMenus.cs" />
     <Compile Include="models\Loyalty\ModelBenefits.cs" />
     <Compile Include="models\Loyalty\ModelLoyalty.cs" />
@@ -216,9 +217,6 @@
     <Compile Include="models\Order\ModelTickets .cs" />
     <Compile Include="models\Order\ModelProduct .cs" />
     <Compile Include="models\Order\ModelOrder.cs" />
-    <Compile Include="models\Order\UserControl1.xaml.cs">
-      <DependentUpon>UserControl1.xaml</DependentUpon>
-    </Compile>
     <Compile Include="models\SeatMap\ModelSeatMap.cs" />
     <Compile Include="models\Social\ModelSocial.cs" />
     <Compile Include="models\Social\SocialResponse.cs" />
@@ -251,23 +249,23 @@
     <Compile Include="tests\Ticket.cs" />
     <Compile Include="tests\SuperSaver.cs" />
     <Compile Include="tests\Users.cs" />
-    <Compile Include="UnitTest1.cs" />
     <Compile Include="utils\ResponseProperties.cs" />
     <Compile Include="utils\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="utils\payloads\ValidaRealizaPedidoMeiaElo.json" />
+    <None Include="utils\payloads\ValidaRealizaPedidoMeiaElo.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="utils\payloads\ValidaRealizaPedidoSnack.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="models\Order\UserControl1.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Content Include="utils\UsuariosNLP\RegistrarUsuarios.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -283,5 +281,9 @@
   </Target>
   <Import Project="..\packages\MSTest.TestAdapter.1.3.2\build\net45\MSTest.TestAdapter.targets" Condition="Exists('..\packages\MSTest.TestAdapter.1.3.2\build\net45\MSTest.TestAdapter.targets')" />
   <Import Project="..\packages\SpecFlow.3.1.67\build\SpecFlow.targets" Condition="Exists('..\packages\SpecFlow.3.1.67\build\SpecFlow.targets')" />
-  <ProjectExtensions />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties utils_4payloads_4validarealizapedidosnack_1json__JsonSchema="https://bitbucket.org/atlassianlabs/atlascode/raw/main/resources/schemas/pipelines-schema.json" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>
