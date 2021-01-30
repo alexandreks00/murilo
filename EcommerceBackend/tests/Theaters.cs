@@ -117,40 +117,29 @@ namespace EcommerceBackend
         {
             ExtentTest test = null;
             test = extent.CreateTest("ValidaDetalhesCinema").Info("Início do teste.");
-
+            int theaterId = 785; 
 
             try
             {
                 //Criando e enviando requisição
                 test.Log(Status.Info, "Criando requisição responsável por realizar login.");
                 var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
-                var request = new RestRequest("bus/v1/theaters/785", Method.GET);
+                var request = new RestRequest("bus/v1/theaters/"+theaterId, Method.GET);
                 request.RequestFormat = DataFormat.Json;
                 utils.Utils.setCisToken(request);
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
 
                 var response = client.Execute<List<ModelDetalhesCinema>>(request);
 
-                string responseContent = response.Content.ToString();
-
-                //Declarando as propriedades que deverão obrigatoriamente estar na resposta da requisição
-                string[] properties = new string[] { "\"Auditoriums\":", "\"TheaterCode\":", "\"Description\":", "\"AuditoriumCode\":",
-                "\"TotalSeats\":", "\"XD\":", "\"Prime\":", "\"DBOX\":", "\"DboxDescription\":", "\"Status\":", "\"Notice\":",
-                "\"InvoiceEnabled\":", "\"SnackbarEnabled\":", "\"IngressoSiteCode\":", "\"IP\":", "\"Licence\":", "\"AVCB\":",
-                "\"MerchantId\":", "\"MerchantKey\":", "\"Remarks\":", "\"PriceTableHTML\":"};
-
-
                 //Início das validações
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
                 Assert.That((int)response.StatusCode, Is.EqualTo(200), "Status Code divergente.");
-                test.Log(Status.Info, "Validando se o contrato esta ok.");
-                Utils.validaContrato(properties, responseContent, test);
+                
                 test.Log(Status.Info, "Contrato validado em sua totalidade.");
 
                 if (response.IsSuccessful)
                 {
-
-                    test.Log(Status.Info, "Validando dados de theater 688.");
+                    test.Log(Status.Info, "Validando dados de theater "+theaterId);
 
                     Assert.That(response.Data[0].Id, Is.EqualTo("762cb89b-51cb-4c7d-8dba-a862310af75f"), "Id divergente.");
                     Assert.That(response.Data[0].TheaterCode, Is.EqualTo("688"), "TheaterCode divergente.");

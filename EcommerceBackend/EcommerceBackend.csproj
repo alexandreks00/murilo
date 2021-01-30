@@ -263,10 +263,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="utils\UsuariosNLP\RegistrarUsuarios.txt">
+    <Content Include="utils\massa\Session_ShowTime_IDs\ShowTimes_id.txt" />
+    <Content Include="utils\massa\UsuariosNLP\RegistrarUsuarios.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="utils\massa\UsuariosParaTeste\UsuariosGerados.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

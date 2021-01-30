@@ -398,7 +398,6 @@ namespace EcommerceBackend
                 }
                 );
 
-               
 
                 //Setando header de autenticação "X-CISIdentity"
                 test.Log(Status.Info, "Setando os headers necessários para enviar a requisição.");
@@ -410,12 +409,6 @@ namespace EcommerceBackend
                 //Inicio das validações
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
 
-                //Massa para utilizar no App
-                using (StreamWriter UsuarioGerado = File.AppendText(@"C:\AutomationTools\EcommerceBackendReports\Users\UsuariosGerados\UsuariosGerados.txt"))
-                {
-                    UsuarioGerado.WriteLine("Email: " + email_massa + " Senha: 112233");
-
-                }
 
                 Assert.That((int)responseRealizaLogin.StatusCode, Is.EqualTo(200), "Status Code diferente do esperado ao enviar requisição responsável por realizar login com o usuário que teve seus dados editados");
                 test.Log(Status.Info, "Validando o retorno das propriedades.");
@@ -433,6 +426,19 @@ namespace EcommerceBackend
                 Assert.That(responseRealizaLogin.Data.City.State.Name, Is.EqualTo("Distrito Federal"), "Valor da propriedade 'City.State.Name' divergente.");
                 Assert.That(responseRealizaLogin.Data.Phone1, Is.EqualTo("1133333336"), "Valor da propriedade 'Phone1' divergente.");
                 test.Log(Status.Pass, "Validação ok, os dados do usuário foram alterados com sucesso.");
+
+                //Massa para utilizar no App
+                using (StreamWriter UsuarioGerado =
+                File.AppendText(@"C:\Users\alexa\CSharpProjects\backend\EcommerceBackendRestSharp\EcommerceBackend\utils\massa\UsuariosParaTeste\UsuariosGerados.txt"))
+                {
+                    UsuarioGerado.WriteLine(
+                        "Email: " + email_massa + " " +
+                        "Senha: 112233" + " " +
+                        "Name: " + responseRealizaLogin.Data.Name + " " +
+                        "CPF: "+ responseRealizaLogin.Data.CPF
+                        );
+
+                }
 
             }
             catch (Exception e)

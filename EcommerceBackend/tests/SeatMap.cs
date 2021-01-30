@@ -43,9 +43,6 @@ namespace EcommerceBackend
             string Idtheater = "785";
             string Idsession = "5445B76F-E8B1-4C7D-BB8F-5CAAA13ADCCE";
 
-            //string Idtheater = "785";
-            //string Idsession = "4B5E8F7F-2A16-4FE7-82C3-D993B9ACA3F7";
-
 
             try
             {
@@ -107,13 +104,14 @@ namespace EcommerceBackend
                 test.Log(Status.Info, "Enviando requisição.");
                 var response = client.Execute<ModelSeatMap>(request);
                 string responseContent = response.Content.ToString();
+
                 //Declarando as propriedades que deverão obrigatoriamente estar na resposta da requisição
                 string[] properties = new string[] { "\"Room\":", "\"Id\":", "\"Name\":", "\"Avail\":",
                 "\"SectorCode\":", "\"Positions\":", "\"Row\":", "\"Col\":", "\"Code\":", "\"Name\":", "\"Status\":",
                 "\"Type\":", "\"Subtype\":", "\"Realtype\":"};
 
 
-                if (responseContent != null)
+                if (String.IsNullOrEmpty(responseContent))
                 {
                     //Início das validações
          
