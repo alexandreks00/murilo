@@ -290,7 +290,7 @@ namespace EcommerceBackend
                 utils.Utils.setCisToken(request);
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
                 utils.Utils.setAuthorizationToken(request, authorizationToken);
-                string jsonFilePath = @"C:\Users\alexa\CSharpProjects\backend\EcommerceBackendRestSharp\EcommerceBackend\utils\payloads\ValidaRealizaPedidoSnack.json";
+                string jsonFilePath = @"C:\Users\alexa\CSharpProjects\backend\EcommerceBackendRestSharp\EcommerceBackend\utils\payloads\ValidaRealizaPedidoMeiaElo.json";
                 string json = Utils.RetornaStringJson(jsonFilePath);
                 request.AddParameter("application /json", json, ParameterType.RequestBody);
                 IRestResponse response = client.Execute(request);
@@ -324,7 +324,7 @@ namespace EcommerceBackend
         {
             ExtentTest test = null;
             test = extent.CreateTest("ValidaRealizaPedidoSnack").Info("Início do teste.");
-
+            
             try
             {
 
@@ -338,20 +338,12 @@ namespace EcommerceBackend
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
                 utils.Utils.setAuthorizationToken(request, authorizationToken);
 
-                /*
-                    enviando o payload / body atraves do arquivo.json de massa e retornando na variavel json o 
-                    conteudo do arquivo já de-serializado
-      
-                */
-
-
-                string jsonFilePath = @"C:\Users\alexa\Downloads\restSharp\EcommerceBackendRestSharp\EcommerceBackend\utils\payloads\ValidaRealizaPedidoMeiaElo.json";
+                string jsonFilePath =
+                @"C:\Users\alexa\CSharpProjects\backend\EcommerceBackendRestSharp\EcommerceBackend\utils\payloads\ValidaRealizaPedidoMeiaElo.json";
                 string json = Utils.RetornaStringJson(jsonFilePath);
+                dynamic jsonObj = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
+                jsonObj["tickets"][0]
 
-                /*
-                     No metodo AddParameter especificamos o content-type como "application/json"
-                     Dessa forma não precisamos usar o deserializer
-                 */
                 request.AddParameter("application /json", json, ParameterType.RequestBody);
                 var response = client.Execute(request);
                 test.Log(Status.Info, "Enviando requisição.");

@@ -22,28 +22,41 @@ namespace EcommerceBackend.utils
 
     {
         
-        public static void VerificaSessaoValida(int theaterId)
+        public static string VerificaSessaoValida(int theaterId)
         {
             if (theaterId < 0)
             {
                 throw new ArgumentOutOfRangeException("Codigo do cinema invalido");
             }
-            
+
             var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
-            var request = new RestRequest("bus/v1/bookings/showtimes/theaters/"+theaterId, Method.GET);
+            var request = new RestRequest("bus/v1/bookings/showtimes/theaters/" + theaterId, Method.GET);
             request.RequestFormat = DataFormat.Json;
             Utils.setCisToken(request);
             var response = client.Get<List<ModelTheatersShowTimes>>(request);
-            
-            if (response.IsSuccessful)
+
+            string show_time_id = "";
+            int dt = response.Data[0].Theaters[0].Dates.Count;
+            ;
+            for (int j = 0; j < dt; j++)
             {
-                Console.WriteLine(response.Data);
+                for (int i = 0; i < j; i++)
+                {
+
+                    var session_id = response.Data[0].Theaters[0].Dates[j].ShowTimes[i];
+                    if (!session_id.IsSessionExpired)
+                    {
+                        show_time_id = session_id.ShowTimeId;
+                        
+                        break;
+                    }
+
+
+                }
+
             }
-            else
-            {
-                Console.WriteLine("Wrong!");
-            }
-            
+            return show_time_id;
+
         }
 
 

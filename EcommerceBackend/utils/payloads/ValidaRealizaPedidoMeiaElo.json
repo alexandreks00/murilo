@@ -30,7 +30,7 @@
   "movieId": 21429,
   "movieCode": 6215,
   "payment": {
-    "number": "424242",
+    "number": "451416",
     "ProtectedCardNumber": "7a02f76d-79a9-47d6-ac94-19f28195d812"
   },
   "products": [],
@@ -64,7 +64,7 @@
       },
       "promotion": {
         "partner": 7,
-        "code": "424242"
+        "code": "451416"
 
       },
       "unitPrice": 19.5,

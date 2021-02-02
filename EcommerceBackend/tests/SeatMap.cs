@@ -11,6 +11,7 @@ using EcommerceBackend.models;
 using DemoRestSharp.models.SeatMap;
 using EcommerceBackend.models.Bookings.ShowTimes;
 using System.Collections.Generic;
+using System.IO;
 
 namespace EcommerceBackend
 {
@@ -40,35 +41,9 @@ namespace EcommerceBackend
             test = extent.CreateTest("ValidaMapaSessaoDisponivel").Info("Início do teste.");
 
             int theaterId = 785;
-            
+            string show_time_id = Utils.VerificaSessaoValida(theaterId);
 
-            var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
-            var request = new RestRequest("bus/v1/bookings/showtimes/theaters/" + theaterId, Method.GET);
-            request.RequestFormat = DataFormat.Json;
-            Utils.setCisToken(request);
-            var response = client.Get<List<ModelTheatersShowTimes>>(request);
 
-            
-            
-            string show_time_id = "";
-            int dt = response.Data[0].Theaters[0].Dates.Count;
-            ;
-            for (int j = 0; j < dt; j++)
-            {
-                for (int i = 0; i < j; i++)
-                {
-                    
-                    var session_id = response.Data[0].Theaters[0].Dates[j].ShowTimes[i];
-                    if (!session_id.IsSessionExpired)
-                    {
-                        show_time_id = session_id.ShowTimeId;
-                        break;
-                    }
-                    
-
-                }
-
-            }
                 test.Log(Status.Info, show_time_id);
 
             try
@@ -79,11 +54,11 @@ namespace EcommerceBackend
                 var restClient = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
                 var restRequest = new RestRequest("theater/v1/map/" + theaterId + "/" + show_time_id, Method.GET);
 
-                request.RequestFormat = DataFormat.Json;
+                restRequest.RequestFormat = DataFormat.Json;
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
-                Utils.setCisToken(request);
+                Utils.setCisToken(restRequest);
                 test.Log(Status.Info, "Enviando requisição.");
-                var restResponse = client.Execute(restRequest);
+                var restResponse = restClient.Execute(restRequest);
 
                 string responseContent = restResponse.Content.ToString();
                 //Declarando as propriedades que deverão obrigatoriamente estar na resposta da requisição
@@ -95,10 +70,23 @@ namespace EcommerceBackend
                 {
                     //Início das validações
                     test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
-                    Assert.That((int)response.StatusCode, Is.EqualTo(200), "Status Code divergente.");
+                    Assert.That((int)restResponse.StatusCode, Is.EqualTo(200), "Status Code divergente.");
                     Utils.validaContrato(properties, responseContent, test);
                     test.Log(Status.Info, "Lista de assentos concluída - teste terminado.");
                     test.Log(Status.Pass, "Teste ok, todas as verificações foram realizadas com sucesso.");
+
+                    //Salva o id de ShowTime (id da sessão do filme) em um txt
+                    using (StreamWriter ShowTimes_id = File.AppendText(
+                    @"C:\Users\alexa\CSharpProjects\backend\EcommerceBackendRestSharp\EcommerceBackend\utils\massa\Session_ShowTime_IDs\ShowTimes_id.txt")
+                                                                      )
+                    {
+                        ShowTimes_id.WriteLine
+                            (
+                            "Cinema: " + theaterId+ " " +
+                            "SessionID: "+show_time_id
+                            );
+
+                    }
                 }
 
             }

@@ -8,10 +8,10 @@ namespace DemoRestSharp.models.Theaters
 {
     public class ModelState
     {
-        public string StateId { get; set; }
+        public int StateId { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
-        public string CountryId { get; set; }
+        public int CountryId { get; set; }
 
 
 

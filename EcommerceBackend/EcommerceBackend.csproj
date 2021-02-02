@@ -219,6 +219,7 @@
     <Compile Include="models\Order\ModelTickets .cs" />
     <Compile Include="models\Order\ModelProduct .cs" />
     <Compile Include="models\Order\ModelOrder.cs" />
+    <Compile Include="models\Order\ShowTimeSessionId.cs" />
     <Compile Include="models\SeatMap\ModelSeatMap.cs" />
     <Compile Include="models\Social\ModelSocial.cs" />
     <Compile Include="models\Social\SocialResponse.cs" />
@@ -265,7 +266,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="utils\massa\Session_ShowTime_IDs\ShowTimes_id.txt" />
+    <None Include="utils\massa\Session_ShowTime_IDs\ShowTimes_id.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="utils\massa\UsuariosNLP\RegistrarUsuarios.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

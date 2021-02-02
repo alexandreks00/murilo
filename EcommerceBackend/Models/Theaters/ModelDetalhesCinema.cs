@@ -19,7 +19,7 @@ namespace DemoRestSharp.models.Theaters
         public string Address2 { get; set; }
         public int CityId { get; set; }
         public List<ModelCity> City { get; set; }
-        public string StateId { get; set; }
+        public int StateId { get; set; }
         public List<ModelState> State { get; set; }
         public string Phone1 { get; set; }
         public string Remarks { get; set; }

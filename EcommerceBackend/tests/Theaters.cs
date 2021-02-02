@@ -52,6 +52,10 @@ namespace EcommerceBackend
 
                 var response = client.Execute<List<ModelTheater>>(request);
 
+                string response_string = response.Content;
+                
+               
+
                 //Início das validações
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
                 Assert.That((int)response.StatusCode, Is.EqualTo(200), "Status Code divergente.");
@@ -108,7 +112,7 @@ namespace EcommerceBackend
                     Assert.That(response.Data[0].Longitude, Is.EqualTo(-38.445869), "Longitude divergente.");
                     Assert.That(response.Data[0].Address1, Is.EqualTo("Avenida Tancredo Neves, 2915, Loja 3005"), "Address1 divergente.");
                     Assert.That(response.Data[0].CityId, Is.EqualTo(988), "CityId divergente.");
-                    Assert.That(response.Data[0].StateId, Is.EqualTo("5"), "StateId divergente.");
+                    Assert.That(response.Data[0].StateId, Is.EqualTo(5), "StateId divergente.");
                     Assert.That(response.Data[0].Phone1, Is.EqualTo("(71) 3023-3916"), "Phone1 divergente.");
                     Assert.That(response.Data[0].Status, Is.EqualTo(10), "Status divergente.");
                     Assert.That(response.Data[0].InvoiceEnabled, Is.EqualTo("False"), "InvoiceEnabled divergente.");
@@ -119,13 +123,13 @@ namespace EcommerceBackend
 
                     Assert.That(response.Data[0].City[0].CityId, Is.EqualTo(988), "CityId divergente.");
                     Assert.That(response.Data[0].City[0].Name, Is.EqualTo("SALVADOR"), "Name divergente.");
-                    Assert.That(response.Data[0].City[0].StateId, Is.EqualTo("5"), "StateId divergente.");
+                    Assert.That(response.Data[0].City[0].StateId, Is.EqualTo(5), "StateId divergente.");
                     Assert.That(response.Data[0].City[0].IbgeCode, Is.EqualTo("2927408"), "IbgeCode divergente.");
 
-                    Assert.That(response.Data[0].State[0].StateId, Is.EqualTo("5"), "StateId divergente.");
+                    Assert.That(response.Data[0].State[0].StateId, Is.EqualTo(5), "StateId divergente.");
                     Assert.That(response.Data[0].State[0].Code, Is.EqualTo("BA"), "Code divergente.");
                     Assert.That(response.Data[0].State[0].Name, Is.EqualTo("Bahia"), "Name divergente.");
-                    Assert.That(response.Data[0].State[0].CountryId, Is.EqualTo("1"), "CountryId divergente.");
+                    Assert.That(response.Data[0].State[0].CountryId, Is.EqualTo(1), "CountryId divergente.");
 
                 }
 
