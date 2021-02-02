@@ -12,7 +12,7 @@ namespace EcommerceBackend.models.Bookings.ShowTimes
         public List<ModelDate> Dates { get; set; }
         public List<ModelShowTime> ShowTimes { get; set; }
         public List<ModelSuggestion> Suggestions { get; set; }
-        
+        public ModelTheatersShowTimes TheatersShowtime { get; set; }
 
     }
 }

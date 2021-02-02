@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,7 +25,10 @@ namespace DemoRestSharp.models.Theaters
         public string Remarks { get; set; }
         public string PriceTableHTML { get; set; }
         public int Status { get; set; }
+
+        [JsonProperty("Auditoriums", Required = Required.Always)]
         public List<ModelAuditoriums> Auditoriums { get; set; }
+
         public string InvoiceEnabled { get; set; }
         public string SnackbarEnabled { get; set; }
         public string IngressoSiteCode { get; set; }

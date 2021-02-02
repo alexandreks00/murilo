@@ -40,7 +40,6 @@ namespace EcommerceBackend
             test = extent.CreateTest("ValidaMapaSessaoDisponivel").Info("Início do teste.");
 
             int theaterId = 785;
-            string Idsession = "D7F77B6B-8A5B-4D12-BF41-289D7C52D221";
             
 
             var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
@@ -49,20 +48,28 @@ namespace EcommerceBackend
             Utils.setCisToken(request);
             var response = client.Get<List<ModelTheatersShowTimes>>(request);
 
-            int i = 0;
+            
+            
             string show_time_id = "";
-            while (true)
+            int dt = response.Data[0].Theaters[0].Dates.Count;
+            ;
+            for (int j = 0; j < dt; j++)
             {
-                var session_id = response.Data[0].Theaters[0].Dates[0].ShowTimes[i];
-                if (!session_id.IsSessionExpired)
+                for (int i = 0; i < j; i++)
                 {
-                    show_time_id = session_id.ShowTimeId;
-                    break;
+                    
+                    var session_id = response.Data[0].Theaters[0].Dates[j].ShowTimes[i];
+                    if (!session_id.IsSessionExpired)
+                    {
+                        show_time_id = session_id.ShowTimeId;
+                        break;
+                    }
+                    
+
                 }
-                i++;
 
             }
-            test.Log(Status.Info, show_time_id);
+                test.Log(Status.Info, show_time_id);
 
             try
             {
@@ -70,7 +77,7 @@ namespace EcommerceBackend
                 //comentario
                 test.Log(Status.Info, "Criando requisição.");
                 var restClient = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
-                var restRequest = new RestRequest("theater/v1/map/" + theaterId + "/" + Idsession, Method.GET);
+                var restRequest = new RestRequest("theater/v1/map/" + theaterId + "/" + show_time_id, Method.GET);
 
                 request.RequestFormat = DataFormat.Json;
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
@@ -78,13 +85,13 @@ namespace EcommerceBackend
                 test.Log(Status.Info, "Enviando requisição.");
                 var restResponse = client.Execute(restRequest);
 
-                string responseContent = response.Content.ToString();
+                string responseContent = restResponse.Content.ToString();
                 //Declarando as propriedades que deverão obrigatoriamente estar na resposta da requisição
                 string[] properties = new string[] { "\"Room\":", "\"Id\":", "\"Name\":", "\"Avail\":",
                 "\"SectorCode\":", "\"Positions\":", "\"Row\":", "\"Col\":", "\"Code\":", "\"Name\":", "\"Status\":",
                 "\"Type\":", "\"Subtype\":", "\"Realtype\":"};
 
-                if (responseContent != null)
+                if (restResponse.IsSuccessful)
                 {
                     //Início das validações
                     test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
