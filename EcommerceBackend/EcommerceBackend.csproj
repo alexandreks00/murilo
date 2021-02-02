@@ -194,6 +194,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="models\Bookings\ShowTimes\ModelBookingsShowTimesTheaters.cs" />
     <Compile Include="models\Bookings\ShowTimes\ModelDate.cs" />
     <Compile Include="models\Bookings\ShowTimes\ModelTheatersShowTimes.cs" />
     <Compile Include="models\Bookings\ShowTimes\ModelTheaters.cs" />

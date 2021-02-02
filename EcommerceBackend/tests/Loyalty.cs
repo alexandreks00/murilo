@@ -429,7 +429,7 @@ namespace EcommerceBackend
 
         public void ValidaConsultaSaldoCliente()
         {
-
+            //Erro de massa, user expirado
             string email = "massanlp@mailinator.com";
             string authorizationToken = utils.Utils.getAuthorization(email, "112233");
 
@@ -460,7 +460,7 @@ namespace EcommerceBackend
 
                 Assert.That(response.Data[0].category, Is.EqualTo("Fã sortudo"), "category divergente.");
                 Utils.IsNullDouble(response.Data[0].balance);
-                //Assert.That(response.Data[0].expired, Is.EqualTo("False"), "expired divergente.");
+                Assert.That(response.Data[0].expired, Is.EqualTo("False"), "expired divergente.");
                 Assert.That(response.Data[0].menus[0].title, Is.EqualTo("Extrato"), "title divergente.");
 
                 Assert.That(response.Data[0].menus[1].title, Is.EqualTo("Resgatar Prêmios"), "title divergente.");

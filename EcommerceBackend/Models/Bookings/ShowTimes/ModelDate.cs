@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace EcommerceBackend.models.Bookings.ShowTimes
 {
-    class ModelDate
+   public class ModelDate
     {
         public DateTime Date { get; set; }
         public DateTime ExhibitionDate { get; set; }
-        public IList<ModelShowTime> ShowTimes { get; set; }
+        public List<ModelShowTime> ShowTimes { get; set; }
     }
 }

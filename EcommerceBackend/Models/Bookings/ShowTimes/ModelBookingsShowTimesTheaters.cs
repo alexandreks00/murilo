@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace EcommerceBackend.models.Bookings.ShowTimes
 {
-    public class ModelTheaters
+    class ModelBookingsShowTimesTheaters
     {
-        public string TheaterCode { get; set; }
-        public string Utc { get; set; }
-        public List<ModelDate> Dates { get; set; }
 
     }
 }
-

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EcommerceBackend.models.Bookings.ShowTimes
 {
-    class ModelSuggestion
+   public class ModelSuggestion
     {
         public int id { get; set; }
         public string ShowTimeId { get; set; }

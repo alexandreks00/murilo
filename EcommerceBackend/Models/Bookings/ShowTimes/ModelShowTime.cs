@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EcommerceBackend.models.Bookings.ShowTimes
 {
-    class ModelShowTime
+    public class ModelShowTime
     {
         public int id { get; set; }
         public string ShowTimeId { get; set; }
@@ -29,7 +29,7 @@ namespace EcommerceBackend.models.Bookings.ShowTimes
         public bool TheaterAllow { get; set; }
         public string Utc { get; set; }
         public int level { get; set; }
-        public IList<ModelSuggestion> Suggestions { get; set; }
+        public List<ModelSuggestion> Suggestions { get; set; }
         public int SnackCategoryId { get; set; }
         public string SnackCategoryIconUrl { get; set; }
     }

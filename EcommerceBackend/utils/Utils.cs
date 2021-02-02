@@ -14,13 +14,42 @@ using EcommerceBackend.models.Users;
 using Newtonsoft.Json;
 using System.IO;
 using EcommerceBackend.models.Discount;
+using EcommerceBackend.models.Bookings.ShowTimes;
 
 namespace EcommerceBackend.utils
 {
     public static class Utils
 
-
     {
+        
+        public static void VerificaSessaoValida(int theaterId)
+        {
+            if (theaterId < 0)
+            {
+                throw new ArgumentOutOfRangeException("Codigo do cinema invalido");
+            }
+            
+            var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
+            var request = new RestRequest("bus/v1/bookings/showtimes/theaters/"+theaterId, Method.GET);
+            request.RequestFormat = DataFormat.Json;
+            Utils.setCisToken(request);
+            var response = client.Get<List<ModelTheatersShowTimes>>(request);
+            
+            if (response.IsSuccessful)
+            {
+                Console.WriteLine(response.Data);
+            }
+            else
+            {
+                Console.WriteLine("Wrong!");
+            }
+            
+        }
+
+
+
+
+         
         public static int VerificaCinemaFlagsAllTrue(int theaterId)
         {
             /*
@@ -53,7 +82,6 @@ namespace EcommerceBackend.utils
             
             try
             {
-
                 var response = client.Execute<ModelDiscountValidate>(request);
 
                 Assert.That((int)response.StatusCode, Is.EqualTo(200),
@@ -77,7 +105,7 @@ namespace EcommerceBackend.utils
             }
             catch (Exception e)
                 {
-                    throw new Exception("Cinema invalido, atualizar a massa!");
+                    throw new Exception("Cinema invalido, atualizar a massa!" + e);
                 }
 
             return theaterId;
@@ -109,6 +137,7 @@ namespace EcommerceBackend.utils
             request.AddHeader("X-CISIdentity", ConfigurationManager.AppSettings["CISToken"]);
             return request;
         }
+
 
         public static RestRequest setCisTokenDEV(RestRequest request)
         {

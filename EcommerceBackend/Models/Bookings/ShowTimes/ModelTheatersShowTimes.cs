@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 
 namespace EcommerceBackend.models.Bookings.ShowTimes
 {
-    class ModelTheatersShowTimes
+    public class ModelTheatersShowTimes
     {
-        public IList<ModelTheaters> Theaters { get; set; }
+        public List<ModelTheaters> Theaters { get; set; }
+        public List<ModelDate> Dates { get; set; }
+        public List<ModelShowTime> ShowTimes { get; set; }
+        public List<ModelSuggestion> Suggestions { get; set; }
+        
 
     }
 }

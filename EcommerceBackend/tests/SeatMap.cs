@@ -9,9 +9,8 @@ using AventStack.ExtentReports.Reporter.Configuration;
 using EcommerceBackend.utils;
 using EcommerceBackend.models;
 using DemoRestSharp.models.SeatMap;
-
-
-
+using EcommerceBackend.models.Bookings.ShowTimes;
+using System.Collections.Generic;
 
 namespace EcommerceBackend
 {
@@ -40,23 +39,44 @@ namespace EcommerceBackend
             ExtentTest test = null;
             test = extent.CreateTest("ValidaMapaSessaoDisponivel").Info("Início do teste.");
 
-            string Idtheater = "785";
-            string Idsession = "5445B76F-E8B1-4C7D-BB8F-5CAAA13ADCCE";
+            int theaterId = 785;
+            string Idsession = "D7F77B6B-8A5B-4D12-BF41-289D7C52D221";
+            
 
+            var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
+            var request = new RestRequest("bus/v1/bookings/showtimes/theaters/" + theaterId, Method.GET);
+            request.RequestFormat = DataFormat.Json;
+            Utils.setCisToken(request);
+            var response = client.Get<List<ModelTheatersShowTimes>>(request);
+
+            int i = 0;
+            string show_time_id = "";
+            while (true)
+            {
+                var session_id = response.Data[0].Theaters[0].Dates[0].ShowTimes[i];
+                if (!session_id.IsSessionExpired)
+                {
+                    show_time_id = session_id.ShowTimeId;
+                    break;
+                }
+                i++;
+
+            }
+            test.Log(Status.Info, show_time_id);
 
             try
             {
                 //Criando e enviando requisição
                 //comentario
                 test.Log(Status.Info, "Criando requisição.");
-                var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
-                var request = new RestRequest("theater/v1/map/" + Idtheater + "/" + Idsession, Method.GET);
+                var restClient = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
+                var restRequest = new RestRequest("theater/v1/map/" + theaterId + "/" + Idsession, Method.GET);
 
                 request.RequestFormat = DataFormat.Json;
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
                 Utils.setCisToken(request);
                 test.Log(Status.Info, "Enviando requisição.");
-                var response = client.Execute(request);
+                var restResponse = client.Execute(restRequest);
 
                 string responseContent = response.Content.ToString();
                 //Declarando as propriedades que deverão obrigatoriamente estar na resposta da requisição
