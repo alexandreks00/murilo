@@ -224,15 +224,15 @@ namespace EcommerceBackend
                         test.Log(Status.Fail, "Cinema Inexistente!");
                     }
                     test.Log(Status.Info, "Validando a sala específica na posição [0].");
-                    Assert.That(response.Data[0].Auditoriums[0].TheaterCode, Is.EqualTo("716"), "TheaterCode divergente.");
+                    Assert.That(response.Data[0].Auditoriums[0].TheaterCode, Is.EqualTo(716), "TheaterCode divergente.");
                     Assert.That(response.Data[0].Auditoriums[0].Description, Is.EqualTo(""), "Description divergente.");
-                    Assert.That(response.Data[0].Auditoriums[0].AuditoriumCode, Is.EqualTo("4"), "AuditoriumCode divergente.");
-                    Assert.That(response.Data[0].Auditoriums[0].TotalSeats, Is.EqualTo("133"), "TotalSeats divergente.");
+                    Assert.That(response.Data[0].Auditoriums[0].AuditoriumCode, Is.EqualTo(4), "AuditoriumCode divergente.");
+                    Assert.That(response.Data[0].Auditoriums[0].TotalSeats, Is.EqualTo(133), "TotalSeats divergente.");
                     Assert.That(response.Data[0].Auditoriums[0].Xd, Is.EqualTo(false), "XD divergente.");
                     Assert.That(response.Data[0].Auditoriums[0].Prime, Is.EqualTo(false), "Prime divergente.");
                     Assert.That(response.Data[0].Auditoriums[0].Dbox, Is.EqualTo(false), "DBOX divergente.");
                     Assert.That(response.Data[0].Auditoriums[0].DboxDescription, Is.EqualTo(""), "DboxDescription divergente.");
-                    Assert.That(response.Data[0].Auditoriums[0].Status, Is.EqualTo("10"), "Status divergente.");
+                    Assert.That(response.Data[0].Auditoriums[0].Status, Is.EqualTo(10), "Status divergente.");
 
                     test.Log(Status.Info, "Sala específica validada com sucesso.");
 

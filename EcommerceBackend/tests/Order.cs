@@ -251,6 +251,7 @@ namespace EcommerceBackend
                 string jsonFilePath = @"C:\Users\alexa\CSharpProjects\backend\EcommerceBackendRestSharp\EcommerceBackend\utils\payloads\ValidaRealizaPedidoSnack.json";
                 string json = Utils.RetornaStringJson(jsonFilePath);
 
+
                 /*
                      No metodo AddParameter especificamos o content-type como "application/json"
                      Dessa forma não precisamos usar o deserializer
@@ -290,7 +291,7 @@ namespace EcommerceBackend
                 utils.Utils.setCisToken(request);
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
                 utils.Utils.setAuthorizationToken(request, authorizationToken);
-                string jsonFilePath = @"C:\Users\alexa\CSharpProjects\backend\EcommerceBackendRestSharp\EcommerceBackend\utils\payloads\ValidaRealizaPedidoMeiaElo.json";
+                string jsonFilePath = @"C:\Users\alexa\CSharpProjects\backend\EcommerceBackendRestSharp\EcommerceBackend\utils\payloads\ValidaRealizaPedidoSnack.json";
                 string json = Utils.RetornaStringJson(jsonFilePath);
                 request.AddParameter("application /json", json, ParameterType.RequestBody);
                 IRestResponse response = client.Execute(request);
@@ -298,6 +299,7 @@ namespace EcommerceBackend
                 /* Guardando o id do response
                  * É necessario fazer o parse do response (string -> objeto)
                  */
+                
                 var idPedido = JObject.Parse(response.Content);
                 var guid = idPedido.GetValue("id");
 
@@ -312,6 +314,12 @@ namespace EcommerceBackend
                 Assert.That((int)response.StatusCode, Is.EqualTo(200), "Status Code divergente.");
 
             }
+            //catch ()
+            //{
+            //    test.Log(Status.Fail, e.ToString());
+            //    throw new Exception("Falha ao validar geracao do pedido: " + e.Message);
+            //}
+
             catch (Exception e)
             {
                 test.Log(Status.Fail, e.ToString());
@@ -342,7 +350,7 @@ namespace EcommerceBackend
                 @"C:\Users\alexa\CSharpProjects\backend\EcommerceBackendRestSharp\EcommerceBackend\utils\payloads\ValidaRealizaPedidoMeiaElo.json";
                 string json = Utils.RetornaStringJson(jsonFilePath);
                 dynamic jsonObj = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
-                jsonObj["tickets"][0]
+                //jsonObj["tickets"][0];
 
                 request.AddParameter("application /json", json, ParameterType.RequestBody);
                 var response = client.Execute(request);

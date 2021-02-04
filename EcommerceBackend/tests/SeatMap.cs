@@ -12,6 +12,7 @@ using DemoRestSharp.models.SeatMap;
 using EcommerceBackend.models.Bookings.ShowTimes;
 using System.Collections.Generic;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace EcommerceBackend
 {
@@ -65,6 +66,9 @@ namespace EcommerceBackend
                 string[] properties = new string[] { "\"Room\":", "\"Id\":", "\"Name\":", "\"Avail\":",
                 "\"SectorCode\":", "\"Positions\":", "\"Row\":", "\"Col\":", "\"Code\":", "\"Name\":", "\"Status\":",
                 "\"Type\":", "\"Subtype\":", "\"Realtype\":"};
+
+
+
 
                 if (restResponse.IsSuccessful)
                 {
