@@ -15,13 +15,22 @@ using Newtonsoft.Json;
 using System.IO;
 using EcommerceBackend.models.Discount;
 using EcommerceBackend.models.Bookings.ShowTimes;
+using Newtonsoft.Json.Linq;
 
 namespace EcommerceBackend.utils
 {
     public static class Utils
 
     {
-        
+        public static bool IsNullOrEmpty(this JToken token)
+        {
+            return (token == null) ||
+                   (token.Type == JTokenType.Array && !token.HasValues) ||
+                   (token.Type == JTokenType.Object && !token.HasValues) ||
+                   (token.Type == JTokenType.String && token.ToString() == String.Empty) ||
+                   (token.Type == JTokenType.Null);
+        }
+
         public static string VerificaSessaoValida(int theaterId)
         {
             if (theaterId < 0)
@@ -42,7 +51,6 @@ namespace EcommerceBackend.utils
             {
                 for (int i = 0; i < j; i++)
                 {
-
                     var session_id = response.Data[0].Theaters[0].Dates[j].ShowTimes[i];
                     if (!session_id.IsSessionExpired)
                     {
@@ -50,7 +58,6 @@ namespace EcommerceBackend.utils
                         
                         break;
                     }
-
 
                 }
 

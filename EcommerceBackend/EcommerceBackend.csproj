@@ -94,7 +94,11 @@
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.ConfigurationManager, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Configuration.ConfigurationManager.4.7.0\lib\net461\System.Configuration.ConfigurationManager.dll</HintPath>
@@ -192,6 +196,15 @@
       <HintPath>..\packages\Utf8Json.1.3.7\lib\net47\Utf8Json.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
+    <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.abstractions.2.0.3\lib\net35\xunit.abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="xunit.core, Version=2.4.1.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.extensibility.core.2.4.1\lib\net452\xunit.core.dll</HintPath>
+    </Reference>
+    <Reference Include="xunit.execution.desktop, Version=2.4.1.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.extensibility.execution.2.4.1\lib\net452\xunit.execution.desktop.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GlobalSuppressions.cs" />
@@ -289,9 +302,5 @@
   </Target>
   <Import Project="..\packages\MSTest.TestAdapter.1.3.2\build\net45\MSTest.TestAdapter.targets" Condition="Exists('..\packages\MSTest.TestAdapter.1.3.2\build\net45\MSTest.TestAdapter.targets')" />
   <Import Project="..\packages\SpecFlow.3.1.67\build\SpecFlow.targets" Condition="Exists('..\packages\SpecFlow.3.1.67\build\SpecFlow.targets')" />
-  <ProjectExtensions>
-    <VisualStudio>
-      <UserProperties utils_4payloads_4validarealizapedidosnack_1json__JsonSchema="https://bitbucket.org/atlassianlabs/atlascode/raw/main/resources/schemas/pipelines-schema.json" />
-    </VisualStudio>
-  </ProjectExtensions>
+  <ProjectExtensions />
 </Project>

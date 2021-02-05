@@ -1,42 +1,59 @@
 {
   "account": {
-    "email": "mobile2020cinemark@gmail.com",
-    "name": "MOBILE AUT ANDROID"
-
+    "email": "8d3hfnah@mailinator.com",
+    "identification": "94890825460",
+    "name": "TESTE VIA API",
+    "type": "PF"
   },
   "appInfo": {
-    "Fingerprint": "atmxcmqlyqyydanpimtf94ysv91uunvy",
-    "deviceModel": "SM-J701MT",
+    "Fingerprint": "ekiqw6duvutbadw0tbyvgnznlbqmzxz4",
+    "deviceModel": "POCOPHONE F1",
     "devicePlatform": "Android",
-    "deviceUUID": "75e73711-71ae-41c8-b883-b12c4151898c",
+    "deviceUUID": "ea6d0ba6-df1c-4d47-9016-43635ec20d03",
     "geolocation": {
-      "latitude": -23.577729,
-      "longitude": -46.7969339
+      "latitude": -23.5611606,
+      "longitude": -46.6358931
     },
-    "version": "4.1.9"
+    "saleChannel": 2,
+    "version": "4.3.0"
   },
   "theaterId": 785,
+  "fee": {
+    "price": 5
+  },
+  "discount": {
+    "price": 0
+  },
   "movieId": 0,
   "payment": {
-    "number": "mTSBDAgF/PbX+jicDGuqOEjpWAMo7rOuQ/LuLGGIesg=",
-    "cpf": "35074705940",
-    "cvc": "737",
-    "expiryMonth": "02",
-    "expiryYear": "2025",
-    "holderName": "Tggg Hhhhh",
-    "saveCardInformation": true
+    "number": "411111",
+    "ProtectedCardNumber": "f7572e3e-2c7d-407d-b834-2f5302b34109"
   },
   "products": [
     {
+      "categoryType": 0,
+      "fee": {
+        "price": 5
+      },
       "id": 524,
+      "discount": {
+        "price": 0
+      },
+      "menuType": 10,
       "name": "Pipoca Manteiga Balde",
-      "unitPrice": 31.0,
-      "quantity": 2,
-      "theaterAddress": "Av. Dr. Chucri Zaidan, 920 - Vila Cordeiro",
-      "theaterName": "Market Place",
-      "theaterPOS": 3,
-      "urlImagem": "https://cdnim.hml.cineticket.com.br/snackbar/product/product_3375_20170605164929.png"
+      "promotion": {
+        "code": "",
+        "partner": -1,
+        "validationCode": ""
+      },
+      "quantity": 1,
+      "subTotal": 31,
+      "theaterAddress": "Avenida Tancredo Neves, 2915, Loja 3005",
+      "theaterName": "Salvador Shopping",
+      "theaterPOS": 43,
+      "unitPrice": 31,
+      "urlImage": "https://cdnim.hml.cineticket.com.br/snackbar/product/product_524_20170605163134.png"
     }
   ],
-  "total": 68
+  "total": 36.0
 }

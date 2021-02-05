@@ -690,6 +690,7 @@ namespace EcommerceBackend
                 test.Log(Status.Info, "Enviando a requisição consultando os dados do usuário.");
                 var responseRealizaLogin = client.Execute<ModelUsers>(requestRealizaLogin);
 
+
                
                
 
