@@ -279,6 +279,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="utils\payloads\TextFile1.txt" />
     <None Include="utils\massa\Session_ShowTime_IDs\ShowTimes_id.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

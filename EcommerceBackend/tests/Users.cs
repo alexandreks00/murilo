@@ -9,6 +9,7 @@ using AventStack.ExtentReports.Reporter.Configuration;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace EcommerceBackend
 {
@@ -668,6 +669,9 @@ namespace EcommerceBackend
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
                 Assert.That((int)responseEditaDadosUsuario.StatusCode, Is.EqualTo(200), "Status Code diferente do esperado ao enviar requisição responsável por editar os dados do usuário.");
 
+                var responseContent = JObject.Parse(responseEditaDadosUsuario.Content);
+                var Name = responseContent.GetValue("Name");
+               
                 
                 //Criando requisição que irá realizar login com o usuário e verificar se as informações foram alteradas
                 test.Log(Status.Info, "Criando requisição responsável por realizar login e consultar se as informações foram realmente alteradas.");
@@ -689,10 +693,6 @@ namespace EcommerceBackend
                 //Enviando a requisição
                 test.Log(Status.Info, "Enviando a requisição consultando os dados do usuário.");
                 var responseRealizaLogin = client.Execute<ModelUsers>(requestRealizaLogin);
-
-
-               
-               
 
                 //Validando o Status Code de retorno da requisição
                 test.Log(Status.Info, "Validando se o Status Code da requisição é 200.");
