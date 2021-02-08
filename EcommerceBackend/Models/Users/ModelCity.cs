@@ -15,6 +15,6 @@ namespace EcommerceBackend.models.Users
 
         public string Name { get; set; }
 
-        public ModelState State { get; set; } 
+        public ModelState State { get; set; }
     }
 }

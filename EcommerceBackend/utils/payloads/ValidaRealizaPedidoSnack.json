@@ -1,14 +1,14 @@
 {
   "account": {
-    "email": "8d3hfnah@mailinator.com",
-    "identification": "94890825460",
-    "name": "TESTE VIA API",
+    "email": "4uadpxcq@mailinator.com",
+    "identification": "86311930706",
+    "name": "IOS",
     "type": "PF"
   },
   "appInfo": {
     "Fingerprint": "ekiqw6duvutbadw0tbyvgnznlbqmzxz4",
-    "deviceModel": "POCOPHONE F1",
-    "devicePlatform": "Android",
+    "deviceModel": "",
+    "devicePlatform": "IOS",
     "deviceUUID": "ea6d0ba6-df1c-4d47-9016-43635ec20d03",
     "geolocation": {
       "latitude": -23.5611606,
@@ -55,5 +55,5 @@
       "urlImage": "https://cdnim.hml.cineticket.com.br/snackbar/product/product_524_20170605163134.png"
     }
   ],
-  "total": 36.0
+  "total": 70.50
 }

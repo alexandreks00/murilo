@@ -46,7 +46,7 @@ namespace EcommerceBackend.utils
 
             string show_time_id = "";
             int dt = response.Data[0].Theaters[0].Dates.Count;
-            ;
+            
             for (int j = 0; j < dt; j++)
             {
                 for (int i = 0; i < j; i++)

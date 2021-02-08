@@ -8,7 +8,7 @@ namespace EcommerceBackend.models.Users
 {
     class ModelCountry
     {
-        public string CountryId { get; set; }
+        public int CountryId { get; set; }
 
         public string Code { get; set; }
 

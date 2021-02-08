@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-
+using System.ComponentModel.DataAnnotations;
 namespace EcommerceBackend
 {
     [TestFixture]
@@ -409,26 +409,10 @@ namespace EcommerceBackend
                 var responseRealizaLogin = client.Execute<ModelUsers>(requestRealizaLogin);
 
                 //Inicio das validações
+                test.Log(Status.Info, "Validando o contrato com Model.Data.Annotations");
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
-
-
                 Assert.That((int)responseRealizaLogin.StatusCode, Is.EqualTo(200), "Status Code diferente do esperado ao enviar requisição responsável por realizar login com o usuário que teve seus dados editados");
-                test.Log(Status.Info, "Validando o retorno das propriedades.");
-                Assert.That(responseRealizaLogin.Data.Name, Is.EqualTo("Automatic Test"), "Valor da propriedade 'Name' divergente.");
-                Assert.That(responseRealizaLogin.Data.NickName, Is.EqualTo("QA"), "Valor da propriedade 'NickName' divergente.");
-                Assert.That(responseRealizaLogin.Data.Gender, Is.EqualTo("M"), "Valor da propriedade 'Gender' divergente.");
-                Assert.That(responseRealizaLogin.Data.Email, Is.EqualTo(email), "Valor da propriedade 'Email' divergente.");
-                Assert.That(responseRealizaLogin.Data.CPF, Is.EqualTo(cpf), "Valor da propriedade 'CPF' divergente.");
-                Assert.That(responseRealizaLogin.Data.DateOfBirth, Is.EqualTo("2002-11-04T00:00:00Z"), "Valor da propriedade 'Member.DateOfBirth' divergente.");
-                Assert.That(responseRealizaLogin.Data.CityId, Is.EqualTo("12789"), "Valor da propriedade 'Member.CityId' divergente.");
-                Assert.That(responseRealizaLogin.Data.City.CityId, Is.EqualTo(12789), "Valor da propriedade 'City.CityId' divergente.");
-                Assert.That(responseRealizaLogin.Data.City.Name, Is.EqualTo("Taguatinga"), "Valor da propriedade 'City.Name' divergente.");
-                Assert.That(responseRealizaLogin.Data.City.StateId, Is.EqualTo(7), "Valor da propriedade 'City.StateId' divergente.");
-                Assert.That(responseRealizaLogin.Data.City.State.Code, Is.EqualTo("DF"), "Valor da propriedade 'City.State.Code' divergente.");
-                Assert.That(responseRealizaLogin.Data.City.State.Name, Is.EqualTo("Distrito Federal"), "Valor da propriedade 'City.State.Name' divergente.");
-                Assert.That(responseRealizaLogin.Data.Phone1, Is.EqualTo("1133333336"), "Valor da propriedade 'Phone1' divergente.");
-                test.Log(Status.Pass, "Validação ok, os dados do usuário foram alterados com sucesso.");
-
+                
                 //Massa para utilizar no App
                 using (StreamWriter UsuarioGerado =
                 File.AppendText(@"C:\Users\alexa\CSharpProjects\backend\EcommerceBackendRestSharp\EcommerceBackend\utils\massa\UsuariosParaTeste\UsuariosGerados.txt"))
@@ -614,12 +598,11 @@ namespace EcommerceBackend
         {
             ExtentTest test = null;
             test = extent.CreateTest("ValidaAlteraDadosUsuario").Info("Início do teste.");
-            string email = "21pe1ipe@mailinator.com";
-            string cpf = utils.Utils.gerarCpf();
+            string email = "4uadpxcq@mailinator.com";
+            string authorizationToken = utils.Utils.getAuthorization(email, "112233");
+            string cpf = "86311930706";
             try
             {
-                string authorizationToken = utils.Utils.getAuthorization(email, "112233");
-
                 //Criando a requisição responsável por editar os dados de um usuário
                 test.Log(Status.Info, "Criando a requisição responsável por editar os dados usuário.");
 
@@ -630,32 +613,32 @@ namespace EcommerceBackend
                 //Montando o body da requisição que será enviada
                 requestEditaDadosUsuario.AddJsonBody(new
                 {
-                    DateOfBirth = "2001-11-04T00:00:00Z",
+                    DateOfBirth = "2002-11-04T00:00:00Z",
                     City = new
                     {
-                        CityId = 9668,
-                        Name = "São Paulo",
+                        CityId = 12789,
+                        Name = "Taguatinga",
                         State = new
                         {
-                            Code = "SP",
+                            Code = "DF",
                             StateId = 25,
-                            Name = "São Paulo"
+                            Name = "Distrito Federal"
                         },
-                        StateId = 25
+                        StateId = 7
                     },
-                    CityId = 9668,
+                    CityId = 12789,
                     CPF = cpf,
                     CpfNf = true,
                     Email = email,
                     Gender = "M",
-                    UserId = 7369478,
+                    UserId = 7369509,
                     Name = "Automatic Test PUT USERS",
                     NickName = "Automatic Test PUT USERS",
-                    Phone1 = "1136333333",
-                    Id = "601c16daf8507b0001961da3"
+                    Phone1 = "11954570388",
+                    Id = "6021791f1832350001bd65c8"
                 }
                 );
-                
+
                 //Setando header de autenticação "X-CISIdentity"
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
                 utils.Utils.setCisToken(requestEditaDadosUsuario);
@@ -669,10 +652,18 @@ namespace EcommerceBackend
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
                 Assert.That((int)responseEditaDadosUsuario.StatusCode, Is.EqualTo(200), "Status Code diferente do esperado ao enviar requisição responsável por editar os dados do usuário.");
 
-                var responseContent = JObject.Parse(responseEditaDadosUsuario.Content);
-                var Name = responseContent.GetValue("Name");
-               
-                
+                dynamic responseContent = JsonConvert.DeserializeObject(responseEditaDadosUsuario.Content);
+                var Id = responseContent.Id;
+                string Name = responseContent.Name;
+                string NickName = responseContent.NickName;
+                string Gender = responseContent.Gender;
+                int UserId = responseContent.UserId;
+                int CityId = responseContent.CityId;
+                string CPF = responseContent.CPF;
+                int StateId = responseContent.StateId;
+                string Phone1 = responseContent.Phone1;
+                string DateOfBirth = responseContent.DateOfBirth;
+
                 //Criando requisição que irá realizar login com o usuário e verificar se as informações foram alteradas
                 test.Log(Status.Info, "Criando requisição responsável por realizar login e consultar se as informações foram realmente alteradas.");
                 var requestRealizaLogin = new RestRequest("bus/v1/users/login/byapp", Method.POST);
@@ -689,10 +680,14 @@ namespace EcommerceBackend
                 //Setando header de autenticação "X-CISIdentity"
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
                 utils.Utils.setCisToken(requestRealizaLogin);
+
+
                 utils.Utils.setAuthorizationToken(requestRealizaLogin, authorizationToken);
                 //Enviando a requisição
                 test.Log(Status.Info, "Enviando a requisição consultando os dados do usuário.");
                 var responseRealizaLogin = client.Execute<ModelUsers>(requestRealizaLogin);
+              
+
 
                 //Validando o Status Code de retorno da requisição
                 test.Log(Status.Info, "Validando se o Status Code da requisição é 200.");
@@ -701,19 +696,15 @@ namespace EcommerceBackend
                 //Validando o valor de retorno das propriedades
                 test.Log(Status.Info, "Validando o retorno das propriedades.");
                 Assert.That((int)responseRealizaLogin.StatusCode, Is.EqualTo(200), "Status Code diferente do esperado ao enviar requisição responsável por realizar login com o usuário que teve seus dados editados");
-                Assert.That(responseRealizaLogin.Data.Name, Is.EqualTo("Automatic Test PUT USERS"), "Valor da propriedade 'Name' divergente.");
-                Assert.That(responseRealizaLogin.Data.NickName, Is.EqualTo("Automatic Test PUT USERS"), "Valor da propriedade 'NickName' divergente.");
-                Assert.That(responseRealizaLogin.Data.Gender, Is.EqualTo("M"), "Valor da propriedade 'Gender' divergente.");
+                Assert.That(responseRealizaLogin.Data.Name, Is.EqualTo(Name), "Valor da propriedade 'Name' divergente.");
+                Assert.That(responseRealizaLogin.Data.NickName, Is.EqualTo(NickName), "Valor da propriedade 'NickName' divergente.");
+                Assert.That(responseRealizaLogin.Data.Gender, Is.EqualTo(Gender), "Valor da propriedade 'Gender' divergente.");
                 Assert.That(responseRealizaLogin.Data.Email, Is.EqualTo(email), "Valor da propriedade 'Email' divergente.");
                 Assert.That(responseRealizaLogin.Data.CPF, Is.EqualTo(cpf), "Valor da propriedade 'CPF' divergente.");
-                Assert.That(responseRealizaLogin.Data.DateOfBirth, Is.EqualTo("2001-11-04T00:00:00Z"), "Valor da propriedade 'Member.DateOfBirth' divergente.");
-                Assert.That(responseRealizaLogin.Data.CityId, Is.EqualTo(9668), "Valor da propriedade 'Member.CityId' divergente.");
-                Assert.That(responseRealizaLogin.Data.City.CityId, Is.EqualTo(9668), "Valor da propriedade 'City.CityId' divergente.");
-                Assert.That(responseRealizaLogin.Data.City.Name, Is.EqualTo("São Paulo"), "Valor da propriedade 'City.Name' divergente.");
-                Assert.That(responseRealizaLogin.Data.City.StateId, Is.EqualTo(25), "Valor da propriedade 'City.StateId' divergente.");
-                Assert.That(responseRealizaLogin.Data.City.State.Code, Is.EqualTo("SP"), "Valor da propriedade 'City.State.Code' divergente.");
-                Assert.That(responseRealizaLogin.Data.City.State.Name, Is.EqualTo("São Paulo"), "Valor da propriedade 'City.State.Name' divergente.");
-                Assert.That(responseRealizaLogin.Data.Phone1, Is.EqualTo("1136333333"), "Valor da propriedade 'Phone1' divergente.");
+                Assert.That(responseRealizaLogin.Data.DateOfBirth, Is.EqualTo("2002-11-04T00:00:00Z"), "Valor da propriedade 'Member.DateOfBirth' divergente.");
+                Assert.That(responseRealizaLogin.Data.CityId, Is.EqualTo(CityId), "Valor da propriedade 'Member.CityId' divergente.");
+                Assert.That(responseRealizaLogin.Data.StateId, Is.EqualTo(StateId), "Valor da propriedade 'Member.CityId' divergente.");
+                Assert.That(responseRealizaLogin.Data.Phone1, Is.EqualTo(Phone1), "Valor da propriedade 'Phone1' divergente.");
 
                 //Criando requisição alterando os dados novamente, realizando rollback
                 test.Log(Status.Info, "Criando a requisição responsável por realizar o rollback dos dados usuário.");
@@ -741,18 +732,18 @@ namespace EcommerceBackend
                     CpfNf = false,
                     Email = email,
                     Gender = "F",
-                    UserId = 7369478,
+                    UserId = 7369509,
                     Name = "Alexandre Kenji PUT USERS",
                     NickName = "Sr Put",
                     Phone1 = "1136333333",
-                    Id = "601c16daf8507b0001961da3"
+                    Id = "6021791f1832350001bd65c8"
                 }
                 );
 
                 //Setando header de autenticação "X-CISIdentity"
                 test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
                 utils.Utils.setCisToken(requestRealizaRollback);
-                utils.Utils.setAuthorizationToken(requestRealizaLogin, authorizationToken);
+                utils.Utils.setAuthorizationToken(requestRealizaRollback, authorizationToken);
 
                 //Enviando a requisição
                 test.Log(Status.Info, "Enviando a requisição editando os dados do usuário.");
