@@ -89,7 +89,7 @@ namespace EcommerceBackend
                 Assert.That(response.Data.Member.City.State.Name, Is.EqualTo("Distrito Federal"), "Valor da propriedade 'City.State.Name' divergente.");
                 Assert.That(response.Data.City.State.CountryId, Is.EqualTo(0), "Valor da propriedade 'City.State.CountryId' divergente.");
                 Assert.That(response.Data.Member.Phone1, Is.EqualTo("1136362525"), "Valor da propriedade 'Phone1' divergente.");
-                Assert.That(response.Data.NLPActive, Is.EqualTo("True"), "Valor da propriedade 'NLPActive' divergente.");
+                Assert.That(response.Data.NLPActive, Is.EqualTo(true), "Valor da propriedade 'NLPActive' divergente.");
                 test.Log(Status.Pass, "Teste ok, todas as verificações foram realizadas com sucesso.");
             }
             catch (Exception e)

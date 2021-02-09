@@ -8,6 +8,10 @@ namespace EcommerceBackend.models.SuperSaver
 {
     public class ModelSuperSaver
     {
+        //public ModelTransacao Transacao { get; set; }
+
+
+
         public string code { get; set; }
         public string saleChannel { get; set; }
         public string theater { get; set; }

@@ -22,7 +22,7 @@ namespace EcommerceBackend.utils
     public static class Utils
 
     {
-        public static bool IsNullOrEmpty(this JToken token)
+        public static bool IsNullOrEmptyJToken(this JToken token)
         {
             return (token == null) ||
                    (token.Type == JTokenType.Array && !token.HasValues) ||

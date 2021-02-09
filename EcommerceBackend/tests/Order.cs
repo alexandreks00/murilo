@@ -288,7 +288,7 @@ namespace EcommerceBackend
                 var responseContent = JObject.Parse(response.Content);
                 var guid = responseContent.GetValue("id");
 
-                utils.Utils.IsNullOrEmpty(guid);
+                utils.Utils.IsNullOrEmptyJToken(guid);
                 
                 var clientPrepare = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
                 var requestPrepare = new RestRequest("order/v1/prepare/"+guid, Method.POST);
