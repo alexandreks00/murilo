@@ -20,7 +20,6 @@ using Newtonsoft.Json.Linq;
 namespace EcommerceBackend.utils
 {
     public static class Utils
-
     {
         public static bool IsNullOrEmptyJToken(this JToken token)
         {

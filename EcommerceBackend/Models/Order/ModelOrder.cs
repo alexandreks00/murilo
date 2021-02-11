@@ -49,8 +49,13 @@ namespace DemoRestSharp.models.Order
 
 
         // Lists utilizadas nessa classe
+        [Required(ErrorMessage = "Propriedade products nao encontrada")]
         public List<ModelProduct> products { get; set; }
+
+        [Required(ErrorMessage = "Propriedade tickets nao encontrada")]
         public List<ModelTickets> tickets { get; set; }
+
+        [Required(ErrorMessage = "Propriedade fee nao encontrada")]
         public List<ModelFee> fee { get; set; }
   
         

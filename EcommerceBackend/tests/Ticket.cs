@@ -42,6 +42,29 @@ namespace EcommerceBackend
             extent.Flush();
         }
 
+        private string RetornaSessionId(int theater = 785)
+        {
+
+            var clientSession = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
+            var requestSession = new RestRequest("bus/v1/bookings/showtimes/theaters/785", Method.GET);
+            requestSession.RequestFormat = DataFormat.Json;
+            Utils.setCisToken(requestSession);
+
+            var responseSession = clientSession.Execute<ModelTheatersShowTimes>(requestSession);
+
+            if (responseSession.IsSuccessful)
+            { 
+                Assert.That((int)responseSession.StatusCode, Is.EqualTo(200), "Status Code divergente.");
+                Assert.That(responseSession.Data.Theaters[0].TheaterCode, Is.EqualTo("785"), "Código do Cinema 'TheaterCode' divergente");
+                Assert.That(responseSession.Data.Theaters[0].Dates[0].ExhibitionDate, !Is.Null, "Data de exibição não informada");
+                Assert.That(responseSession.Data.Theaters[0].Dates[0].ShowTimes[0].tht, Is.EqualTo("785"), "Id do Cinema diferente do que foi filtrado");
+            }
+            String ShowTime = responseSession.Data.Theaters[0].Dates[0].ShowTimes[0].ShowTimeId;
+            
+            return ShowTime;
+        }
+
+
         [Test]
         public void ValidaTipoIngresso()
         {
@@ -51,7 +74,7 @@ namespace EcommerceBackend
 
             try
             {
-
+                
                 // Preparando a massa em tempo de execução
                 var clientSession = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
                 var requestSession = new RestRequest("bus/v1/bookings/showtimes/theaters/785", Method.GET);
