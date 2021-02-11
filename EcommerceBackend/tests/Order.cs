@@ -42,13 +42,14 @@ namespace EcommerceBackend
         private void ValidaStatusResponse(IRestResponse response)
         {   
             ExtentTest test = null;
-            test.Log(Status.Info, "Chamada da validação comum de /order response");
 
             var result = (response.IsSuccessful && !String.IsNullOrEmpty(response.Content))
-                    ? test.Log(Status.Info, "Status code: " + response.StatusCode + "Propriedades OK")
-                    : (int)response.StatusCode == 401
-                    ? test.Log(Status.Info, "Nao autorizado, erro na autenticação/token do usuario")
-                    : throw new Exception("Erro inesperado");
+                        ? test.Log(Status.Info, "Status code: " + response.StatusCode + "Propriedades OK")
+                        : (int)response.StatusCode == 401
+                        ? test.Log(Status.Info, "Nao autorizado, erro na autenticação/token do usuario")
+                        : (int)response.StatusCode == 204
+                        ? test.Log(Status.Info, "OK porém a consulta não trouxe nenhum conteudo")
+                        : throw new Exception("Retorno inesperado");
         }
 
         [Test]
@@ -57,29 +58,26 @@ namespace EcommerceBackend
             ExtentTest test = null;
             test = extent.CreateTest("ValidaConsultaListaPedidos").Info("Início do teste.");
 
-            try
-            {
+            var authorizationToken = utils.Utils.getAuthorization("mobile2020cinemark@gmail.com", "123456");
 
-                var authorizationToken = utils.Utils.getAuthorization("mobile2020cinemark@gmail.com", "123456");
+            //Criando e enviando requisição
+            test.Log(Status.Info, "Criando requisição responsável por realizar login.");
+            var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
+            var request = new RestRequest("order/v1/list", Method.GET);
+            request.RequestFormat = DataFormat.Json;
+            utils.Utils.setCisToken(request);
+            test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
+            utils.Utils.setAuthorizationToken(request, authorizationToken);
 
-                //Criando e enviando requisição
-                test.Log(Status.Info, "Criando requisição responsável por realizar login.");
-                var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
-                var request = new RestRequest("order/v1/list", Method.GET);
-                request.RequestFormat = DataFormat.Json;
-                utils.Utils.setCisToken(request);
-                test.Log(Status.Info, "Setando headers necessários para realizar a requisição.");
-                utils.Utils.setAuthorizationToken(request, authorizationToken);
+            IRestResponse response = client.Execute<List<ModelOrder>>(request);
+            ValidaStatusResponse(response);
+            var responseContent = JObject.Parse(response.Content);
 
-                var response = client.Execute<List<ModelOrder>>(request);
-                ValidaStatusResponse(response);
-                
-            }
-            catch (Exception e)
-            {
-                test.Log(Status.Fail, e.ToString());
-                throw new Exception("Falha ao validar dados do login do usuário: " + e.Message);
-            }
+                if (responseContent.HasValues)
+                    test.Log(Status.Pass);
+
+        
+        
 
         }
 
@@ -103,36 +101,15 @@ namespace EcommerceBackend
                 utils.Utils.setAuthorizationToken(request, authorizationToken);
 
                 var response = client.Execute<List<ModelOrderLast>>(request);
-              
-                //Início das validações
-                test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
-                Assert.That((int)response.StatusCode, Is.EqualTo(200), "Status Code divergente.");
-
-                if ((int)response.StatusCode == 200 && authorizationToken != null)
+                ValidaStatusResponse(response);
+                var responseContent = JObject.Parse(response.Content);
+                var guid = responseContent.GetValue("id");
+                
+                if (!(Utils.IsNullOrEmptyJToken(guid)))
                 {
-                    //testes realizados de forma unitaria
-                    test.Log(Status.Info, "Início de validações de propriedades e valores.");
-                    Assert.That(response.Data[0].id, Is.EqualTo("26a33aed-a360-451b-8f6d-a9ff00fc1118"), "Status Code divergente.");
-                    Assert.That(response.Data[0].account[0].userId, Is.EqualTo(5640490), "Status Code divergente.");
-                    Assert.That(response.Data[0].account[0].email, Is.EqualTo("consultaultimopedido@mailinator.com"), "Status Code divergente.");
-                    Assert.That(response.Data[0].account[0].name, Is.EqualTo("Consulta O Ultimo"), "Status Code divergente.");
-
-                    Assert.That(response.Data[0].products[0].name, Is.EqualTo("Combo Balde c/ Manteiga"), "Status Code divergente.");
-                    Assert.That(response.Data[0].products[1].name, Is.EqualTo("Pipoca Caramelo Balde"), "Status Code divergente.");
-                    Assert.That(response.Data[0].products[2].name, Is.EqualTo("Pipoca Caramelo Balde"), "Status Code divergente.");
-                    Assert.That(response.Data[0].products[3].name, Is.EqualTo("Coca-Cola Grande"), "Status Code divergente.");
-                    Assert.That(response.Data[0].products[4].name, Is.EqualTo("Batata Lays"), "Status Code divergente.");
-                    Assert.That(response.Data[0].products[5].name, Is.EqualTo("Batata Lays"), "Status Code divergente.");
-                    Assert.That(response.Data[0].products[6].name, Is.EqualTo("M&Ms 270g chocolate"), "Status Code divergente.");
-                    Assert.That(response.Data[0].products[7].name, Is.EqualTo("M&Ms 270g chocolate"), "Status Code divergente.");
-
-                    test.Log(Status.Info, "Término de validações de propriedades e valores.");
+                    test.Log(Status.Pass);
                 }
-                else if (response.Data[0].id == "" || response.Data[0].id == null)
-                {
-                    test.Log(Status.Fail, "Usuário inexistente.");
-                }
-           
+                
             }
 
             catch (Exception e)
@@ -145,13 +122,13 @@ namespace EcommerceBackend
         public void ValidaConsultaOrderId()
         {
             ExtentTest test = null;
-            test = extent.CreateTest("ValidaConsultaUltimoPedido").Info("Início do teste.");
+            test = extent.CreateTest("ValidaConsultaOrderId").Info("Início do teste.");
 
             try
             {
                 ValidaRealizaPedidoSnack();
                 string authorizationToken = utils.Utils.getAuthorization("8d3hfnah@mailinator.com", "112233");
-
+                var guid = "";
                 //Criando e enviando requisição
                 test.Log(Status.Info, "Criando requisição responsável por realizar login.");
                 var client = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
@@ -166,8 +143,6 @@ namespace EcommerceBackend
                 //Início das validações
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
                 Assert.That((int)response.StatusCode, Is.EqualTo(200), "Status Code divergente.");
-
-
 
             }
 
@@ -213,11 +188,9 @@ namespace EcommerceBackend
                      Dessa forma não precisamos usar o deserializer
                  */
                 request.AddParameter("application /json", json , ParameterType.RequestBody);
-                var response = client.Execute(request);
                 test.Log(Status.Info, "Enviando requisição.");
-                Console.WriteLine(response);
+                var response = client.Execute(request);
                 
-          
                 //Início das validações
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
                 Assert.That((int)response.StatusCode, Is.EqualTo(200), "Status Code divergente.");
@@ -259,8 +232,6 @@ namespace EcommerceBackend
                 var responseContent = JObject.Parse(response.Content);
                 var guid = responseContent.GetValue("id");
 
-                
-
                 var isGuidOk = Utils.IsNullOrEmptyJToken(guid);
                 
                 var clientPrepare = new RestClient(ConfigurationManager.AppSettings["dnsSensedia"]);
@@ -275,7 +246,6 @@ namespace EcommerceBackend
                 Assert.That((int)response.StatusCode, Is.EqualTo(200), "Status Code divergente.");
 
             }
-            
 
             catch (Exception e)
             {
