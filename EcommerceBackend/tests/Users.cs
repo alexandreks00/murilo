@@ -648,7 +648,7 @@ namespace EcommerceBackend
                 //Enviando a requisição
                 test.Log(Status.Info, "Enviando a requisição editando os dados do usuário.");
                 IRestResponse responseEditaDadosUsuario = client.Execute<ModelUsers>(requestEditaDadosUsuario);
-
+                    
                 //Validando Status Code de retorno da requisição
                 test.Log(Status.Info, "Validando se o Status Code de retorno da requisição é 200.");
                 Assert.That((int)responseEditaDadosUsuario.StatusCode, Is.EqualTo(200), "Status Code diferente do esperado ao enviar requisição responsável por editar os dados do usuário.");
